@@ -163,27 +163,36 @@ import roomsData from '../../../public/assets/data/rooms.json';
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 44px; height: 44px;
+      width: 56px; height: 56px; /* Increased for better touch */
       background: white;
       border-radius: 50%;
       display: flex;
       align-items: center; justify-content: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 25px rgba(0,0,0,0.5);
       color: var(--primary-color);
+      border: 3px solid var(--primary-color);
+      z-index: 20;
+    }
+
+    .slider-handle svg {
+      width: 28px;
+      height: 28px;
     }
 
     .label {
       position: absolute;
       bottom: 2rem;
-      padding: 0.5rem 1rem;
-      background: rgba(0,0,0,0.6);
+      padding: 0.6rem 1.2rem; /* Slightly larger padding */
+      background: rgba(0,0,0,0.8); /* Higher contrast */
       color: white;
-      font-size: 0.7rem;
-      font-weight: 800;
-      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 900;
+      border-radius: 8px;
       backdrop-filter: blur(10px);
       z-index: 5;
+      border: 1px solid rgba(255,255,255,0.2);
     }
+
     .label-before { left: 2rem; }
     .label-after { right: 2rem; }
 

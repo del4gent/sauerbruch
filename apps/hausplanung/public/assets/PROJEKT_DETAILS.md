@@ -1,7 +1,7 @@
 # 🏠 SAUERBRUCH 3 - GESAMTPLANUNG
 
 **Gesamtfläche:** 178.05 m²  
-**Gesamtkosten:** 1.295.00 EUR
+**Gesamtkosten:** 50.320,00 EUR
 
 ---
 

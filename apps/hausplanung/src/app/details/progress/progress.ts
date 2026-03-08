@@ -51,8 +51,15 @@ import { RouterModule } from '@angular/router';
     .details-header { margin-bottom: 3rem; }
     .btn-back { color: var(--primary-color); text-decoration: none; font-weight: 700; margin-bottom: 1rem; display: inline-block; }
     
+    @media (max-width: 768px) {
+      .details-container { padding: 1.25rem; }
+      .details-header { margin-bottom: 2rem; }
+      .info-box { padding: 1.25rem; }
+    }
+
     .table-card { padding: 0; overflow: hidden; }
     .details-table { width: 100%; border-collapse: collapse; }
+
     .details-table th, .details-table td { padding: 1.25rem 2rem; border-bottom: 1px solid var(--border-color); text-align: left; }
     .details-table th { background: rgba(255,255,255,0.05); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; }
     

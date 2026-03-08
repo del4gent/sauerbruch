@@ -14,11 +14,6 @@ import roomsData from '../../public/assets/data/rooms.json';
         <div class="hero-overlay"></div>
         <div class="hero-content">
           <h1 class="gradient-text">Projekt Sauerbruch 3</h1>
-          <p class="subtitle">Digitale Renovierungsplanung & Baudokumentation</p>
-          <div class="hero-badges">
-            <span class="badge status-active">🏗️ Sanierung läuft</span>
-            <span class="badge revision">Revision 2.2</span>
-          </div>
         </div>
       </header>
 
@@ -34,13 +29,13 @@ import roomsData from '../../public/assets/data/rooms.json';
 
         <div class="glass-card stat-item clickable" routerLink="/details/area">
           <span class="stat-label">Gesamtfläche</span>
-          <span class="stat-value">61,24 m²</span>
-          <span class="stat-derivation">(Klicken für Grundriss)</span>
+          <span class="stat-value">178,05 m²</span>
+          <span class="stat-derivation">(Summe aller Räume inkl. Keller & Garage)</span>
         </div>
 
         <div class="glass-card stat-item clickable" routerLink="/details/budget">
           <span class="stat-label">Geschätztes Budget</span>
-          <span class="stat-value">25.810 €</span>
+          <span class="stat-value">27.920 €</span>
           <span class="stat-derivation">(Summe: Bäder, Flure & Wohnzimmer)</span>
         </div>
       </div>
@@ -100,22 +95,93 @@ import roomsData from '../../public/assets/data/rooms.json';
     .hero-header:hover .hero-image { transform: scale(1.02); }
     .hero-overlay { 
       position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
-      background: linear-gradient(to top, rgba(2, 6, 23, 0.9) 0%, rgba(2, 6, 23, 0.2) 100%);
+      background: linear-gradient(to top, rgba(2, 6, 23, 0.95) 0%, rgba(2, 6, 23, 0.4) 50%, rgba(2, 6, 23, 0.1) 100%);
     }
     .hero-content { position: relative; z-index: 1; }
-    .hero-content h1 { font-size: 4rem; margin: 0; line-height: 1; }
-    .hero-badges { display: flex; gap: 1rem; margin-top: 1.5rem; }
-    .badge.revision { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
+    .hero-content h1 { 
+      font-size: 4.5rem; 
+      margin: 0; 
+      line-height: 1; 
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .hero-content .subtitle { 
+      font-size: 1.25rem; 
+      color: white; 
+      opacity: 0.9; 
+      margin-top: 0.75rem; 
+      font-weight: 500;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    .hero-badges { display: flex; gap: 0.75rem; margin-top: 2rem; }
+    .badge.status-active-hero { 
+      background: rgba(34, 197, 94, 0.2); 
+      color: #4ade80; 
+      border: 1px solid rgba(34, 197, 94, 0.4); 
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge.revision { 
+      background: rgba(255,255,255,0.1); 
+      color: white; 
+      border: 1px solid rgba(255,255,255,0.2); 
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
 
     .stats-grid { 
       display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
       gap: 2rem; margin-bottom: 4rem; 
     }
-    .stat-item { padding: 2.5rem; display: flex; flex-direction: column; cursor: pointer; transition: all 0.3s ease; }
-    .stat-item:hover { border-color: var(--primary-color); transform: translateY(-5px); }
-    .stat-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; font-weight: 800; margin-bottom: 1rem; }
-    .stat-value { font-size: 2.2rem; font-weight: 800; }
-    .stat-derivation { font-size: 0.8rem; opacity: 0.4; margin-top: 0.5rem; font-style: italic; }
+    .stat-item { 
+      padding: 2.5rem; 
+      display: flex; 
+      flex-direction: column; 
+      cursor: pointer; 
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border-top: 4px solid var(--primary-color);
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+    }
+    .stat-item:hover { 
+      transform: translateY(-8px); 
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      border-top-width: 8px;
+    }
+    .stat-label { 
+      font-size: 0.75rem; 
+      text-transform: uppercase; 
+      letter-spacing: 0.15em; 
+      color: var(--primary-color); 
+      font-weight: 800; 
+      margin-bottom: 1.5rem; 
+      opacity: 0.8;
+    }
+    .stat-value { 
+      font-size: 2.8rem; 
+      font-weight: 900; 
+      color: var(--text-color); 
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .stat-derivation { 
+      font-size: 0.85rem; 
+      margin-top: 1rem; 
+      font-weight: 500;
+      color: var(--text-color);
+      opacity: 0.5;
+    }
 
     .progress-container { background: rgba(255, 255, 255, 0.05); height: 8px; border-radius: 4px; margin: 1rem 0; overflow: hidden; }
     .progress-bar { background: var(--primary-color); height: 100%; border-radius: 4px; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
@@ -194,16 +260,16 @@ import roomsData from '../../public/assets/data/rooms.json';
     .room-info h3 { margin: 0; font-size: 1.4rem; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.9); color: white; letter-spacing: -0.01em; }
     .room-info p { margin: 0.1rem 0 0.5rem 0; opacity: 0.6; font-size: 0.75rem; text-shadow: 0 1px 4px rgba(0,0,0,0.8); color: white; font-weight: 500; }
 
-    .badge { padding: 0.25rem 0.6rem; border-radius: 8px; font-size: 0.65rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; text-transform: uppercase; letter-spacing: 0.03em; }
+    .badge { padding: 0.25rem 0; border-radius: 8px; font-size: 0.65rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; text-transform: uppercase; letter-spacing: 0.03em; }
     .status-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
     
-    .status-active { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2); }
+    .status-active { background: none; color: #4ade80; border: none; }
     .status-active .status-dot { background: #4ade80; box-shadow: 0 0 8px #22c55e; }
     
-    .status-planned { background: rgba(234, 179, 8, 0.1); color: #fde047; border: 1px solid rgba(234, 179, 8, 0.2); }
+    .status-planned { background: none; color: #fde047; border: none; }
     .status-planned .status-dot { background: #eab308; }
 
-    .status-onhold { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
+    .status-onhold { background: none; color: #f87171; border: none; }
     .status-onhold .status-dot { background: #ef4444; }
 
     .btn-primary { 
