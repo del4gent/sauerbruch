@@ -16,5 +16,9 @@ export const appRoutes: Route[] = [
   {
     path: 'details/area',
     loadComponent: () => import('./details/area/area').then(m => m.AreaComponent)
+  },
+  {
+    path: 'details/progress',
+    loadComponent: () => import('./details/progress/progress').then(m => m.ProgressComponent)
   }
 ];

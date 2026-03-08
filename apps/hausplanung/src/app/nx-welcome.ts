@@ -8,18 +8,27 @@ import { RouterModule } from '@angular/router';
   imports: [CommonModule, RouterModule],
   template: `
     <div class="dashboard">
-      <header class="main-header">
-        <h1 class="gradient-text">Projekt Dashboard</h1>
-        <p class="subtitle">Sauerbruchstraße 3 — Hausplanung & Renovierung</p>
+      <header class="hero-header glass-card">
+        <div class="hero-image" style="background-image: url('assets/plan/house_hero.jpg')"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <h1 class="gradient-text">Projekt Sauerbruch 3</h1>
+          <p class="subtitle">Digitale Renovierungsplanung & Baudokumentation</p>
+          <div class="hero-badges">
+            <span class="badge status-active">🏗️ Sanierung läuft</span>
+            <span class="badge revision">Revision 2.2</span>
+          </div>
+        </div>
       </header>
 
       <div class="stats-grid">
-        <div class="glass-card stat-item clickable">
+        <div class="glass-card stat-item clickable" routerLink="/details/progress">
           <span class="stat-label">Gesamtfortschritt</span>
           <div class="progress-container">
             <div class="progress-bar" style="width: 20%"></div>
           </div>
           <span class="stat-value">20%</span>
+          <span class="stat-derivation">(2/10 Meilensteine erreicht)</span>
         </div>
 
         <div class="glass-card stat-item clickable" routerLink="/details/area">
@@ -30,15 +39,15 @@ import { RouterModule } from '@angular/router';
 
         <div class="glass-card stat-item clickable" routerLink="/details/budget">
           <span class="stat-label">Geschätztes Budget</span>
-          <span class="stat-value">25.230 €</span>
+          <span class="stat-value">25.810 €</span>
           <span class="stat-derivation">(Summe: Bäder, Flure & Wohnzimmer)</span>
         </div>
       </div>
 
       <section class="rooms-section">
         <div class="section-header">
-          <h2>Aktuelle Räume</h2>
-          <button class="btn-primary">Alle Details</button>
+          <h2>Räume im Umbau</h2>
+          <button class="btn-primary" routerLink="/details/budget">Kosten-Details</button>
         </div>
         
         <div class="room-grid">
@@ -82,15 +91,38 @@ import { RouterModule } from '@angular/router';
     </div>
   `,
   styles: [`
-    .main-header { margin-bottom: 3.5rem; }
-    .main-header h1 { font-size: 3.5rem; margin: 0; margin-bottom: 0.5rem; }
-    .subtitle { font-size: 1.1rem; opacity: 0.6; font-weight: 500; }
+    .hero-header { 
+      position: relative; 
+      height: 400px; 
+      border-radius: 24px; 
+      overflow: hidden; 
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: flex-end;
+      padding: 3rem;
+      border: 1px solid var(--border-color);
+    }
+    .hero-image { 
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
+      background-size: cover; background-position: center 40%;
+      transition: transform 0.5s ease;
+    }
+    .hero-header:hover .hero-image { transform: scale(1.02); }
+    .hero-overlay { 
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
+      background: linear-gradient(to top, rgba(2, 6, 23, 0.9) 0%, rgba(2, 6, 23, 0.2) 100%);
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-content h1 { font-size: 4rem; margin: 0; line-height: 1; }
+    .hero-badges { display: flex; gap: 1rem; margin-top: 1.5rem; }
+    .badge.revision { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
 
     .stats-grid { 
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
       gap: 2rem; margin-bottom: 4rem; 
     }
-    .stat-item { padding: 2.5rem; display: flex; flex-direction: column; }
+    .stat-item { padding: 2.5rem; display: flex; flex-direction: column; cursor: pointer; transition: all 0.3s ease; }
+    .stat-item:hover { border-color: var(--primary-color); transform: translateY(-5px); }
     .stat-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; font-weight: 800; margin-bottom: 1rem; }
     .stat-value { font-size: 2.2rem; font-weight: 800; }
     .stat-derivation { font-size: 0.8rem; opacity: 0.4; margin-top: 0.5rem; font-style: italic; }
