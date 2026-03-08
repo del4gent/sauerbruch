@@ -21,8 +21,11 @@
   --sidebar-text: #f1f5f9;
 }
 
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
   font-family: 'Inter', -apple-system, sans-serif;
   background-color: var(--bg-color);
   color: var(--text-color);

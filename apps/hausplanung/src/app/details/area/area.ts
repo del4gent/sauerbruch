@@ -10,6 +10,9 @@ import roomsData from '../../../../public/assets/data/rooms.json';
   imports: [CommonModule, RouterModule, FloorPlanComponent],
   template: `
     <div class="details-container">
+      <div class="breadcrumb mobile-breadcrumb">
+        <a routerLink="/">Dashboard</a> / Flächen & Grundriss
+      </div>
       <header class="details-header">
         <a routerLink="/" class="btn-back">← Dashboard</a>
         <h1 class="gradient-text">Flächen & Grundriss</h1>

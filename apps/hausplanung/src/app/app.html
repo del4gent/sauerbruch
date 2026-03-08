@@ -43,22 +43,6 @@
   <main class="main-content">
     <router-outlet></router-outlet>
   </main>
-
-  <!-- Mobile Bottom Nav (Keep for Handwerker-Ergonomie) -->
-  <nav class="mobile-nav mobile-only">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="mobile-nav-item">
-      <span class="icon">📊</span>
-      <span class="label">Dashboard</span>
-    </a>
-    <a *ngFor="let room of activeRooms().slice(0, 3)" [routerLink]="['/room', room.id]" routerLinkActive="active" class="mobile-nav-item">
-      <span class="icon">{{ getRoomEmoji(room.id) }}</span>
-      <span class="label">{{ room.name }}</span>
-    </a>
-    <a routerLink="/details/progress" routerLinkActive="active" class="mobile-nav-item">
-      <span class="icon">✅</span>
-      <span class="label">Status</span>
-    </a>
-  </nav>
 </div>
 
 <ng-template #loginTpl>

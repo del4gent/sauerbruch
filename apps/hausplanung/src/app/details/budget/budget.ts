@@ -9,6 +9,9 @@ import roomsData from '../../../../public/assets/data/rooms.json';
   imports: [CommonModule, RouterModule],
   template: `
     <div class="details-container">
+      <div class="breadcrumb mobile-breadcrumb">
+        <a routerLink="/">Dashboard</a> / Budget
+      </div>
       <header class="details-header">
         <a routerLink="/" class="btn-back">← Dashboard</a>
         <h1 class="gradient-text">Budget Herleitung</h1>

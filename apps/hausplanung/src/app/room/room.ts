@@ -32,7 +32,7 @@ import roomsData from '../../../public/assets/data/rooms.json';
 
         <div class="banner-overlay"></div>
         <div class="banner-content">
-          <div class="breadcrumb">
+          <div class="breadcrumb mobile-breadcrumb">
             <a routerLink="/">Dashboard</a> / {{ roomDetails()?.name || roomName() }}
           </div>
           <h1 class="room-title">{{ roomDetails()?.name || roomName() }}</h1>
@@ -200,10 +200,6 @@ import roomsData from '../../../public/assets/data/rooms.json';
     .banner-content { position: relative; z-index: 5; width: 100%; pointer-events: none; }
     .banner-content * { pointer-events: auto; }
     
-    .breadcrumb { font-size: 0.85rem; opacity: 0.8; margin-bottom: 0.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-    .breadcrumb a { color: inherit; text-decoration: none; }
-    .breadcrumb a:hover { text-decoration: underline; }
-
     .room-title { 
       font-size: 4.5rem; font-weight: 900; margin: 0 0 2rem 0; 
       letter-spacing: -0.03em; line-height: 1; 
@@ -257,7 +253,6 @@ import roomsData from '../../../public/assets/data/rooms.json';
     @media (max-width: 600px) {
       .room-banner { min-height: 320px; padding: 2rem 1rem 1.5rem 1rem; margin: -1.25rem -1.25rem 1.25rem -1.25rem; }
       .room-title { font-size: 2.25rem; margin-bottom: 1.25rem; }
-      .breadcrumb { font-size: 0.75rem; }
       .quick-stats { gap: 0.5rem; }
       .stat-pill { padding: 0.5rem 0.75rem; border-radius: 12px; gap: 0.5rem; }
       .pill-label { font-size: 0.6rem; }
