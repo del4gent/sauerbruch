@@ -24,14 +24,6 @@ interface ImageGroup {
         <div class="slider-container" *ngIf="beforeImage() && afterImage(); else staticHero">
           <div class="image-before" [style.backgroundImage]="'url(' + beforeImage() + ')'"></div>
           <div class="image-after" [style.backgroundImage]="'url(' + afterImage() + ')'" [style.clipPath]="'inset(0 0 0 ' + (100 - sliderPos()) + '%)'"></div>
-          
-          <div class="slider-line" [style.left]="sliderPos() + '%'">
-            <div class="slider-handle">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 8 4 4-4 4M6 8l-4 4 4 4"/></svg>
-            </div>
-          </div>
-
-          <input type="range" min="0" max="100" [value]="sliderPos()" (input)="onSliderChange($event)" class="slider-input">
         </div>
 
         <ng-template #staticHero>
@@ -169,36 +161,6 @@ interface ImageGroup {
     .slider-container {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
-    }
-
-    .slider-input {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      opacity: 0;
-      cursor: ew-resize;
-      z-index: 15;
-    }
-
-    .slider-line {
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 1px;
-      background: rgba(255,255,255,0.8);
-      z-index: 12;
-    }
-
-    .slider-handle {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 40px; height: 40px;
-      background: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center; justify-content: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      color: #0f172a;
-      z-index: 20;
     }
 
     .hero-overlay {
