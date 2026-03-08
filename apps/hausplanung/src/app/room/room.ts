@@ -245,15 +245,34 @@ import roomsData from '../../../public/assets/data/rooms.json';
     .error-icon { font-size: 4rem; margin-bottom: 1.5rem; }
 
     @media (max-width: 1100px) {
-      .layout-grid { grid-template-columns: 1fr; }
+      .layout-grid { grid-template-columns: 1fr; gap: 1.5rem; }
       .room-title { font-size: 3.5rem; }
-      .room-banner { height: auto; min-height: 400px; padding: 2rem; }
+      .room-banner { height: auto; min-height: 400px; padding: 2.5rem 1.5rem; }
+      .details-card { padding: 2rem; }
+    }
+
+    @media (max-width: 600px) {
+      .room-banner { min-height: 320px; padding: 2rem 1rem 1.5rem 1rem; margin: -1.25rem -1.25rem 1.25rem -1.25rem; }
+      .room-title { font-size: 2.25rem; margin-bottom: 1.25rem; }
+      .breadcrumb { font-size: 0.75rem; }
+      .quick-stats { gap: 0.5rem; }
+      .stat-pill { padding: 0.5rem 0.75rem; border-radius: 12px; gap: 0.5rem; }
+      .pill-label { font-size: 0.6rem; }
+      .pill-value { font-size: 0.9rem; }
+      .details-card { padding: 1.25rem; border-radius: 16px; }
+      .card-header { margin-bottom: 1.5rem; padding-bottom: 1rem; }
+      .card-header h2 { font-size: 1.25rem; }
+      .markdown-body { font-size: 1rem; }
+      .label-before, .label-after { bottom: 1rem; font-size: 0.6rem; padding: 0.35rem 0.65rem; }
+      .label-before { left: 1rem; }
+      .label-after { right: 1rem; }
     }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
   `]
 })
 export class RoomComponent implements OnInit, OnDestroy {

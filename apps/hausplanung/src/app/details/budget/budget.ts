@@ -26,17 +26,18 @@ import roomsData from '../../../../public/assets/data/rooms.json';
           </thead>
           <tbody>
             <tr *ngFor="let room of rooms">
-              <td>{{ room.name }}</td>
-              <td><span class="badge">{{ room.status }}</span></td>
-              <td class="text-right font-mono">{{ formatCurrency(room.budget) }}</td>
+              <td data-label="Raum">{{ room.name }}</td>
+              <td data-label="Status"><span class="badge">{{ room.status }}</span></td>
+              <td data-label="Budget" class="text-right font-mono">{{ formatCurrency(room.budget) }}</td>
             </tr>
           </tbody>
           <tfoot>
             <tr class="total-row">
-              <td colspan="2">Gesamtsumme</td>
-              <td class="text-right font-mono">{{ formatCurrency(totalBudget()) }}</td>
+              <td colspan="2" data-label="Gesamt">Gesamtsumme</td>
+              <td data-label="Summe" class="text-right font-mono">{{ formatCurrency(totalBudget()) }}</td>
             </tr>
           </tfoot>
+
         </table>
       </div>
 

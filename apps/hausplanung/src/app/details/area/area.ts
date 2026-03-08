@@ -31,15 +31,15 @@ import roomsData from '../../../../public/assets/data/rooms.json';
           </thead>
           <tbody>
             <tr *ngFor="let room of rooms">
-              <td>{{ room.name }}</td>
-              <td class="font-mono">{{ room.area }} m²</td>
-              <td class="opacity-60 italic">{{ room.area_derivation }}</td>
+              <td data-label="Raum">{{ room.name }}</td>
+              <td data-label="Fläche" class="font-mono">{{ room.area }} m²</td>
+              <td data-label="Quelle" class="opacity-60 italic">{{ room.area_derivation }}</td>
             </tr>
           </tbody>
           <tfoot>
             <tr class="total-row">
-              <td>Gesamtfläche Netto</td>
-              <td colspan="2" class="font-mono">{{ totalArea() }} m²</td>
+              <td data-label="Zusammenfassung">Gesamtfläche Netto</td>
+              <td colspan="2" data-label="Summe" class="font-mono">{{ totalArea() }} m²</td>
             </tr>
           </tfoot>
         </table>
@@ -51,8 +51,15 @@ import roomsData from '../../../../public/assets/data/rooms.json';
     .details-header { margin-bottom: 3rem; }
     .btn-back { color: var(--primary-color); text-decoration: none; font-weight: 700; margin-bottom: 1rem; display: inline-block; }
     
+    @media (max-width: 768px) {
+      .details-header { margin-bottom: 2rem; }
+      .floorplan-card { padding: 1rem; }
+      .details-table th, .details-table td { padding: 1rem; }
+    }
+
     .floorplan-card { margin-bottom: 2rem; padding: 2rem; }
     .floorplan-img { width: 100%; border-radius: 12px; border: 1px solid var(--border-color); }
+
     .floorplan-card h3 { margin-top: 0; margin-bottom: 1.5rem; opacity: 0.7; }
 
     .table-card { padding: 0; overflow: hidden; }

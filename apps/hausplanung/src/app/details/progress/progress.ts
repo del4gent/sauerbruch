@@ -24,18 +24,19 @@ import { RouterModule } from '@angular/router';
           </thead>
           <tbody>
             <tr *ngFor="let m of milestones">
-              <td>{{ m.name }}</td>
-              <td class="text-right">
+              <td data-label="Meilenstein">{{ m.name }}</td>
+              <td data-label="Status" class="text-right">
                 <span class="badge" [class.badge-done]="m.done">{{ m.done ? '✅ Erledigt' : '⏳ Offen' }}</span>
               </td>
             </tr>
           </tbody>
           <tfoot>
             <tr class="total-row">
-              <td>Gesamtfortschritt</td>
-              <td class="text-right font-mono">{{ calculateProgress() }}%</td>
+              <td data-label="Zusammenfassung">Gesamtfortschritt</td>
+              <td data-label="Prozent" class="text-right font-mono">{{ calculateProgress() }}%</td>
             </tr>
           </tfoot>
+
         </table>
       </div>
 

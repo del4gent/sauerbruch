@@ -132,3 +132,60 @@ h1, h2, h3 {
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); 
   transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+  .details-table th, .details-table td {
+    padding: 1rem !important;
+  }
+  
+  .glass-card {
+    border-radius: 16px;
+  }
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+}
+
+@media (max-width: 480px) {
+  .details-table {
+    display: block;
+    width: 100%;
+  }
+  
+  .details-table thead {
+    display: none;
+  }
+  
+  .details-table tbody, .details-table tr, .details-table td {
+    display: block;
+    width: 100%;
+  }
+  
+  .details-table tr {
+    padding: 1rem;
+    border-bottom: 8px solid var(--border-color);
+  }
+  
+  .details-table td {
+    border: none;
+    padding: 0.5rem 0 !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .details-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  .details-table tfoot td {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+

@@ -164,6 +164,18 @@ import { CommonModule } from '@angular/common';
       border: 1px solid rgba(0,0,0,0.05);
     }
 
+    @media (max-width: 768px) {
+      .floor-plan-container { padding: 1.25rem; }
+      .floor-plan-header h3 { font-size: 1.25rem; }
+      .view-toggle button { padding: 6px 12px; font-size: 0.85rem; }
+    }
+
+    @media (max-width: 480px) {
+      .floor-plan-container { padding: 0.75rem; }
+      .floor-plan-header { margin-bottom: 1.25rem; }
+    }
+
+
     .floor-plan-header {
       display: flex;
       justify-content: space-between;
