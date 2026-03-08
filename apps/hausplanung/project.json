@@ -24,6 +24,7 @@
         "ssr": {
           "entry": "apps/hausplanung/src/server.ts"
         },
+        "prerender": false,
         "outputMode": "server"
       },
       "configurations": {

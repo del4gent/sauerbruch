@@ -1,10 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-nx-welcome',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   template: `
     <div class="dashboard">
       <header class="main-header">
@@ -24,7 +25,7 @@ import { CommonModule } from '@angular/common';
         <div class="glass-card stat-item">
           <span class="stat-label">Gesamtfläche</span>
           <span class="stat-value">61,24 m²</span>
-          <span class="stat-derivation">(Derivation: 17,04 + 3,02 + 6,64 + 20,02 + 14,52)</span>
+          <span class="stat-derivation">(Derivation: PDF Report Revision 2.2)</span>
         </div>
 
         <div class="glass-card stat-item">
@@ -41,7 +42,7 @@ import { CommonModule } from '@angular/common';
         </div>
         
         <div class="room-grid">
-          <div class="glass-card room-card">
+          <div class="glass-card room-card" [routerLink]="['/room', 'bad']">
             <div class="room-icon">🚿</div>
             <div class="room-info">
               <h3>Badezimmer</h3>
@@ -50,29 +51,29 @@ import { CommonModule } from '@angular/common';
             </div>
           </div>
 
-          <div class="glass-card room-card">
+          <div class="glass-card room-card" [routerLink]="['/room', 'wc']">
             <div class="room-icon">🚽</div>
             <div class="room-info">
               <h3>Gästebad</h3>
-              <p>3,02 m² (1,60 m x 1,89 m)</p>
+              <p>2,86 m² (laut Grundriss)</p>
               <div class="badge status-planned">⏳ In Planung</div>
             </div>
           </div>
 
-          <div class="glass-card room-card">
+          <div class="glass-card room-card" [routerLink]="['/room', 'wohnraum']">
             <div class="room-icon">🛋️</div>
             <div class="room-info">
-              <h3>Wohnzimmer</h3>
-              <p>20,02 m² (Grundriss)</p>
+              <h3>Wohnraum</h3>
+              <p>20,02 m² (laut Grundriss)</p>
               <div class="badge status-planned">⏳ In Planung</div>
             </div>
           </div>
 
-          <div class="glass-card room-card">
+          <div class="glass-card room-card" [routerLink]="['/room', 'diele']">
             <div class="room-icon">🧣</div>
             <div class="room-info">
-              <h3>Flur</h3>
-              <p>17,04 m² (L-Form Messung)</p>
+              <h3>Diele</h3>
+              <p>12,25 m² (laut Grundriss)</p>
               <div class="badge status-planned">⏳ In Planung</div>
             </div>
           </div>
@@ -100,7 +101,9 @@ import { CommonModule } from '@angular/common';
     .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
     .room-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
     
-    .room-card { padding: 1.5rem; display: flex; gap: 1.5rem; align-items: center; }
+    .room-card { padding: 1.5rem; display: flex; gap: 1.5rem; align-items: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .room-card:hover { transform: translateY(-5px); border-color: var(--primary-color); }
+    
     .room-icon { font-size: 2.5rem; background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 16px; }
     .room-info h3 { margin: 0; font-size: 1.25rem; }
     .room-info p { margin: 0.25rem 0 0.75rem 0; opacity: 0.5; font-size: 0.9rem; }
