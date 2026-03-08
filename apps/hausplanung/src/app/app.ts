@@ -63,7 +63,7 @@ export class App implements OnInit {
     }
   }
 
-  private applyTheme() {
+  public applyTheme() {
     if (isPlatformBrowser(this.platformId)) {
       document.body.setAttribute('data-theme', this.isDarkMode() ? 'dark' : 'light');
     }
