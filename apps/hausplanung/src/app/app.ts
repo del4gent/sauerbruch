@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, signal, computed } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -16,6 +16,16 @@ export class App implements OnInit {
   isDarkMode = signal(false);
   isAuthorized = signal(false);
   isSidebarCollapsed = signal(true);
+  isOtherRoomsExpanded = signal(false);
+
+  // Filtered rooms: Active planning (In Planung, Angefangen) vs Others
+  activeRooms = computed(() => 
+    this.rooms.filter(r => r.status === 'In Planung' || r.status === 'Angefangen')
+  );
+
+  otherRooms = computed(() => 
+    this.rooms.filter(r => r.status !== 'In Planung' && r.status !== 'Angefangen')
+  );
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
@@ -57,9 +67,17 @@ export class App implements OnInit {
     this.isSidebarCollapsed.update((v) => !v);
   }
 
+  toggleOtherRooms(event: Event) {
+    event.stopPropagation();
+    this.isOtherRoomsExpanded.update(v => !v);
+    if (this.isSidebarCollapsed()) {
+      this.isSidebarCollapsed.set(false);
+    }
+  }
+
   getRoomEmoji(roomId: string): string {
     const emojis: Record<string, string> = {
-      'flur': '🧣',
+      'flur': '🚪',
       'wohnraum': '🛋️',
       'essraum': '🍽️',
       'kueche': '🍳',
@@ -68,10 +86,11 @@ export class App implements OnInit {
       'schlafzimmer': '🛏️',
       'kinderzimmer': '🧸',
       'zimmer': '💻',
-      'flur_privat': '🚪',
+      'flur_privat': '🗝️',
       'garderobe': '🧥',
       'garage': '🚗',
-      'kellerflur': '📦'
+      'kellerflur': '📦',
+      'keller_buero': '🖥️'
     };
     return emojis[roomId] || '🏠';
   }

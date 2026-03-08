@@ -87,6 +87,7 @@
   opacity: 0.7;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .sidebar.collapsed .nav-item {
@@ -170,9 +171,107 @@
   background-color: var(--bg-color);
 }
 
+/* Tree / Sub-Navigation Styles */
+.nav-tree-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.tree-header .icon svg {
+  transition: transform 0.3s ease;
+}
+
+.tree-header .icon svg.rotated {
+  transform: rotate(90deg);
+}
+
+.tree-content {
+  margin-left: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding-left: 0.75rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+  animation: fadeIn 0.3s ease;
+}
+
+.sub-item {
+  padding: 0.5rem 0.75rem;
+  opacity: 0.5;
+}
+
+.sub-item:hover {
+  opacity: 0.8;
+}
+
+.sub-item.active {
+  opacity: 1;
+}
+
+.sub-icon {
+  font-size: 1rem;
+}
+
+/* Login Screen Styles */
+.login-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-color);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.1) 0px, transparent 50%);
+  z-index: 1000;
+}
+
+.login-card {
+  padding: 3rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.login-card h1 {
+  margin: 0 0 1rem 0;
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+.login-card p {
+  opacity: 0.7;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.login-card input:focus {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+}
+
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateX(-5px); }
-  to { opacity: 1; transform: translateX(0); }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 768px) {
@@ -240,5 +339,9 @@
   .content {
     padding: 1.5rem;
     margin-bottom: 64px;
+  }
+
+  .tree-content {
+    display: none; /* Hide on mobile for now to keep it clean */
   }
 }
