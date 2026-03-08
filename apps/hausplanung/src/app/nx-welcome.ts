@@ -21,10 +21,10 @@ import roomsData from '../../public/assets/data/rooms.json';
         <div class="glass-card stat-item clickable" routerLink="/details/progress">
           <span class="stat-label">Gesamtfortschritt</span>
           <div class="progress-container">
-            <div class="progress-bar" style="width: 20%"></div>
+            <div class="progress-bar" style="width: 18%"></div>
           </div>
-          <span class="stat-value">20%</span>
-          <span class="stat-derivation">(2/10 Meilensteine erreicht)</span>
+          <span class="stat-value">18%</span>
+          <span class="stat-derivation">(2/11 Meilensteine erreicht)</span>
         </div>
 
         <div class="glass-card stat-item clickable" routerLink="/details/area">

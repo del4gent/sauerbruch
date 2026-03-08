@@ -82,6 +82,7 @@ export class ProgressComponent {
     { name: 'Datenaufnahme & Maße (m²)', done: true },
     { name: 'Erstellung Leistungsverzeichnis', done: true },
     { name: 'Angebote Handwerker einholen', done: false },
+    { name: 'Austausch der Fenster (Lieferung & Montage)', done: false },
     { name: 'Bestellung Material', done: false },
     { name: 'Entkernung Bad', done: false },
     { name: 'Installation Elektro', done: false },
