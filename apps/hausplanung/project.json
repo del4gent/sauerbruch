@@ -19,7 +19,8 @@
             "input": "apps/hausplanung/public"
           }
         ],
-        "styles": ["apps/hausplanung/src/styles.css"]
+        "styles": ["apps/hausplanung/src/styles.css"],
+        "index": "apps/hausplanung/src/index.html"
       },
       "configurations": {
         "production": {
