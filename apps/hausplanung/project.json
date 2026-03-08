@@ -19,13 +19,7 @@
             "input": "apps/hausplanung/public"
           }
         ],
-        "styles": ["apps/hausplanung/src/styles.css"],
-        "server": "apps/hausplanung/src/main.server.ts",
-        "ssr": {
-          "entry": "apps/hausplanung/src/server.ts"
-        },
-        "prerender": false,
-        "outputMode": "server"
+        "styles": ["apps/hausplanung/src/styles.css"]
       },
       "configurations": {
         "production": {
@@ -76,16 +70,6 @@
     "test": {
       "executor": "@angular/build:unit-test",
       "options": {}
-    },
-    "serve-static": {
-      "continuous": true,
-      "executor": "@nx/web:file-server",
-      "options": {
-        "buildTarget": "hausplanung:build",
-        "port": 4200,
-        "staticFilePath": "dist/apps/hausplanung/browser",
-        "spa": true
-      }
     }
   }
 }

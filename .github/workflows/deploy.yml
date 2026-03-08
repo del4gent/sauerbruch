@@ -31,7 +31,6 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          # this should match the `outputPath` in project.json + /browser
           path: dist/apps/hausplanung/browser
 
   deploy:
