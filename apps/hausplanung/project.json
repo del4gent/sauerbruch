@@ -66,6 +66,12 @@
     "lint": {
       "executor": "@nx/eslint:lint"
     },
+    "generate-pdf": {
+      "command": "python3 generator.py",
+      "options": {
+        "cwd": "apps/hausplanung/public/assets"
+      }
+    },
     "test": {
       "executor": "@angular/build:unit-test",
       "options": {}

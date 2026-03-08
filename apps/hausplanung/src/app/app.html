@@ -1,2 +1,24 @@
-<app-nx-welcome></app-nx-welcome>
-<router-outlet></router-outlet>
+<div class="layout-wrapper">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1>Sauerbruch 3</h1>
+      <button (click)="toggleTheme()" class="theme-toggle">
+        {{ isDarkMode ? '☀️' : '🌙' }}
+      </button>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Dashboard</a>
+      <div class="nav-section">Räume</div>
+      <a routerLink="/bad" routerLinkActive="active">Bad</a>
+      <a routerLink="/gaestebad" routerLinkActive="active">Gästebad</a>
+      <a routerLink="/flur" routerLinkActive="active">Flur</a>
+      <a routerLink="/wohnzimmer" routerLinkActive="active">Wohnzimmer</a>
+      <a routerLink="/kellerflur" routerLinkActive="active">Kellerflur</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
