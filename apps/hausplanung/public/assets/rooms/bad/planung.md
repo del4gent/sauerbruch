@@ -2,15 +2,16 @@
 
 ## 📏 BASISDATEN
 - Fläche: 6,64 m² (Derivation: 2.01m x 3.305m)
-- Status: Angefangen
+- Status: In Arbeit
 
 ## 📸 IST-ZUSTAND
-Das Bad befindet sich im Originalzustand aus den 70ern/80ern mit grünen Sanitärobjekten (Waschbecken, WC) und gemusterten Fliesen.
+Das Bad wurde vollständig entkernt. Alle alten Sanitärobjekte sowie die Fliesen an Wänden und Boden wurden entfernt.
 
 - [x] Dokumentation des Bestands (siehe vorher.png, IMG_9974.jpg, IMG_9976.jpg)
+- [x] Entkernung (Fliesen und Sanitäranlagen entfernt)
 
 ## 🛠️ GEPLANTE MASSNAHMEN
-- [ ] Entkernung der alten Sanitärobjekte
+- [x] Entkernung der alten Sanitärobjekte
 - [ ] Erneuerung der Wasserleitungen
 - [ ] Neuverfliesung (Boden und Wände)
 - [ ] Installation neuer Sanitärobjekte (Waschtisch, WC, Dusche/Badewanne)
