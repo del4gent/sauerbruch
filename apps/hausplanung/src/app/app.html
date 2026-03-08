@@ -2,8 +2,8 @@
   <aside class="sidebar">
     <div class="sidebar-header">
       <h1>Sauerbruch 3</h1>
-      <button (click)="toggleTheme()" class="theme-toggle">
-        {{ isDarkMode() ? '☀️' : '🌙' }}
+      <button (click)="toggleTheme()" class="theme-toggle" [title]="isDarkMode() ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+        {{ isDarkMode() ? '🌙' : '☀️' }}
       </button>
     </div>
     
