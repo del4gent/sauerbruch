@@ -16,12 +16,17 @@
     </div>
     
     <nav class="sidebar-nav">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Dashboard</a>
-      <div class="nav-section">Räume</div>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <span class="nav-icon">📊</span>
+        <span class="nav-text">Dashboard</span>
+      </a>
+      <div class="nav-section" *ngIf="!isSidebarCollapsed()">Räume</div>
       <a *ngFor="let room of rooms" 
          [routerLink]="['/room', room.id]" 
-         routerLinkActive="active">
-        {{ room.name }}
+         routerLinkActive="active"
+         [title]="isSidebarCollapsed() ? room.name : ''">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-text">{{ room.name }}</span>
       </a>
     </nav>
   </aside>

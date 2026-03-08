@@ -14,7 +14,7 @@ import { RouterModule } from '@angular/router';
       </header>
 
       <div class="stats-grid">
-        <div class="glass-card stat-item">
+        <div class="glass-card stat-item clickable">
           <span class="stat-label">Gesamtfortschritt</span>
           <div class="progress-container">
             <div class="progress-bar" style="width: 20%"></div>
@@ -22,16 +22,16 @@ import { RouterModule } from '@angular/router';
           <span class="stat-value">20%</span>
         </div>
 
-        <div class="glass-card stat-item">
+        <div class="glass-card stat-item clickable" routerLink="/details/area">
           <span class="stat-label">Gesamtfläche</span>
           <span class="stat-value">61,24 m²</span>
-          <span class="stat-derivation">(Derivation: PDF Report Revision 2.2)</span>
+          <span class="stat-derivation">(Klicken für Grundriss)</span>
         </div>
 
-        <div class="glass-card stat-item">
+        <div class="glass-card stat-item clickable" routerLink="/details/budget">
           <span class="stat-label">Geschätztes Budget</span>
-          <span class="stat-value">29.013 €</span>
-          <span class="stat-derivation">(Summe aller Raumschätzungen)</span>
+          <span class="stat-value">25.230 €</span>
+          <span class="stat-derivation">(Summe: Bäder, Flure & Wohnzimmer)</span>
         </div>
       </div>
 
