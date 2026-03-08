@@ -250,29 +250,29 @@ import roomsData from '../../public/assets/data/rooms.json';
     .btn-primary:hover { transform: scale(1.05); box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4); }
 
     @media (max-width: 1024px) {
-      .hero-header { height: 320px; padding: 2rem; margin-bottom: 2rem; }
-      .hero-content h1 { font-size: 3rem; }
-      .stats-grid { gap: 1.5rem; margin-bottom: 3rem; }
+      .hero-header { min-height: 400px; height: auto; padding: 2rem; margin-bottom: 2rem; }
+      .hero-content h1 { font-size: 3.5rem; margin-bottom: 2.5rem; }
+      .stats-grid { gap: 1rem; }
       .room-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
     }
 
     @media (max-width: 768px) {
-      .hero-header { height: 280px; padding: 1.5rem; border-radius: 20px; }
-      .hero-content h1 { font-size: 2.25rem; }
-      .hero-content p { font-size: 0.9rem; }
-      .stats-grid { grid-template-columns: 1fr; gap: 1rem; }
-      .stat-item { padding: 1.5rem; }
-      .stat-value { font-size: 1.75rem; }
+      .hero-header { min-height: 360px; height: auto; padding: 2rem 1.5rem; border-radius: 20px; }
+      .hero-content h1 { font-size: 2.5rem; margin-bottom: 2rem; }
+      .stats-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+      .stat-item { padding: 1rem 1.25rem; }
+      .stat-value { font-size: 1.5rem; }
       .section-header h2 { font-size: 1.5rem; }
       .room-grid { grid-template-columns: 1fr; }
       .room-card { min-height: 140px; }
     }
 
     @media (max-width: 480px) {
-      .hero-header { height: 240px; padding: 1.25rem; }
-      .hero-content h1 { font-size: 1.75rem; }
-      .hero-badges { gap: 0.5rem; margin-top: 1rem; }
-      .badge { font-size: 0.6rem; padding: 0.2rem 0.5rem; }
+      .hero-header { min-height: 320px; padding: 1.5rem 1.25rem; }
+      .hero-content h1 { font-size: 2rem; margin-bottom: 1.5rem; }
+      .stat-item { padding: 0.85rem 1rem; border-radius: 14px; }
+      .stat-value { font-size: 1.25rem; }
+      .stat-label { font-size: 0.55rem; margin-bottom: 0.5rem; }
     }
   `],
   encapsulation: ViewEncapsulation.None,
