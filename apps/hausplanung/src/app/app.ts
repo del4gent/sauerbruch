@@ -3,6 +3,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { forkJoin, map, of } from 'rxjs';
+import { FloorPlanComponent } from './floor-plan/floor-plan';
 import roomsData from '../../public/assets/data/rooms.json';
 
 interface RoomInfo {
@@ -19,7 +20,7 @@ interface RoomInfo {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, RouterModule, HttpClientModule, FloorPlanComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
