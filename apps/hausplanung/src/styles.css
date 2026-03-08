@@ -55,3 +55,80 @@ h1, h2, h3 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* Global Component Styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status-active { 
+  background: rgba(59, 130, 246, 0.15); 
+  color: #60a5fa; 
+  border: 1px solid rgba(59, 130, 246, 0.3); 
+}
+
+.status-planned { 
+  background: rgba(148, 163, 184, 0.1); 
+  color: #94a3b8; 
+  border: 1px solid rgba(148, 163, 184, 0.2); 
+}
+
+.status-finished {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.status-onhold {
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.btn-primary { 
+  background: var(--primary-color); 
+  color: white; 
+  border: none; 
+  padding: 0.75rem 1.5rem; 
+  border-radius: 12px; 
+  font-weight: 700; 
+  cursor: pointer; 
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary:hover { 
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4); 
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.progress-container { 
+  background: rgba(255, 255, 255, 0.05); 
+  height: 8px; 
+  border-radius: 4px; 
+  margin: 1rem 0; 
+  overflow: hidden; 
+}
+
+.progress-bar { 
+  background: var(--primary-color); 
+  height: 100%; 
+  border-radius: 4px; 
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); 
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}

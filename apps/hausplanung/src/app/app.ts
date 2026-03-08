@@ -23,6 +23,13 @@ export class App implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this.applyTheme();
 
+      // Check for 'auth=bubu' in URL query parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('auth') === 'bubu') {
+        this.isAuthorized.set(true);
+        localStorage.setItem('auth', 'bubu');
+      }
+
       const auth = localStorage.getItem('auth');
       if (auth === 'bubu') {
         this.isAuthorized.set(true);
@@ -48,5 +55,24 @@ export class App implements OnInit {
 
   toggleSidebar() {
     this.isSidebarCollapsed.update((v) => !v);
+  }
+
+  getRoomEmoji(roomId: string): string {
+    const emojis: Record<string, string> = {
+      'diele': '🧣',
+      'wohnraum': '🛋️',
+      'essraum': '🍽️',
+      'kueche': '🍳',
+      'bad': '🚿',
+      'wc': '🚽',
+      'schlafzimmer': '🛏️',
+      'kinderzimmer': '🧸',
+      'zimmer': '💻',
+      'flur_privat': '🚪',
+      'garderobe': '🧥',
+      'garage': '🚗',
+      'kellerflur': '📦'
+    };
+    return emojis[roomId] || '🏠';
   }
 }
