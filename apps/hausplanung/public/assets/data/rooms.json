@@ -1,0 +1,119 @@
+[
+  {
+    "id": "diele",
+    "name": "Diele",
+    "area": 12.25,
+    "area_derivation": "laut Grundriss",
+    "status": "In Planung",
+    "budget": 5000.00,
+    "path": "rooms/diele/planung.md"
+  },
+  {
+    "id": "wohnraum",
+    "name": "Wohnraum",
+    "area": 20.02,
+    "area_derivation": "laut Grundriss",
+    "status": "In Planung",
+    "budget": 4220.00,
+    "path": "rooms/wohnraum/planung.md"
+  },
+  {
+    "id": "essraum",
+    "name": "Essraum",
+    "area": 20.21,
+    "area_derivation": "laut Grundriss",
+    "status": "In Planung",
+    "budget": 3500.00,
+    "path": "rooms/essraum/planung.md"
+  },
+  {
+    "id": "kueche",
+    "name": "Küche",
+    "area": 14.47,
+    "area_derivation": "laut Grundriss",
+    "status": "In Planung",
+    "budget": 15000.00,
+    "path": "rooms/kueche/planung.md"
+  },
+  {
+    "id": "bad",
+    "name": "Bad",
+    "area": 6.64,
+    "area_derivation": "laut Grundriss",
+    "status": "In Arbeit (Fenstertausch)",
+    "budget": 7150.00,
+    "path": "rooms/bad/planung.md"
+  },
+  {
+    "id": "wc",
+    "name": "WC (Gästebad)",
+    "area": 2.86,
+    "area_derivation": "laut Grundriss",
+    "status": "In Planung",
+    "budget": 6650.00,
+    "path": "rooms/wc/planung.md"
+  },
+  {
+    "id": "schlafzimmer",
+    "name": "Schlafzimmer",
+    "area": 17.70,
+    "area_derivation": "laut Grundriss",
+    "status": "In Planung",
+    "budget": 2000.00,
+    "path": "rooms/schlafzimmer/planung.md"
+  },
+  {
+    "id": "kinderzimmer",
+    "name": "Kinderzimmer",
+    "area": 12.56,
+    "area_derivation": "laut Grundriss",
+    "status": "In Planung",
+    "budget": 1500.00,
+    "path": "rooms/kinderzimmer/planung.md"
+  },
+  {
+    "id": "zimmer",
+    "name": "Zimmer (Büro)",
+    "area": 10.35,
+    "area_derivation": "laut Grundriss",
+    "status": "In Planung",
+    "budget": 1200.00,
+    "path": "rooms/zimmer/planung.md"
+  },
+  {
+    "id": "flur_privat",
+    "name": "Flur (Privat)",
+    "area": 3.84,
+    "area_derivation": "laut Grundriss",
+    "status": "In Planung",
+    "budget": 500.00,
+    "path": "rooms/flur_privat/planung.md"
+  },
+  {
+    "id": "garderobe",
+    "name": "Garderobe",
+    "area": 4.79,
+    "area_derivation": "laut Grundriss",
+    "status": "In Planung",
+    "budget": 800.00,
+    "path": "rooms/garderobe/planung.md"
+  },
+  {
+    "id": "garage",
+    "name": "Garage",
+    "area": 25.24,
+    "area_derivation": "laut Grundriss",
+    "status": "In Planung",
+    "budget": 1000.00,
+    "path": "rooms/garage/planung.md"
+  },
+  {
+    "id": "kellerflur",
+    "name": "Kellerflur",
+    "area": 14.52,
+    "area_derivation": "5.2m x 2.8m (netto)",
+    "status": "In Planung",
+    "budget": 700.00,
+    "path": "rooms/kellerflur/planung.md"
+  }
+]

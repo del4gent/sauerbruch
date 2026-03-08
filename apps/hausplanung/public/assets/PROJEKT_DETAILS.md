@@ -1,13 +1,7 @@
 # 🏠 SAUERBRUCH 3 - GESAMTPLANUNG
 
-**Gesamtfläche:** 0.00 m²  
+**Gesamtfläche:** 61.24 m²  
 **Gesamtkosten:** 0.00 EUR
-
----
-
-## BAD
-
-
 
 ---
 
@@ -17,19 +11,25 @@
 
 ---
 
-## GAESTEBAD
+## GÄSTEBAD
 
 
 
 ---
 
-## KELLERFLUR
+## BAD
 
 
 
 ---
 
 ## WOHNZIMMER
+
+
+
+---
+
+## KELLERFLUR
 
 
 

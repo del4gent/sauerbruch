@@ -53,7 +53,7 @@ def update_master_markdown(rooms):
             
             # Find all markdown image links ![alt](path)
             # and prefix the path with the room's subdirectory
-            room_rel_path = f"raeume/{os.path.basename(room.path)}"
+            room_rel_path = f"rooms/{os.path.basename(room.path)}"
             
             def prefix_path(match):
                 alt_text = match.group(1)

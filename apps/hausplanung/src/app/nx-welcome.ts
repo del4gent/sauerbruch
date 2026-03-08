@@ -7,75 +7,113 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <div class="dashboard">
-      <header>
-        <h1>Projekt Übersicht</h1>
-        <p>Sauerbruchstraße 3 - Renovierungsplanung</p>
+      <header class="main-header">
+        <h1 class="gradient-text">Projekt Dashboard</h1>
+        <p class="subtitle">Sauerbruchstraße 3 — Hausplanung & Renovierung</p>
       </header>
 
-      <div class="grid">
-        <div class="card">
-          <h3>Status</h3>
-          <div class="status-badge progress">🏗️ In Arbeit</div>
-          <p>Aktuell: Bad-Sanierung</p>
+      <div class="stats-grid">
+        <div class="glass-card stat-item">
+          <span class="stat-label">Gesamtfortschritt</span>
+          <div class="progress-container">
+            <div class="progress-bar" style="width: 20%"></div>
+          </div>
+          <span class="stat-value">20%</span>
         </div>
 
-        <div class="card">
-          <h3>Fläche Gesamt</h3>
-          <p class="value">61,24 m²</p>
-          <p class="derivation">(Derivation: 17,04 + 3,02 + 6,64 + 20,02 + 14,52)</p>
+        <div class="glass-card stat-item">
+          <span class="stat-label">Gesamtfläche</span>
+          <span class="stat-value">61,24 m²</span>
+          <span class="stat-derivation">(Derivation: 17,04 + 3,02 + 6,64 + 20,02 + 14,52)</span>
         </div>
 
-        <div class="card">
-          <h3>Budget</h3>
-          <p class="value">29.013 €</p>
-          <p class="derivation">(Geschätzte Gesamtkosten)</p>
+        <div class="glass-card stat-item">
+          <span class="stat-label">Geschätztes Budget</span>
+          <span class="stat-value">29.013 €</span>
+          <span class="stat-derivation">(Summe aller Raumschätzungen)</span>
         </div>
       </div>
 
-      <section class="rooms-overview">
-        <h2>Räume</h2>
-        <div class="room-list">
-          <div class="room-item">
-            <span>🚿 Bad</span>
-            <span class="badge progress">🏗️ In Arbeit</span>
+      <section class="rooms-section">
+        <div class="section-header">
+          <h2>Aktuelle Räume</h2>
+          <button class="btn-primary">Alle Details</button>
+        </div>
+        
+        <div class="room-grid">
+          <div class="glass-card room-card">
+            <div class="room-icon">🚿</div>
+            <div class="room-info">
+              <h3>Badezimmer</h3>
+              <p>6,64 m² (laut Grundriss)</p>
+              <div class="badge status-active">🏗️ In Arbeit</div>
+            </div>
           </div>
-          <div class="room-item">
-            <span>🚽 Gästebad</span>
-            <span class="badge planned">⏳ Geplant</span>
+
+          <div class="glass-card room-card">
+            <div class="room-icon">🚽</div>
+            <div class="room-info">
+              <h3>Gästebad</h3>
+              <p>3,02 m² (1,60 m x 1,89 m)</p>
+              <div class="badge status-planned">⏳ In Planung</div>
+            </div>
           </div>
-          <div class="room-item">
-            <span>🧣 Flur</span>
-            <span class="badge planned">⏳ Geplant</span>
+
+          <div class="glass-card room-card">
+            <div class="room-icon">🛋️</div>
+            <div class="room-info">
+              <h3>Wohnzimmer</h3>
+              <p>20,02 m² (Grundriss)</p>
+              <div class="badge status-planned">⏳ In Planung</div>
+            </div>
           </div>
-          <div class="room-item">
-            <span>🛋️ Wohnzimmer</span>
-            <span class="badge planned">⏳ Geplant</span>
-          </div>
-          <div class="room-item">
-            <span>📦 Kellerflur</span>
-            <span class="badge planned">⏳ Geplant</span>
+
+          <div class="glass-card room-card">
+            <div class="room-icon">🧣</div>
+            <div class="room-info">
+              <h3>Flur</h3>
+              <p>17,04 m² (L-Form Messung)</p>
+              <div class="badge status-planned">⏳ In Planung</div>
+            </div>
           </div>
         </div>
       </section>
     </div>
   `,
   styles: [`
-    .dashboard header { margin-bottom: 2rem; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
-    .card { background: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); }
-    .card h3 { margin-top: 0; font-size: 0.9rem; opacity: 0.7; }
-    .value { font-size: 1.5rem; font-weight: 700; margin: 0.5rem 0; }
-    .derivation { font-size: 0.8rem; opacity: 0.5; font-style: italic; }
-    
-    .status-badge, .badge { padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.8rem; font-weight: 600; }
-    .badge.progress, .status-badge.progress { background: rgba(59, 130, 246, 0.1); color: var(--primary-color); border: 1px solid var(--primary-color); }
-    .badge.planned { background: rgba(148, 163, 184, 0.1); color: #94a3b8; border: 1px solid #94a3b8; }
-    
-    .room-list { display: flex; flex-direction: column; gap: 0.75rem; }
-    .room-item { 
-      display: flex; justify-content: space-between; align-items: center; 
-      padding: 1rem; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border-color);
+    .main-header { margin-bottom: 3.5rem; }
+    .main-header h1 { font-size: 3.5rem; margin: 0; margin-bottom: 0.5rem; }
+    .subtitle { font-size: 1.1rem; opacity: 0.6; font-weight: 500; }
+
+    .stats-grid { 
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+      gap: 2rem; margin-bottom: 4rem; 
     }
+    .stat-item { padding: 2.5rem; display: flex; flex-direction: column; }
+    .stat-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; font-weight: 800; margin-bottom: 1rem; }
+    .stat-value { font-size: 2.2rem; font-weight: 800; }
+    .stat-derivation { font-size: 0.8rem; opacity: 0.4; margin-top: 0.5rem; font-style: italic; }
+
+    .progress-container { background: rgba(255, 255, 255, 0.05); height: 8px; border-radius: 4px; margin: 1rem 0; overflow: hidden; }
+    .progress-bar { background: var(--primary-color); height: 100%; border-radius: 4px; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
+
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+    .room-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    
+    .room-card { padding: 1.5rem; display: flex; gap: 1.5rem; align-items: center; }
+    .room-icon { font-size: 2.5rem; background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 16px; }
+    .room-info h3 { margin: 0; font-size: 1.25rem; }
+    .room-info p { margin: 0.25rem 0 0.75rem 0; opacity: 0.5; font-size: 0.9rem; }
+
+    .badge { padding: 0.4rem 0.8rem; border-radius: 10px; font-size: 0.75rem; font-weight: 700; display: inline-block; }
+    .status-active { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+    .status-planned { background: rgba(148, 163, 184, 0.1); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.2); }
+
+    .btn-primary { 
+      background: var(--primary-color); color: white; border: none; padding: 0.75rem 1.5rem; 
+      border-radius: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-primary:hover { transform: scale(1.05); box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4); }
   `],
   encapsulation: ViewEncapsulation.None,
 })

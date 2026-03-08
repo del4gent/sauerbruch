@@ -1,7 +1,8 @@
 import os
 import re
+import json
 from .models import Room, Section
-from .config import RAEUME_DIR
+from .config import RAEUME_DIR, ROOMS_JSON_PATH
 
 def clean_text(text):
     if not text: return ""
@@ -25,13 +26,8 @@ def extract_images(room_path):
         images[category] = sorted(list(set(images[category])))
     return images
 
-def parse_room_markdown(md_path):
-    if not os.path.exists(md_path): return None
-    
-    room_path = os.path.dirname(md_path)
-    room_name = os.path.basename(room_path).upper()
-    
-    room = Room(name=room_name, path=room_path)
+def parse_room_markdown(room, md_path):
+    if not os.path.exists(md_path): return room
     
     with open(md_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
@@ -42,16 +38,6 @@ def parse_room_markdown(md_path):
         line = line.strip()
         if not line: continue
         
-        # Basisdaten
-        area_match = re.search(r'(?:Fläche|Planwert|Gesamt):\s*(?:\*\*)?(\d+(?:[.,]\d+)?)\s*m[2²](?:\s*(.*))?', line, re.IGNORECASE)
-        if area_match: 
-            room.area = float(area_match.group(1).replace(',', '.'))
-            if area_match.group(2):
-                room.area_derivation = area_match.group(2).strip()
-        
-        status_match = re.search(r'Status:\s*(.+)', line, re.IGNORECASE)
-        if status_match: room.status = status_match.group(1).replace('**', '').strip()
-        
         # Sections
         if line.startswith('##') or line.startswith('###'):
             title = re.sub(r'[^\w\s\(\)&\-/,]', '', line.lstrip('# ').strip()).upper()
@@ -61,26 +47,23 @@ def parse_room_markdown(md_path):
             
         if current_section:
             if '|' in line:
-                # Skip markdown separator lines like |:---|
+                # Skip markdown separator lines
                 if re.match(r'^\|?\s?[:\-|\s]+\s?\|?$', line) or line.startswith('| :---'):
                     continue
                 
                 current_section.is_table = True
                 cols = [p.strip() for p in line.split('|') if p.strip()]
                 
-                # Filter out header lines if they appear in middle
+                # Filter out header lines
                 if not cols or cols[0].lower() == 'posten':
                     continue
 
                 if len(cols) >= 5:
-                    # Clean columns for numeric extraction and display
-                    # Remove calculation notes in parentheses for Menge, Preis, Gesamt
                     for idx in [1, 3, 4]: 
                         if idx < len(cols) and '(' in cols[idx]:
                             cols[idx] = cols[idx].split('(')[0].strip()
                     
                     try:
-                        # Extract numeric cost from last column
                         cost_str = cols[4].replace('.', '').replace(',', '.')
                         cost_match = re.search(r'(\d+(?:\.\d+)?)', cost_str)
                         if cost_match: room.total_cost += float(cost_match.group(1))
@@ -88,20 +71,35 @@ def parse_room_markdown(md_path):
                 
                 current_section.items.append(cols)
             else:
-                # Clean list items or simple text
                 item = re.sub(r'^[-*]\s*(?:\[[ xX]\]\s*)?|^\d+\.\s*', '', line).strip()
                 if item: current_section.items.append(item)
                 
-    room.images = extract_images(room_path)
+    room.images = extract_images(room.path)
     return room
 
 def get_all_rooms():
     rooms = []
-    if not os.path.exists(RAEUME_DIR): return rooms
+    if not os.path.exists(ROOMS_JSON_PATH): 
+        print(f"Warning: {ROOMS_JSON_PATH} not found.")
+        return rooms
     
-    for entry in sorted(os.listdir(RAEUME_DIR)):
-        md_path = os.path.join(RAEUME_DIR, entry, 'planung.md')
-        if os.path.isfile(md_path):
-            room = parse_room_markdown(md_path)
-            if room: rooms.append(room)
+    with open(ROOMS_JSON_PATH, 'r', encoding='utf-8') as f:
+        rooms_data = json.load(f)
+        
+    for data in rooms_data:
+        room_path = os.path.join(os.path.dirname(ROOMS_JSON_PATH), '..', data['path'])
+        room_dir = os.path.dirname(room_path)
+        
+        room = Room(
+            name=data['name'].upper(),
+            path=room_dir,
+            area=data['area'],
+            status=data['status']
+        )
+        room.area_derivation = data.get('area_derivation', '')
+        
+        if os.path.isfile(room_path):
+            parse_room_markdown(room, room_path)
+        rooms.append(room)
+        
     return rooms

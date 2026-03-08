@@ -2,9 +2,10 @@ import os
 
 # Pfade
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RAEUME_DIR = os.path.join(BASE_DIR, 'raeume')
+RAEUME_DIR = os.path.join(BASE_DIR, 'rooms')
 MASTER_MD_PATH = os.path.join(BASE_DIR, 'PROJEKT_DETAILS.md')
 PDF_PATH = os.path.join(BASE_DIR, 'renovierungsplan.pdf')
+ROOMS_JSON_PATH = os.path.join(BASE_DIR, 'data/rooms.json')
 
 # Architektur-Farbpalette
 C_SLATE = (44, 62, 80)
