@@ -122,9 +122,9 @@ import roomsData from '../../public/assets/data/rooms.json';
       border-radius: 20px;
     }
     .stat-item.transparent {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px) saturate(160%);
     }
     .stat-item:hover { 
       transform: translateY(-8px); 
