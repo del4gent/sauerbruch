@@ -1,7 +1,7 @@
 # Planung: Wohnraum
 
 ## 📏 BASISDATEN
-- Fläche: 20,02 m² (laut Grundriss)
+- Fläche: 20,02 m² (Derivation: 5.51m x 3.635m)
 - Status: In Planung
 
 ## 💡 ELEKTRO-PLANUNG (MATERIALKOSTEN)

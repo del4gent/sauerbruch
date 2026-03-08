@@ -1,7 +1,7 @@
 # Planung: Bad
 
 ## 📏 BASISDATEN
-- Fläche: 6,64 m² (laut Grundriss)
+- Fläche: 6,64 m² (Derivation: 2.01m x 3.305m)
 - Status: Angefangen
 
 ## 📸 IST-ZUSTAND

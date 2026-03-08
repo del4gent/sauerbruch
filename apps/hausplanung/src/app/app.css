@@ -250,6 +250,13 @@
   line-height: 1.6;
 }
 
+.login-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
 .login-card input {
   width: 100%;
   padding: 1rem 1.25rem;

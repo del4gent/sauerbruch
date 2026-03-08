@@ -7,12 +7,12 @@ Dieses Dokument bildet die Grundlage für die Ausschreibung und Ausführung der 
 - **Zielwerte:** Die Kostenschätzungen dienen der Budgetplanung; die finalen Werte ergeben sich aus den Angeboten der Fachbetriebe.
 - **Ist-Zustand:** Die fotografische Dokumentation dient der Vorab-Beurteilung der Baustellensituation.
 
-## 🏠 Räume & Status
+## 🏠 Räume & Status (Priorisiert nach Renovierungsplan)
 | Raum | Fläche (m²) | Status | Link |
 | :--- | :--- | :--- | :--- |
-| Flur | 17,04 | ⏳ In Planung | [Details](./raeume/flur/planung.md) |
-| Gästebad | 3,02 | ⏳ In Planung | [Details](./raeume/gaestebad/planung.md) |
 | Bad | 6,64 | 🏗️ In Arbeit (Fenstertausch) | [Details](./raeume/bad/planung.md) |
+| Gästebad | 3,02 | ⏳ In Planung | [Details](./raeume/gaestebad/planung.md) |
+| Flur | 17,04 | ⏳ In Planung | [Details](./raeume/flur/planung.md) |
 | Wohnzimmer | 20,02 | ⏳ In Planung | [Details](./raeume/wohnzimmer/planung.md) |
 | Kellerflur | 14,52 | ⏳ In Planung | [Details](./raeume/kellerflur/planung.md) |
 

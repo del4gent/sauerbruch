@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -16,7 +16,7 @@ import roomsData from '../../../public/assets/data/rooms.json';
         <!-- Before/After Slider Container -->
         <div class="slider-container" *ngIf="beforeImage() && afterImage(); else staticHero">
           <div class="image-before" [style.backgroundImage]="'url(' + beforeImage() + ')'"></div>
-          <div class="image-after" [style.backgroundImage]="'url(' + afterImage() + ')'" [style.clipPath]="'inset(0 ' + (100 - sliderPos()) + '% 0 0)'"></div>
+          <div class="image-after" [style.backgroundImage]="'url(' + afterImage() + ')'" [style.clipPath]="'inset(0 0 0 ' + (100 - sliderPos()) + '%)'"></div>
           
           <div class="slider-control">
             <input type="range" min="0" max="100" [value]="sliderPos()" (input)="onSliderChange($event)" class="slider-input">
@@ -80,7 +80,7 @@ import roomsData from '../../../public/assets/data/rooms.json';
               <div *ngFor="let img of images()" class="glass-card image-wrapper" (click)="openImage(img)">
                 <img [src]="img" [alt]="img">
                 <div class="img-overlay">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><line x1="11" x1="8" x2="11" y2="14"/><line x1="8" x1="11" x2="14" y2="11"/></svg>
                 </div>
               </div>
             </div>
@@ -137,7 +137,7 @@ import roomsData from '../../../public/assets/data/rooms.json';
     .slider-control {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 10;
+      z-index: 1;
     }
 
     .slider-input {
@@ -256,7 +256,7 @@ import roomsData from '../../../public/assets/data/rooms.json';
     }
   `]
 })
-export class RoomComponent implements OnInit {
+export class RoomComponent implements OnInit, OnDestroy {
   roomName = signal('');
   roomDetails = signal<any>(null);
   content = signal<SafeHtml>('');
@@ -267,6 +267,8 @@ export class RoomComponent implements OnInit {
   sliderPos = signal(50);
   error = signal(false);
 
+  private animationInterval: any;
+
   // Mapping of rooms to their specific images
   // In a real app, this would come from a database or file system scan
   private roomImagesMap: Record<string, string[]> = {
@@ -276,7 +278,8 @@ export class RoomComponent implements OnInit {
       'assets/rooms/bad/medien/ist/IMG_9974.jpg', 
       'assets/rooms/bad/medien/ist/IMG_9976.jpg', 
       'assets/rooms/bad/medien/material/fliesen2.jpg', 
-      'assets/rooms/bad/medien/plan/grundriss.png'
+      'assets/rooms/bad/medien/plan/grundriss.png',
+      'assets/rooms/bad/medien/plan/grundriss_ausschnitt.png'
     ],
     'wc': [
       'assets/rooms/wc/medien/ist/gaestebad_ist.png',
@@ -284,7 +287,8 @@ export class RoomComponent implements OnInit {
       'assets/rooms/wc/medien/ist/IMG_9971.jpg', 
       'assets/rooms/wc/medien/ist/IMG_9972.jpg', 
       'assets/rooms/wc/medien/plan/grundriss.JPG', 
-      'assets/rooms/wc/medien/plan/plan.JPG'
+      'assets/rooms/wc/medien/plan/plan.JPG',
+      'assets/rooms/wc/medien/plan/grundriss_ausschnitt.png'
     ],
     'flur': [
       'assets/rooms/flur/medien/ist/flur_ansicht_eingang.jpg', 
@@ -296,11 +300,13 @@ export class RoomComponent implements OnInit {
       'assets/rooms/flur/medien/inspiration/flur_fenster_regenbogen.png',
       'assets/rooms/flur/medien/inspiration/kamin_clean_look.jpg',
       'assets/rooms/flur/medien/inspiration/kamin_farbiger_teppich.jpg',
-      'assets/rooms/flur/medien/plan/grundriss.JPG'
+      'assets/rooms/flur/medien/plan/grundriss.JPG',
+      'assets/rooms/flur/medien/plan/grundriss_gesamt.png'
     ],
     'wohnraum': [
       'assets/rooms/wohnraum/medien/ist/wohnzimmer_1.jpeg',
       'assets/rooms/wohnraum/medien/plan/grundriss.JPG',
+      'assets/rooms/wohnraum/medien/plan/grundriss_gesamt.png',
       'assets/rooms/wohnraum/medien/ist/wohnzimmer_2.jpeg',
       'assets/rooms/wohnraum/medien/ist/wohnzimmer_3.jpeg',
       'assets/rooms/wohnraum/medien/ist/IMG_9983.jpg', 
@@ -310,7 +316,15 @@ export class RoomComponent implements OnInit {
     'kellerflur': [
       'assets/rooms/kellerflur/medien/ist/kellerflur_ansicht_eingang.jpg', 
       'assets/rooms/kellerflur/medien/plan/grundriss_keller.JPG',
+      'assets/rooms/kellerflur/medien/plan/grundriss_detail.png',
       'assets/rooms/kellerflur/medien/ist/kellerflur_treppe_blick_unten.jpg', 
+    ],
+    'keller_buero': [
+      'assets/rooms/keller_buero/medien/ist/ist2.png',
+      'assets/rooms/keller_buero/medien/inspiration/soll.png',
+      'assets/rooms/keller_buero/medien/inspiration/IMG_0029.png',
+      'assets/rooms/keller_buero/medien/inspiration/IMG_0031.png',
+      'assets/rooms/keller_buero/medien/plan/grundriss.png'
     ],
   };
 
@@ -327,9 +341,14 @@ export class RoomComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.stopAnimation();
+  }
+
   loadRoomData(roomId: string) {
     this.roomName.set(roomId);
     this.error.set(false);
+    this.stopAnimation();
     
     const details = (roomsData as any[]).find(r => r.id === roomId);
     this.roomDetails.set(details);
@@ -357,6 +376,7 @@ export class RoomComponent implements OnInit {
           if (istImg && planImg) {
             this.beforeImage.set(istImg);
             this.afterImage.set(planImg);
+            this.startAnimation();
           } else {
             this.beforeImage.set(null);
             this.afterImage.set(null);
@@ -373,7 +393,30 @@ export class RoomComponent implements OnInit {
     });
   }
 
+  private startAnimation() {
+    this.stopAnimation();
+    if (!isPlatformBrowser(this.platformId)) return;
+    
+    const startTime = Date.now();
+    const cycleDuration = 24000; // 24 seconds for a full loop (12s each way)
+    
+    this.animationInterval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      // Smooth oscillation using sine wave starting from 0%
+      const pos = (Math.sin((elapsed / cycleDuration) * 2 * Math.PI - Math.PI / 2) + 1) / 2 * 100;
+      this.sliderPos.set(pos);
+    }, 20); 
+  }
+
+  private stopAnimation() {
+    if (this.animationInterval) {
+      clearInterval(this.animationInterval);
+      this.animationInterval = null;
+    }
+  }
+
   onSliderChange(event: Event) {
+    this.stopAnimation();
     const value = (event.target as HTMLInputElement).value;
     this.sliderPos.set(parseInt(value));
   }

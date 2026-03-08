@@ -72,7 +72,10 @@
     <div class="glass-card login-card">
       <h1>Sauerbruch 3</h1>
       <p>Bitte gib das Passwort ein, um die Planung zu sehen.</p>
-      <input type="password" (input)="checkPassword($event)" placeholder="Passwort..." autofocus>
+      <div class="login-input-wrapper">
+        <input #pwdInput type="password" (input)="checkPassword($event)" (keyup.enter)="checkPassword(pwdInput.value)" placeholder="Passwort..." autofocus>
+        <button class="btn-primary" (click)="checkPassword(pwdInput.value)">Anmelden</button>
+      </div>
     </div>
   </div>
 </ng-template>

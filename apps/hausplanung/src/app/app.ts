@@ -27,7 +27,14 @@ export class App implements OnInit {
     this.rooms.filter(r => r.status !== 'In Planung' && r.status !== 'Angefangen')
   );
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      const auth = localStorage.getItem('auth');
+      if (auth === 'bubu') {
+        this.isAuthorized.set(true);
+      }
+    }
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -39,17 +46,16 @@ export class App implements OnInit {
         this.isAuthorized.set(true);
         localStorage.setItem('auth', 'bubu');
       }
-
-      const auth = localStorage.getItem('auth');
-      if (auth === 'bubu') {
-        this.isAuthorized.set(true);
-      }
     }
   }
 
-  checkPassword(event: Event) {
-    const input = (event.target as HTMLInputElement).value;
-    if (input === 'bubu') {
+  checkPassword(eventOrValue: Event | string) {
+    const value = typeof eventOrValue === 'string' 
+      ? eventOrValue 
+      : (eventOrValue.target as HTMLInputElement).value;
+      
+    const input = value.trim().toLowerCase();
+    if (input === 'bubu' || input === 'sauerbruch') {
       this.isAuthorized.set(true);
       if (isPlatformBrowser(this.platformId)) {
         localStorage.setItem('auth', 'bubu');

@@ -1,6 +1,7 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import roomsData from '../../public/assets/data/rooms.json';
 
 @Component({
   selector: 'app-nx-welcome',
@@ -51,39 +52,28 @@ import { RouterModule } from '@angular/router';
         </div>
         
         <div class="room-grid">
-          <div class="glass-card room-card" [routerLink]="['/room', 'bad']">
-            <div class="room-icon">🚿</div>
-            <div class="room-info">
-              <h3>Badezimmer</h3>
-              <p>6,64 m² (laut Grundriss)</p>
-              <div class="badge status-active">🏗️ In Arbeit</div>
+          <div *ngFor="let room of rooms" class="glass-card room-card" [routerLink]="['/room', room.id]">
+            <div class="room-preview-container">
+              <div *ngFor="let img of getRoomImages(room.id); let i = index" 
+                   class="room-preview" 
+                   [class.active]="i === currentImageIndices[room.id]"
+                   [style.backgroundImage]="'url(' + img + ')'">
+              </div>
             </div>
-          </div>
-
-          <div class="glass-card room-card" [routerLink]="['/room', 'wc']">
-            <div class="room-icon">🚽</div>
-            <div class="room-info">
-              <h3>Gästebad</h3>
-              <p>2,86 m² (laut Grundriss)</p>
-              <div class="badge status-planned">⏳ In Planung</div>
-            </div>
-          </div>
-
-          <div class="glass-card room-card" [routerLink]="['/room', 'wohnraum']">
-            <div class="room-icon">🛋️</div>
-            <div class="room-info">
-              <h3>Wohnraum</h3>
-              <p>20,02 m² (laut Grundriss)</p>
-              <div class="badge status-planned">⏳ In Planung</div>
-            </div>
-          </div>
-
-          <div class="glass-card room-card" [routerLink]="['/room', 'flur']">
-            <div class="room-icon">🧣</div>
-            <div class="room-info">
-              <h3>Flur</h3>
-              <p>12,25 m² (laut Grundriss)</p>
-              <div class="badge status-planned">⏳ In Planung</div>
+            <div class="room-overlay"></div>
+            <div class="room-content-wrapper">
+              <div class="room-info">
+                <h3>{{ room.name }}</h3>
+                <p>{{ room.area }} m² ({{ room.area_derivation }})</p>
+                <div class="badge" [ngClass]="{
+                  'status-active': room.status === 'Angefangen' || room.status === 'In Arbeit',
+                  'status-planned': room.status === 'In Planung',
+                  'status-onhold': room.status === 'On hold'
+                }">
+                  <span class="status-dot"></span>
+                  {{ room.status }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -131,18 +121,90 @@ import { RouterModule } from '@angular/router';
     .progress-bar { background: var(--primary-color); height: 100%; border-radius: 4px; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
 
     .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-    .room-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .room-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 2rem; }
     
-    .room-card { padding: 1.5rem; display: flex; gap: 1.5rem; align-items: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    .room-card:hover { transform: translateY(-5px); border-color: var(--primary-color); }
+    .room-card { 
+      min-height: 180px;
+      display: flex; 
+      cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative; overflow: hidden;
+      border-radius: 20px;
+      padding: 0;
+      background: #1e293b;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .room-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--primary-color); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5); }
     
-    .room-icon { font-size: 2.5rem; background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 16px; }
-    .room-info h3 { margin: 0; font-size: 1.25rem; }
-    .room-info p { margin: 0.25rem 0 0.75rem 0; opacity: 0.5; font-size: 0.9rem; }
+    .room-preview-container {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 0;
+    }
 
-    .badge { padding: 0.4rem 0.8rem; border-radius: 10px; font-size: 0.75rem; font-weight: 700; display: inline-block; }
-    .status-active { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
-    .status-planned { background: rgba(148, 163, 184, 0.1); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.2); }
+    .room-preview {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      z-index: 0;
+      pointer-events: none;
+      transition: opacity 2s ease-in-out, transform 8s ease-in-out;
+      transform: scale(1);
+    }
+
+    .room-preview.active {
+      opacity: 0.8;
+      transform: scale(1.1);
+    }
+
+    .room-card:hover .room-preview.active {
+      opacity: 1.0;
+    }
+
+    .room-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0.2) 100%);
+      z-index: 1;
+    }
+
+    .room-content-wrapper {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      padding: 1.25rem;
+      width: 100%;
+      color: white;
+    }
+
+    .room-icon { 
+      font-size: 1.2rem; 
+      background: rgba(255,255,255,0.15); 
+      backdrop-filter: blur(8px);
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 12px; 
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .room-info h3 { margin: 0; font-size: 1.4rem; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.9); color: white; letter-spacing: -0.01em; }
+    .room-info p { margin: 0.1rem 0 0.5rem 0; opacity: 0.6; font-size: 0.75rem; text-shadow: 0 1px 4px rgba(0,0,0,0.8); color: white; font-weight: 500; }
+
+    .badge { padding: 0.25rem 0.6rem; border-radius: 8px; font-size: 0.65rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; text-transform: uppercase; letter-spacing: 0.03em; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+    
+    .status-active { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2); }
+    .status-active .status-dot { background: #4ade80; box-shadow: 0 0 8px #22c55e; }
+    
+    .status-planned { background: rgba(234, 179, 8, 0.1); color: #fde047; border: 1px solid rgba(234, 179, 8, 0.2); }
+    .status-planned .status-dot { background: #eab308; }
+
+    .status-onhold { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
+    .status-onhold .status-dot { background: #ef4444; }
 
     .btn-primary { 
       background: var(--primary-color); color: white; border: none; padding: 0.75rem 1.5rem; 
@@ -152,4 +214,85 @@ import { RouterModule } from '@angular/router';
   `],
   encapsulation: ViewEncapsulation.None,
 })
-export class NxWelcomeComponent {}
+export class NxWelcomeComponent implements OnInit, OnDestroy {
+  rooms = roomsData.filter(r => ['In Planung', 'Angefangen', 'In Arbeit'].includes(r.status));
+  currentImageIndices: Record<string, number> = {};
+  private intervalId: any;
+
+  // Dynamic image map populated with inspiration images
+  private roomImagesMap: Record<string, string[]> = {
+    'bad': [
+      'assets/rooms/bad/medien/inspiration/titel.png',
+      'assets/rooms/bad/medien/inspiration/f9203bbf-e397-43e0-997a-3b0dceafdddd.JPG'
+    ],
+    'wc': [
+      'assets/rooms/wc/medien/inspiration/titel.jpg'
+    ],
+    'flur': [
+      'assets/rooms/flur/medien/inspiration/flur_fenster_regenbogen.png',
+      'assets/rooms/flur/medien/inspiration/kamin_farbiger_teppich.jpg',
+      'assets/rooms/flur/medien/inspiration/kamin_clean_look.jpg'
+    ],
+    'wohnraum': [
+      'assets/rooms/wohnraum/medien/ist/wohnzimmer_1.jpeg',
+      'assets/rooms/wohnraum/medien/ist/wohnzimmer_2.jpeg',
+      'assets/rooms/wohnraum/medien/ist/wohnzimmer_3.jpeg'
+    ],
+    'kellerflur': [
+      'assets/rooms/kellerflur/medien/inspiration/kellerflur_detail_2.jpg',
+      'assets/rooms/kellerflur/medien/inspiration/kellerflur_detail_3.jpg',
+      'assets/rooms/kellerflur/medien/inspiration/kellerflur_detail_4.jpg'
+    ],
+    'keller_buero': [
+      'assets/rooms/keller_buero/medien/inspiration/soll.png',
+      'assets/rooms/keller_buero/medien/inspiration/IMG_0029.png',
+      'assets/rooms/keller_buero/medien/inspiration/IMG_0031.png'
+    ]
+  };
+
+  ngOnInit() {
+    // Initialize indices
+    this.rooms.forEach(room => {
+      this.currentImageIndices[room.id] = 0;
+    });
+
+    // Start slideshow interval
+    this.intervalId = setInterval(() => {
+      this.rooms.forEach(room => {
+        const imgs = this.getRoomImages(room.id);
+        if (imgs.length > 1) {
+          this.currentImageIndices[room.id] = (this.currentImageIndices[room.id] + 1) % imgs.length;
+        }
+      });
+    }, 5000); // Switch every 5 seconds
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
+  getRoomEmoji(roomId: string): string {
+    const emojis: Record<string, string> = {
+      'flur': '🚪',
+      'wohnraum': '🛋️',
+      'essraum': '🍽️',
+      'kueche': '🍳',
+      'bad': '🚿',
+      'wc': '🚽',
+      'schlafzimmer': '🛏️',
+      'kinderzimmer': '🧸',
+      'zimmer': '💻',
+      'flur_privat': '🗝️',
+      'garderobe': '🧥',
+      'garage': '🚗',
+      'kellerflur': '📦'
+    };
+    return emojis[roomId] || '🏠';
+  }
+
+  getRoomImages(roomId: string): string[] {
+    return this.roomImagesMap[roomId] || [];
+  }
+}
