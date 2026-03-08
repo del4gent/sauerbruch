@@ -1,70 +1,64 @@
-<div class="layout-wrapper" [class.sidebar-collapsed]="isSidebarCollapsed()" *ngIf="isAuthorized(); else loginTpl">
-  <aside class="sidebar" [class.collapsed]="isSidebarCollapsed()">
-    <div class="sidebar-header">
-      <div class="logo-container" *ngIf="!isSidebarCollapsed()">
+<div class="app-container" *ngIf="isAuthorized(); else loginTpl">
+  <header class="top-nav">
+    <div class="nav-container">
+      <div class="nav-brand" routerLink="/">
+        <span class="logo-icon">🏠</span>
         <span class="logo-text">Sauerbruch 3</span>
       </div>
-      <button (click)="toggleSidebar()" class="sidebar-toggle" [title]="isSidebarCollapsed() ? 'Expand' : 'Collapse'">
-        <svg *ngIf="isSidebarCollapsed()" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        <svg *ngIf="!isSidebarCollapsed()" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-      </button>
-    </div>
-    
-    <nav class="sidebar-nav">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">
-        <div class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
-        </div>
-        <span class="label" *ngIf="!isSidebarCollapsed()">Dashboard</span>
-      </a>
-
-      <div class="nav-separator" [class.centered]="isSidebarCollapsed()">
-        <span class="separator-text" *ngIf="!isSidebarCollapsed()">In Planung</span>
-        <div class="separator-line" *ngIf="isSidebarCollapsed()"></div>
-      </div>
-
-      <!-- Active Rooms -->
-      <a *ngFor="let room of activeRooms()" 
-         [routerLink]="['/room', room.id]" 
-         routerLinkActive="active"
-         class="nav-item"
-         [title]="isSidebarCollapsed() ? room.name : ''">
-        <div class="icon">
-          {{ getRoomEmoji(room.id) }}
-        </div>
-        <span class="label" *ngIf="!isSidebarCollapsed()">{{ room.name }}</span>
-      </a>
-
-      <!-- Other Rooms Tree -->
-      <div class="nav-tree-container">
-        <div class="nav-item tree-header" 
-             (click)="toggleOtherRooms($event)"
-             [class.active]="isOtherRoomsExpanded() && !isSidebarCollapsed()"
-             [title]="isSidebarCollapsed() ? 'Weitere Räume' : ''">
-          <div class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" [class.rotated]="isOtherRoomsExpanded()"><path d="m9 18 6-6-6-6"/></svg>
-          </div>
-          <span class="label" *ngIf="!isSidebarCollapsed()">Weitere Räume</span>
-        </div>
-
-        <div class="tree-content" *ngIf="isOtherRoomsExpanded() && !isSidebarCollapsed()">
-          <a *ngFor="let room of otherRooms()" 
-             [routerLink]="['/room', room.id]" 
-             routerLinkActive="active"
-             class="nav-item sub-item">
-            <div class="icon sub-icon">
-              {{ getRoomEmoji(room.id) }}
+      
+      <nav class="nav-links desktop-only">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Dashboard</a>
+        
+        <div class="nav-dropdown">
+          <span class="dropdown-trigger">Räume</span>
+          <div class="dropdown-content glass-card">
+            <div class="dropdown-section">
+              <span class="section-title">In Planung</span>
+              <a *ngFor="let room of activeRooms()" [routerLink]="['/room', room.id]" routerLinkActive="active" class="dropdown-item">
+                {{ getRoomEmoji(room.id) }} {{ room.name }}
+              </a>
             </div>
-            <span class="label">{{ room.name }}</span>
-          </a>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-section">
+              <span class="section-title">Weitere</span>
+              <a *ngFor="let room of otherRooms()" [routerLink]="['/room', room.id]" routerLinkActive="active" class="dropdown-item">
+                {{ getRoomEmoji(room.id) }} {{ room.name }}
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
-    </nav>
-  </aside>
+        
+        <a routerLink="/details/area" routerLinkActive="active" class="nav-link">Flächen</a>
+        <a routerLink="/details/budget" routerLinkActive="active" class="nav-link">Budget</a>
+      </nav>
 
-  <main class="content">
+      <div class="nav-actions">
+        <button class="theme-toggle" (click)="isDarkMode.set(!isDarkMode()); applyTheme()">
+          {{ isDarkMode() ? '☀️' : '🌙' }}
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
     <router-outlet></router-outlet>
   </main>
+
+  <!-- Mobile Bottom Nav (Keep for Handwerker-Ergonomie) -->
+  <nav class="mobile-nav mobile-only">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="mobile-nav-item">
+      <span class="icon">📊</span>
+      <span class="label">Dashboard</span>
+    </a>
+    <a *ngFor="let room of activeRooms().slice(0, 3)" [routerLink]="['/room', room.id]" routerLinkActive="active" class="mobile-nav-item">
+      <span class="icon">{{ getRoomEmoji(room.id) }}</span>
+      <span class="label">{{ room.name }}</span>
+    </a>
+    <a routerLink="/details/progress" routerLinkActive="active" class="mobile-nav-item">
+      <span class="icon">✅</span>
+      <span class="label">Status</span>
+    </a>
+  </nav>
 </div>
 
 <ng-template #loginTpl>

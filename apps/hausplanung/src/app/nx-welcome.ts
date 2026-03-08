@@ -14,39 +14,36 @@ import roomsData from '../../public/assets/data/rooms.json';
         <div class="hero-overlay"></div>
         <div class="hero-content">
           <h1 class="gradient-text">Projekt Sauerbruch 3</h1>
+          
+          <div class="stats-grid overlay-stats">
+            <div class="stat-item transparent" routerLink="/details/progress">
+              <span class="stat-label">Fortschritt</span>
+              <div class="progress-container">
+                <div class="progress-bar" style="width: 18%"></div>
+              </div>
+              <span class="stat-value">18%</span>
+            </div>
+
+            <div class="stat-item transparent" routerLink="/details/area">
+              <span class="stat-label">Gesamtfläche</span>
+              <span class="stat-value">178,05 m²</span>
+            </div>
+
+            <div class="stat-item transparent" routerLink="/details/budget">
+              <span class="stat-label">Budget</span>
+              <span class="stat-value">27.920 €</span>
+            </div>
+          </div>
         </div>
       </header>
-
-      <div class="stats-grid">
-        <div class="glass-card stat-item clickable" routerLink="/details/progress">
-          <span class="stat-label">Gesamtfortschritt</span>
-          <div class="progress-container">
-            <div class="progress-bar" style="width: 18%"></div>
-          </div>
-          <span class="stat-value">18%</span>
-          <span class="stat-derivation">(2/11 Meilensteine erreicht)</span>
-        </div>
-
-        <div class="glass-card stat-item clickable" routerLink="/details/area">
-          <span class="stat-label">Gesamtfläche</span>
-          <span class="stat-value">178,05 m²</span>
-          <span class="stat-derivation">(Summe aller Räume inkl. Keller & Garage)</span>
-        </div>
-
-        <div class="glass-card stat-item clickable" routerLink="/details/budget">
-          <span class="stat-label">Geschätztes Budget</span>
-          <span class="stat-value">27.920 €</span>
-          <span class="stat-derivation">(Summe: Bäder, Flure & Wohnzimmer)</span>
-        </div>
-      </div>
 
       <section class="rooms-section">
         <div class="section-header">
           <h2>Räume im Umbau</h2>
-          <button class="btn-primary" routerLink="/details/budget">Kosten-Details</button>
         </div>
         
         <div class="room-grid">
+
           <div *ngFor="let room of rooms" class="glass-card room-card" [routerLink]="['/room', room.id]">
             <div class="room-preview-container">
               <div *ngFor="let img of getRoomImages(room.id); let i = index" 
@@ -78,7 +75,7 @@ import roomsData from '../../public/assets/data/rooms.json';
   styles: [`
     .hero-header { 
       position: relative; 
-      height: 400px; 
+      height: 520px; 
       border-radius: 24px; 
       overflow: hidden; 
       margin-bottom: 3rem;
@@ -95,12 +92,13 @@ import roomsData from '../../public/assets/data/rooms.json';
     .hero-header:hover .hero-image { transform: scale(1.02); }
     .hero-overlay { 
       position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
-      background: linear-gradient(to top, rgba(2, 6, 23, 0.95) 0%, rgba(2, 6, 23, 0.4) 50%, rgba(2, 6, 23, 0.1) 100%);
+      background: linear-gradient(to top, rgba(2, 6, 23, 0.98) 0%, rgba(2, 6, 23, 0.6) 40%, rgba(2, 6, 23, 0.2) 100%);
     }
-    .hero-content { position: relative; z-index: 1; }
+    .hero-content { position: relative; z-index: 1; width: 100%; display: flex; flex-direction: column; height: 100%; justify-content: flex-end; }
     .hero-content h1 { 
-      font-size: 4.5rem; 
-      margin: 0; 
+      font-size: 5rem; 
+      margin: 0 0 auto 0; 
+      padding-top: 2rem;
       line-height: 1; 
       font-weight: 900;
       letter-spacing: -0.04em;
@@ -109,82 +107,55 @@ import roomsData from '../../public/assets/data/rooms.json';
       -webkit-text-fill-color: transparent;
       text-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
-    .hero-content .subtitle { 
-      font-size: 1.25rem; 
-      color: white; 
-      opacity: 0.9; 
-      margin-top: 0.75rem; 
-      font-weight: 500;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    }
-    .hero-badges { display: flex; gap: 0.75rem; margin-top: 2rem; }
-    .badge.status-active-hero { 
-      background: rgba(34, 197, 94, 0.2); 
-      color: #4ade80; 
-      border: 1px solid rgba(34, 197, 94, 0.4); 
-      padding: 0.5rem 1rem;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .badge.revision { 
-      background: rgba(255,255,255,0.1); 
-      color: white; 
-      border: 1px solid rgba(255,255,255,0.2); 
-      padding: 0.5rem 1rem;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-    }
 
     .stats-grid { 
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-      gap: 2rem; margin-bottom: 4rem; 
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+      gap: 1.5rem; 
+      width: 100%;
     }
     .stat-item { 
-      padding: 2.5rem; 
+      padding: 1.5rem; 
       display: flex; 
       flex-direction: column; 
       cursor: pointer; 
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      border-top: 4px solid var(--primary-color);
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 20px;
+    }
+    .stat-item.transparent {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px) saturate(180%);
     }
     .stat-item:hover { 
       transform: translateY(-8px); 
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-      border-top-width: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
     }
     .stat-label { 
-      font-size: 0.75rem; 
+      font-size: 0.65rem; 
       text-transform: uppercase; 
       letter-spacing: 0.15em; 
-      color: var(--primary-color); 
+      color: white; 
       font-weight: 800; 
-      margin-bottom: 1.5rem; 
-      opacity: 0.8;
+      margin-bottom: 1rem; 
+      opacity: 0.6;
     }
     .stat-value { 
-      font-size: 2.8rem; 
-      font-weight: 900; 
-      color: var(--text-color); 
-      line-height: 1;
-      letter-spacing: -0.02em;
-    }
-    .stat-derivation { 
-      font-size: 0.85rem; 
-      margin-top: 1rem; 
-      font-weight: 500;
-      color: var(--text-color);
-      opacity: 0.5;
+      font-size: 1.75rem; 
+      font-weight: 800; 
+      color: white; 
+      line-height: 1.1;
+      letter-spacing: -0.01em;
     }
 
-    .progress-container { background: rgba(255, 255, 255, 0.05); height: 8px; border-radius: 4px; margin: 1rem 0; overflow: hidden; }
-    .progress-bar { background: var(--primary-color); height: 100%; border-radius: 4px; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
+    .progress-container { background: rgba(255, 255, 255, 0.1); height: 5px; border-radius: 3px; margin: 0.75rem 0 1rem 0; overflow: hidden; }
+    .progress-bar { 
+      background: linear-gradient(90deg, #60a5fa, #a855f7); 
+      height: 100%; 
+      border-radius: 3px; 
+      box-shadow: 0 0 15px rgba(96, 165, 250, 0.5);
+    }
 
     .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
     .room-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 2rem; }

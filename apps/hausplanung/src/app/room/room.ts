@@ -13,24 +13,18 @@ import roomsData from '../../../public/assets/data/rooms.json';
   template: `
     <div class="room-page" *ngIf="!error(); else errorTpl">
       <header class="room-banner">
-        <!-- Before/After Slider Container -->
+        <!-- Before/After Animation Container (Manual Slider removed) -->
         <div class="slider-container" *ngIf="beforeImage() && afterImage(); else staticHero">
           <div class="image-before" [style.backgroundImage]="'url(' + beforeImage() + ')'"></div>
           <div class="image-after" [style.backgroundImage]="'url(' + afterImage() + ')'" [style.clipPath]="'inset(0 0 0 ' + (100 - sliderPos()) + '%)'"></div>
           
-          <div class="slider-control">
-            <input type="range" min="0" max="100" [value]="sliderPos()" (input)="onSliderChange($event)" class="slider-input">
-            <div class="slider-line" [style.left]="sliderPos() + '%'">
-              <div class="slider-handle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-              </div>
-            </div>
-          </div>
+          <!-- Only the dividing line remains for visual separation -->
+          <div class="slider-line" [style.left]="sliderPos() + '%'"></div>
 
           <div class="label label-before">IST-ZUSTAND</div>
           <div class="label label-after">PLANUNG</div>
         </div>
+
 
         <ng-template #staticHero>
           <div class="static-hero" [style.backgroundImage]="heroImage() ? 'url(' + heroImage() + ')' : 'none'"></div>

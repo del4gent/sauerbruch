@@ -26,26 +26,26 @@ import { CommonModule } from '@angular/common';
           </filter>
         </defs>
 
+        <!-- Garage -->
         <g class="room garage" (click)="onRoomClick('garage')" [class.active]="activeRoomId === 'garage'">
-          <rect x="20" y="250" width="180" height="480" rx="4" />
-          <text x="110" y="470" class="room-label">Garage</text>
-          <text x="110" y="490" class="room-detail">25,24 m²</text>
+          <rect x="20" y="250" width="180" height="505" rx="4" />
+          <text x="110" y="480" class="room-label">Garage</text>
+          <text x="110" y="500" class="room-detail">25,24 m²</text>
         </g>
 
+        <!-- Wohnzimmer Gesamt (Wohnraum + Essraum) -->
         <g class="room" (click)="onRoomClick('wohnraum')" [class.active]="activeRoomId === 'wohnraum'">
           <rect x="230" y="40" width="330" height="218" rx="2" />
-          <text x="395" y="130" class="room-label">Wohnraum</text>
-          <text x="395" y="150" class="room-detail">5,51m x 3,64m</text>
-          <text x="395" y="165" class="room-area">20,02 m²</text>
-        </g>
-
-        <g class="room" (click)="onRoomClick('essraum')" [class.active]="activeRoomId === 'essraum'">
           <rect x="230" y="258" width="334" height="218" rx="2" />
-          <text x="397" y="350" class="room-label">Essraum</text>
-          <text x="397" y="370" class="room-detail">5,56m x 3,64m</text>
-          <text x="397" y="385" class="room-area">20,21 m²</text>
+          
+          <text x="395" y="130" class="room-label">Wohnzimmer</text>
+          <text x="395" y="150" class="room-detail">(Gesamt)</text>
+          <text x="395" y="170" class="room-area">40,23 m²</text>
+          
+          <text x="397" y="350" class="room-label-small opacity-40">Essbereich</text>
         </g>
 
+        <!-- Küche -->
         <g class="room" (click)="onRoomClick('kueche')" [class.active]="activeRoomId === 'kueche'">
           <rect x="230" y="476" width="190" height="273" rx="2" />
           <text x="325" y="600" class="room-label">Küche</text>
@@ -53,48 +53,50 @@ import { CommonModule } from '@angular/common';
           <text x="325" y="635" class="room-area">14,47 m²</text>
         </g>
 
+        <!-- Flur Gesamt (Diele + Garderobe + Flur Privat) -->
         <g class="room" (click)="onRoomClick('flur')" [class.active]="activeRoomId === 'flur'">
+          <!-- Diele -->
           <rect x="420" y="476" width="144" height="130" rx="2" />
-          <text x="492" y="535" class="room-label">Diele</text>
-          <text x="492" y="555" class="room-area">12,25 m²</text>
-        </g>
-
-        <g class="room" (click)="onRoomClick('garderobe')" [class.active]="activeRoomId === 'garderobe'">
+          <!-- Garderobe -->
           <rect x="420" y="606" width="120" height="143" rx="2" />
-          <text x="480" y="670" class="room-label-small">Garderobe</text>
-          <text x="480" y="698" class="room-area-tiny">4,79 m²</text>
+          <!-- Flur Privat -->
+          <rect x="564" y="258" width="69" height="218" rx="2" />
+          
+          <text x="492" y="535" class="room-label">Diele</text>
+          <text x="492" y="555" class="room-area">20,88 m²</text>
+          <text x="480" y="670" class="room-label-tiny opacity-40">Garderobe</text>
+          <text x="598" y="367" class="room-label-tiny opacity-40" transform="rotate(-90, 598, 367)">Flur (P)</text>
         </g>
 
+        <!-- WC -->
         <g class="room" (click)="onRoomClick('wc')" [class.active]="activeRoomId === 'wc'">
           <rect x="540" y="606" width="72" height="143" rx="2" />
           <text x="576" y="670" class="room-label-small">WC</text>
           <text x="576" y="698" class="room-area-tiny">2,86 m²</text>
         </g>
 
-        <g class="room" (click)="onRoomClick('flur_privat')" [class.active]="activeRoomId === 'flur_privat'">
-          <rect x="564" y="258" width="69" height="348" rx="2" />
-          <text x="598" y="430" class="room-label-small" transform="rotate(-90, 598, 430)">Flur (P)</text>
-          <text x="598" y="450" class="room-area-tiny">3,84 m²</text>
-        </g>
-
+        <!-- Bad -->
         <g class="room" (click)="onRoomClick('bad')" [class.active]="activeRoomId === 'bad'">
           <rect x="633" y="40" width="120" height="198" rx="2" />
           <text x="693" y="120" class="room-label-small">Bad</text>
           <text x="693" y="153" class="room-area-tiny">6,64 m²</text>
         </g>
 
+        <!-- Schlafzimmer -->
         <g class="room" (click)="onRoomClick('schlafzimmer')" [class.active]="activeRoomId === 'schlafzimmer'">
           <rect x="753" y="40" width="233" height="273" rx="2" />
           <text x="870" y="160" class="room-label">Schlafzimmer</text>
           <text x="870" y="195" class="room-area">17,70 m²</text>
         </g>
 
+        <!-- Kinderzimmer -->
         <g class="room" (click)="onRoomClick('kinderzimmer')" [class.active]="activeRoomId === 'kinderzimmer'">
           <rect x="753" y="313" width="233" height="194" rx="2" />
           <text x="870" y="400" class="room-label">Kind</text>
           <text x="870" y="435" class="room-area">12,56 m²</text>
         </g>
 
+        <!-- Zimmer / Büro -->
         <g class="room" (click)="onRoomClick('zimmer')" [class.active]="activeRoomId === 'zimmer'">
           <rect x="633" y="507" width="171" height="218" rx="2" />
           <text x="718" y="600" class="room-label-small">Büro</text>
@@ -134,9 +136,9 @@ import { CommonModule } from '@angular/common';
 
         <!-- ZIMMER KELLER (BÜRO) -->
         <g class="room" (click)="onRoomClick('keller_buero')" [class.active]="activeRoomId === 'keller_buero'">
-          <rect x="754" y="313" width="150" height="194" rx="2" />
-          <text x="829" y="400" class="room-label">Büro</text>
-          <text x="829" y="420" class="room-detail">12,60 m²</text>
+          <rect x="754" y="313" width="233" height="194" rx="2" />
+          <text x="870" y="400" class="room-label">Büro</text>
+          <text x="870" y="420" class="room-detail">12,60 m²</text>
         </g>
 
         <!-- WEITERE KELLERRÄUME OBEN -->
@@ -261,7 +263,7 @@ import { CommonModule } from '@angular/common';
       stroke-dasharray: 2;
     }
 
-    .room-label, .room-label-small {
+    .room-label, .room-label-small, .room-label-tiny {
       fill: #2c3e50;
       font-weight: 700;
       text-anchor: middle;
@@ -270,6 +272,7 @@ import { CommonModule } from '@angular/common';
 
     .room-label { font-size: 14px; text-transform: uppercase; }
     .room-label-small { font-size: 11px; }
+    .room-label-tiny { font-size: 9px; }
 
     .room-detail, .room-detail-tiny {
       fill: #7f8c8d;
@@ -293,6 +296,8 @@ import { CommonModule } from '@angular/common';
     .room.active text { fill: #ffffff !important; }
 
     .room.garage rect { fill: #f8f9fa; stroke-dasharray: 4; }
+    
+    .opacity-40 { opacity: 0.4; }
   `]
 })
 export class FloorPlanComponent {
@@ -305,5 +310,3 @@ export class FloorPlanComponent {
     this.roomSelected.emit(roomId);
   }
 }
-
-
