@@ -71,7 +71,7 @@ import roomsData from '../../../../public/assets/data/rooms.json';
 })
 export class BudgetComponent {
   // Define only the rooms currently planned for renovation
-  private plannedRoomIds = ['diele', 'wohnraum', 'bad', 'wc', 'kellerflur'];
+  private plannedRoomIds = ['flur', 'wohnraum', 'bad', 'wc', 'kellerflur'];
   
   rooms = (roomsData as any[]).filter(r => this.plannedRoomIds.includes(r.id));
   

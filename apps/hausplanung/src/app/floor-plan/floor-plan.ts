@@ -32,10 +32,10 @@ import { CommonModule } from '@angular/common';
           <text x="300" y="630" class="room-label">Küche</text>
         </g>
 
-        <!-- Diele -->
-        <g class="room" (click)="onRoomClick('diele')" [class.active]="activeRoomId === 'diele'">
+        <!-- Flur -->
+        <g class="room" (click)="onRoomClick('flur')" [class.active]="activeRoomId === 'flur'">
           <rect x="460" y="300" width="160" height="300" />
-          <text x="540" y="450" class="room-label">Diele</text>
+          <text x="540" y="450" class="room-label">Flur</text>
         </g>
 
         <!-- Garderobe -->

@@ -78,10 +78,10 @@ import { RouterModule } from '@angular/router';
             </div>
           </div>
 
-          <div class="glass-card room-card" [routerLink]="['/room', 'diele']">
+          <div class="glass-card room-card" [routerLink]="['/room', 'flur']">
             <div class="room-icon">🧣</div>
             <div class="room-info">
-              <h3>Diele</h3>
+              <h3>Flur</h3>
               <p>12,25 m² (laut Grundriss)</p>
               <div class="badge status-planned">⏳ In Planung</div>
             </div>

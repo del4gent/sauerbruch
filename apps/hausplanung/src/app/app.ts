@@ -23,9 +23,9 @@ export class App implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this.applyTheme();
 
-      // Check for 'auth=bubu' in URL query parameters
+      // Check for 'invite=sauerbruch' in URL query parameters (magic link)
       const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('auth') === 'bubu') {
+      if (urlParams.get('invite') === 'sauerbruch') {
         this.isAuthorized.set(true);
         localStorage.setItem('auth', 'bubu');
       }
@@ -59,7 +59,7 @@ export class App implements OnInit {
 
   getRoomEmoji(roomId: string): string {
     const emojis: Record<string, string> = {
-      'diele': '🧣',
+      'flur': '🧣',
       'wohnraum': '🛋️',
       'essraum': '🍽️',
       'kueche': '🍳',

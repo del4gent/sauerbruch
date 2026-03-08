@@ -1,4 +1,4 @@
-# Planung: Diele
+# Planung: Flur
 
 ## 📏 BASISDATEN
 - Fläche: 12,25 m² (laut Grundriss)

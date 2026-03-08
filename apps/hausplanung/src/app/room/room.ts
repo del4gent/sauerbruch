@@ -11,34 +11,97 @@ import roomsData from '../../../public/assets/data/rooms.json';
   standalone: true,
   imports: [CommonModule, RouterModule],
   template: `
-    <div class="room-container" *ngIf="!error(); else errorTpl">
-      <header class="room-header">
-        <h1 class="gradient-text">{{ roomDetails()?.name || roomName() }}</h1>
-        <div class="room-meta">
-          <span class="badge status-active">{{ roomDetails()?.status }}</span>
-          <span class="badge area">{{ roomDetails()?.area }} m²</span>
-        </div>
-        <p class="derivation" *ngIf="roomDetails()?.area_derivation">
-          <strong>Herleitung:</strong> {{ roomDetails()?.area_derivation }}
-        </p>
-      </header>
-
-      <div class="content-grid">
-        <div class="glass-card md-content" [innerHTML]="content()"></div>
-        
-        <aside class="media-sidebar" *ngIf="images().length > 0">
-          <h2 class="section-title">Medien / Pläne</h2>
-          <div class="image-gallery">
-            <div *ngFor="let img of images()" class="glass-card image-card">
-              <img [src]="img" [alt]="img" (click)="openImage(img)">
+    <div class="room-page" *ngIf="!error(); else errorTpl">
+      <header class="room-banner">
+        <!-- Before/After Slider Container -->
+        <div class="slider-container" *ngIf="beforeImage() && afterImage(); else staticHero">
+          <div class="image-before" [style.backgroundImage]="'url(' + beforeImage() + ')'"></div>
+          <div class="image-after" [style.backgroundImage]="'url(' + afterImage() + ')'" [style.clipPath]="'inset(0 ' + (100 - sliderPos()) + '% 0 0)'"></div>
+          
+          <div class="slider-control">
+            <input type="range" min="0" max="100" [value]="sliderPos()" (input)="onSliderChange($event)" class="slider-input">
+            <div class="slider-line" [style.left]="sliderPos() + '%'">
+              <div class="slider-handle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </div>
             </div>
           </div>
+
+          <div class="label label-before">IST-ZUSTAND</div>
+          <div class="label label-after">PLANUNG</div>
+        </div>
+
+        <ng-template #staticHero>
+          <div class="static-hero" [style.backgroundImage]="heroImage() ? 'url(' + heroImage() + ')' : 'none'"></div>
+        </ng-template>
+
+        <div class="banner-overlay"></div>
+        <div class="banner-content">
+          <div class="breadcrumb">
+            <a routerLink="/">Dashboard</a> / {{ roomDetails()?.name || roomName() }}
+          </div>
+          <h1 class="room-title">{{ roomDetails()?.name || roomName() }}</h1>
+          
+          <div class="quick-stats">
+            <div class="glass-card stat-pill">
+              <span class="pill-label">Status</span>
+              <span class="badge" [ngClass]="getStatusClass(roomDetails()?.status)">{{ roomDetails()?.status }}</span>
+            </div>
+            <div class="glass-card stat-pill">
+              <span class="pill-label">Fläche</span>
+              <span class="pill-value">{{ roomDetails()?.area }} m²</span>
+            </div>
+            <div class="glass-card stat-pill" *ngIf="roomDetails()?.budget">
+              <span class="pill-label">Budget</span>
+              <span class="pill-value">{{ roomDetails()?.budget | number:'1.0-0':'de-DE' }} €</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="layout-grid">
+        <main class="main-content">
+          <section class="glass-card details-card">
+            <div class="card-header">
+              <h2>Planungsdetails</h2>
+              <div class="derivation" *ngIf="roomDetails()?.area_derivation">
+                <strong>Herleitung:</strong> {{ roomDetails()?.area_derivation }}
+              </div>
+            </div>
+            <div class="markdown-body" [innerHTML]="content()"></div>
+          </section>
+        </main>
+        
+        <aside class="side-content">
+          <section class="media-section" *ngIf="images().length > 0">
+            <h3 class="section-label">Medien & Pläne</h3>
+            <div class="gallery-grid">
+              <div *ngFor="let img of images()" class="glass-card image-wrapper" (click)="openImage(img)">
+                <img [src]="img" [alt]="img">
+                <div class="img-overlay">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="actions-section">
+            <h3 class="section-label">Aktionen</h3>
+            <div class="action-buttons">
+              <button class="btn-primary full-width">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x1="15" x2="12" y2="3"/></svg>
+                PDF Export
+              </button>
+            </div>
+          </section>
         </aside>
       </div>
     </div>
 
     <ng-template #errorTpl>
-      <div class="error-container glass-card">
+      <div class="error-view glass-card">
+        <div class="error-icon">⚠️</div>
         <h2>Raum nicht gefunden</h2>
         <p>Die Planungsdaten für "{{ roomName() }}" konnten nicht geladen werden.</p>
         <a routerLink="/" class="btn-primary">Zurück zum Dashboard</a>
@@ -46,45 +109,150 @@ import roomsData from '../../../public/assets/data/rooms.json';
     </ng-template>
   `,
   styles: [`
-    .room-header { margin-bottom: 3rem; }
-    .room-header h1 { font-size: 3.5rem; margin: 0; }
-    .room-meta { display: flex; gap: 1rem; margin-top: 1rem; }
-    .derivation { margin-top: 1rem; opacity: 0.6; font-style: italic; }
-    
-    .content-grid { 
-      display: grid; 
-      grid-template-columns: 1fr 380px; 
-      gap: 2.5rem; 
-      align-items: start;
+    .room-page { animation: fadeIn 0.4s ease-out; }
+
+    .room-banner {
+      height: 450px;
+      margin: -2.5rem -2.5rem 2.5rem -2.5rem;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 4rem;
+      background-color: var(--sidebar-bg);
     }
 
-    .md-content { 
-      padding: 3rem; 
-      line-height: 1.8;
-      font-size: 1.1rem;
+    .static-hero, .image-before, .image-after {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-size: cover;
+      background-position: center;
     }
 
-    /* Markdown Styles for Dark Mode */
-    :host ::ng-deep h2 { color: var(--primary-color); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-top: 2.5rem; }
-    :host ::ng-deep ul { padding-left: 1.5rem; }
-    :host ::ng-deep li { margin-bottom: 0.75rem; }
-    :host ::ng-deep table { width: 100%; border-collapse: collapse; margin: 2rem 0; background: rgba(255,255,255,0.03); border-radius: 12px; overflow: hidden; }
-    :host ::ng-deep th, :host ::ng-deep td { padding: 1rem; border: 1px solid var(--border-color); text-align: left; }
-    :host ::ng-deep th { background: rgba(255,255,255,0.05); font-weight: 800; }
+    .slider-container {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+    }
 
-    .media-sidebar { position: sticky; top: 2rem; }
-    .section-title { font-size: 1.2rem; margin-bottom: 1.5rem; opacity: 0.7; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; }
+    .slider-control {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 10;
+    }
+
+    .slider-input {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      opacity: 0;
+      cursor: ew-resize;
+      margin: 0;
+      z-index: 15;
+    }
+
+    .slider-line {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      pointer-events: none;
+      z-index: 12;
+    }
+
+    .slider-handle {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px; height: 44px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      color: var(--primary-color);
+    }
+
+    .label {
+      position: absolute;
+      bottom: 2rem;
+      padding: 0.5rem 1rem;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 800;
+      border-radius: 4px;
+      backdrop-filter: blur(10px);
+      z-index: 5;
+    }
+    .label-before { left: 2rem; }
+    .label-after { right: 2rem; }
+
+    .banner-overlay {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to top, var(--bg-color) 0%, rgba(2, 6, 23, 0.2) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .banner-content { position: relative; z-index: 5; width: 100%; pointer-events: none; }
+    .banner-content * { pointer-events: auto; }
     
-    .image-gallery { display: flex; flex-direction: column; gap: 1.5rem; }
-    .image-card { padding: 0.75rem; overflow: hidden; }
-    .image-card img { width: 100%; border-radius: 12px; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    .image-card img:hover { transform: scale(1.05); }
+    .breadcrumb { font-size: 0.85rem; opacity: 0.8; margin-bottom: 0.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+    .breadcrumb a { color: inherit; text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
 
-    .error-container { padding: 4rem; text-align: center; max-width: 600px; margin: 5rem auto; }
+    .room-title { 
+      font-size: 4.5rem; font-weight: 900; margin: 0 0 2rem 0; 
+      letter-spacing: -0.03em; line-height: 1; 
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
 
-    @media (max-width: 1200px) {
-      .content-grid { grid-template-columns: 1fr; }
-      .media-sidebar { position: static; }
+    .quick-stats { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .stat-pill { padding: 0.75rem 1.25rem; display: flex; align-items: center; gap: 1rem; border-radius: 16px; backdrop-filter: blur(15px); }
+    .pill-label { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.7; }
+    .pill-value { font-weight: 700; font-size: 1.1rem; }
+
+    .layout-grid { display: grid; grid-template-columns: 1fr 340px; gap: 2.5rem; }
+
+    .details-card { padding: 3rem; }
+    .card-header { margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); }
+    .card-header h2 { margin: 0 0 0.5rem 0; font-size: 1.5rem; }
+    .derivation { font-size: 0.9rem; opacity: 0.5; font-style: italic; }
+
+    .markdown-body { line-height: 1.8; font-size: 1.1rem; }
+    :host ::ng-deep .markdown-body h1 { display: none; }
+    :host ::ng-deep .markdown-body h2 { color: var(--primary-color); font-size: 1.25rem; margin-top: 2rem; }
+    :host ::ng-deep .markdown-body p { margin-bottom: 1.25rem; }
+    :host ::ng-deep .markdown-body ul { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+
+    .section-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.4; margin-bottom: 1.25rem; }
+
+    .gallery-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+    .image-wrapper { position: relative; padding: 0.5rem; cursor: pointer; border-radius: 14px; overflow: hidden; }
+    .image-wrapper img { width: 100%; border-radius: 10px; display: block; transition: transform 0.4s ease; }
+    .img-overlay { 
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
+      background: rgba(59, 130, 246, 0.4); display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s; color: white;
+    }
+    .image-wrapper:hover img { transform: scale(1.05); }
+    .image-wrapper:hover .img-overlay { opacity: 1; }
+
+    .full-width { width: 100%; }
+    .actions-section { margin-top: 3rem; }
+
+    .error-view { padding: 5rem; text-align: center; max-width: 600px; margin: 4rem auto; }
+    .error-icon { font-size: 4rem; margin-bottom: 1.5rem; }
+
+    @media (max-width: 1100px) {
+      .layout-grid { grid-template-columns: 1fr; }
+      .room-title { font-size: 3.5rem; }
+      .room-banner { height: auto; min-height: 400px; padding: 2rem; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   `]
 })
@@ -93,11 +261,18 @@ export class RoomComponent implements OnInit {
   roomDetails = signal<any>(null);
   content = signal<SafeHtml>('');
   images = signal<string[]>([]);
+  heroImage = signal<string | null>(null);
+  beforeImage = signal<string | null>(null);
+  afterImage = signal<string | null>(null);
+  sliderPos = signal(50);
   error = signal(false);
 
-  // Manual image mapping based on actual file structure
-  private roomImages: Record<string, string[]> = {
+  // Mapping of rooms to their specific images
+  // In a real app, this would come from a database or file system scan
+  private roomImagesMap: Record<string, string[]> = {
     'bad': [
+      'assets/rooms/bad/medien/ist/vorher.png',
+      'assets/rooms/bad/medien/inspiration/titel.png',
       'assets/rooms/bad/medien/ist/IMG_9974.jpg', 
       'assets/rooms/bad/medien/ist/IMG_9976.jpg', 
       'assets/rooms/bad/medien/material/fliesen2.jpg', 
@@ -105,6 +280,7 @@ export class RoomComponent implements OnInit {
     ],
     'wc': [
       'assets/rooms/wc/medien/ist/gaestebad_ist.png',
+      'assets/rooms/wc/medien/inspiration/titel.jpg',
       'assets/rooms/wc/medien/ist/IMG_9971.jpg', 
       'assets/rooms/wc/medien/ist/IMG_9972.jpg', 
       'assets/rooms/wc/medien/plan/grundriss.JPG', 
@@ -112,6 +288,7 @@ export class RoomComponent implements OnInit {
     ],
     'diele': [
       'assets/rooms/diele/medien/ist/flur_ansicht_eingang.jpg', 
+      'assets/rooms/diele/medien/inspiration/kamin_clean_look.jpg',
       'assets/rooms/diele/medien/ist/flur_durchgang_wohnzimmer.jpg', 
       'assets/rooms/diele/medien/ist/flur_eingangstuer_innen.jpg', 
       'assets/rooms/diele/medien/ist/flur_schrank_detail.jpg',
@@ -119,22 +296,17 @@ export class RoomComponent implements OnInit {
     ],
     'wohnraum': [
       'assets/rooms/wohnraum/medien/ist/wohnzimmer_1.jpeg',
+      'assets/rooms/wohnraum/medien/plan/grundriss.JPG',
       'assets/rooms/wohnraum/medien/ist/wohnzimmer_2.jpeg',
       'assets/rooms/wohnraum/medien/ist/wohnzimmer_3.jpeg',
-      'assets/rooms/wohnraum/medien/ist/wohnzimmer_4.jpeg',
-      'assets/rooms/wohnraum/medien/ist/wohnzimmer_5.jpeg',
       'assets/rooms/wohnraum/medien/ist/IMG_9983.jpg', 
       'assets/rooms/wohnraum/medien/ist/IMG_6989.jpg', 
       'assets/rooms/wohnraum/medien/ist/IMG_6990.jpg', 
-      'assets/rooms/wohnraum/medien/ist/IMG_6991.jpg', 
-      'assets/rooms/wohnraum/medien/ist/IMG_7360.jpg', 
-      'assets/rooms/wohnraum/medien/ist/IMG_7861.jpg', 
-      'assets/rooms/wohnraum/medien/plan/grundriss.JPG'
     ],
     'kellerflur': [
       'assets/rooms/kellerflur/medien/ist/kellerflur_ansicht_eingang.jpg', 
+      'assets/rooms/kellerflur/medien/plan/grundriss_keller.JPG',
       'assets/rooms/kellerflur/medien/ist/kellerflur_treppe_blick_unten.jpg', 
-      'assets/rooms/kellerflur/medien/plan/grundriss_keller.JPG'
     ],
   };
 
@@ -170,7 +342,22 @@ export class RoomComponent implements OnInit {
         if (isPlatformBrowser(this.platformId)) {
           const rendered = await marked.parse(md);
           this.content.set(this.sanitizer.bypassSecurityTrustHtml(rendered));
-          this.images.set(this.roomImages[roomId] || []);
+          
+          const roomImgs = this.roomImagesMap[roomId] || [];
+          this.images.set(roomImgs);
+
+          // Setup Before/After logic
+          const istImg = roomImgs.find(img => img.includes('/ist/'));
+          const planImg = roomImgs.find(img => img.includes('/plan/') || img.includes('/inspiration/'));
+
+          if (istImg && planImg) {
+            this.beforeImage.set(istImg);
+            this.afterImage.set(planImg);
+          } else {
+            this.beforeImage.set(null);
+            this.afterImage.set(null);
+            this.heroImage.set(roomImgs.length > 0 ? roomImgs[0] : null);
+          }
         } else {
           this.content.set(md);
         }
@@ -180,6 +367,21 @@ export class RoomComponent implements OnInit {
         this.error.set(true);
       }
     });
+  }
+
+  onSliderChange(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.sliderPos.set(parseInt(value));
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'Angefangen': return 'status-active';
+      case 'In Planung': return 'status-planned';
+      case 'Fertig': return 'status-finished';
+      case 'On hold': return 'status-onhold';
+      default: return 'status-planned';
+    }
   }
 
   openImage(url: string) {
