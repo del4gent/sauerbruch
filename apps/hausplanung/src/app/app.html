@@ -55,7 +55,10 @@
           <h2>{{ room.name }}</h2>
         </div>
         <div class="room-badges">
-          <span class="badge status">{{ room.status }}</span>
+          <span class="badge status" [ngClass]="room.status.toLowerCase().replace(' ', '-')">
+            <span class="status-dot"></span>
+            {{ room.status }}
+          </span>
           <span class="badge area">{{ formatArea(room.area) }}</span>
         </div>
       </div>

@@ -200,9 +200,30 @@
 }
 
 .badge.status {
-  background: #e1f5fe;
-  color: #0288d1;
+  background: #f1f3f5;
+  color: #495057;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ced4da;
+  display: inline-block;
+}
+
+/* Status Colors */
+.badge.fertig { background: #ebfbee; color: #2b8a3e; }
+.badge.fertig .status-dot { background-color: #40c057; }
+
+.badge.angefangen, .badge.in-planung { background: #fff9db; color: #e67700; }
+.badge.angefangen .status-dot, .badge.in-planung .status-dot { background-color: #fab005; }
+
+.badge.on-hold { background: #fff5f5; color: #c92a2a; }
+.badge.on-hold .status-dot { background-color: #fa5252; }
 
 .badge.area {
   background: #f1f8e9;

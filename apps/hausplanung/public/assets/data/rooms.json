@@ -22,7 +22,7 @@
     "name": "Essraum",
     "area": 20.21,
     "area_derivation": "laut Grundriss",
-    "status": "In Planung",
+    "status": "On hold",
     "budget": 3500.00,
     "path": "rooms/essraum/planung.md"
   },
@@ -31,7 +31,7 @@
     "name": "Küche",
     "area": 14.47,
     "area_derivation": "laut Grundriss",
-    "status": "In Planung",
+    "status": "On hold",
     "budget": 15000.00,
     "path": "rooms/kueche/planung.md"
   },
@@ -40,7 +40,7 @@
     "name": "Bad",
     "area": 6.64,
     "area_derivation": "laut Grundriss",
-    "status": "In Arbeit (Fenstertausch)",
+    "status": "Angefangen",
     "budget": 7150.00,
     "path": "rooms/bad/planung.md"
   },
@@ -58,7 +58,7 @@
     "name": "Schlafzimmer",
     "area": 17.70,
     "area_derivation": "laut Grundriss",
-    "status": "In Planung",
+    "status": "Fertig",
     "budget": 2000.00,
     "path": "rooms/schlafzimmer/planung.md"
   },
@@ -67,7 +67,7 @@
     "name": "Kinderzimmer",
     "area": 12.56,
     "area_derivation": "laut Grundriss",
-    "status": "In Planung",
+    "status": "On hold",
     "budget": 1500.00,
     "path": "rooms/kinderzimmer/planung.md"
   },
@@ -76,7 +76,7 @@
     "name": "Zimmer (Büro)",
     "area": 10.35,
     "area_derivation": "laut Grundriss",
-    "status": "In Planung",
+    "status": "On hold",
     "budget": 1200.00,
     "path": "rooms/zimmer/planung.md"
   },
@@ -85,7 +85,7 @@
     "name": "Flur (Privat)",
     "area": 3.84,
     "area_derivation": "laut Grundriss",
-    "status": "In Planung",
+    "status": "On hold",
     "budget": 500.00,
     "path": "rooms/flur_privat/planung.md"
   },
@@ -94,7 +94,7 @@
     "name": "Garderobe",
     "area": 4.79,
     "area_derivation": "laut Grundriss",
-    "status": "In Planung",
+    "status": "On hold",
     "budget": 800.00,
     "path": "rooms/garderobe/planung.md"
   },
@@ -103,7 +103,7 @@
     "name": "Garage",
     "area": 25.24,
     "area_derivation": "laut Grundriss",
-    "status": "In Planung",
+    "status": "On hold",
     "budget": 1000.00,
     "path": "rooms/garage/planung.md"
   },
