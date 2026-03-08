@@ -104,6 +104,7 @@ export class RoomComponent implements OnInit {
       'assets/rooms/bad/medien/plan/grundriss.png'
     ],
     'wc': [
+      'assets/rooms/wc/medien/ist/gaestebad_ist.png',
       'assets/rooms/wc/medien/ist/IMG_9971.jpg', 
       'assets/rooms/wc/medien/ist/IMG_9972.jpg', 
       'assets/rooms/wc/medien/plan/grundriss.JPG', 
@@ -113,11 +114,21 @@ export class RoomComponent implements OnInit {
       'assets/rooms/diele/medien/ist/flur_ansicht_eingang.jpg', 
       'assets/rooms/diele/medien/ist/flur_durchgang_wohnzimmer.jpg', 
       'assets/rooms/diele/medien/ist/flur_eingangstuer_innen.jpg', 
+      'assets/rooms/diele/medien/ist/flur_schrank_detail.jpg',
       'assets/rooms/diele/medien/plan/grundriss.JPG'
     ],
     'wohnraum': [
+      'assets/rooms/wohnraum/medien/ist/wohnzimmer_1.jpeg',
+      'assets/rooms/wohnraum/medien/ist/wohnzimmer_2.jpeg',
+      'assets/rooms/wohnraum/medien/ist/wohnzimmer_3.jpeg',
+      'assets/rooms/wohnraum/medien/ist/wohnzimmer_4.jpeg',
+      'assets/rooms/wohnraum/medien/ist/wohnzimmer_5.jpeg',
       'assets/rooms/wohnraum/medien/ist/IMG_9983.jpg', 
       'assets/rooms/wohnraum/medien/ist/IMG_6989.jpg', 
+      'assets/rooms/wohnraum/medien/ist/IMG_6990.jpg', 
+      'assets/rooms/wohnraum/medien/ist/IMG_6991.jpg', 
+      'assets/rooms/wohnraum/medien/ist/IMG_7360.jpg', 
+      'assets/rooms/wohnraum/medien/ist/IMG_7861.jpg', 
       'assets/rooms/wohnraum/medien/plan/grundriss.JPG'
     ],
     'kellerflur': [

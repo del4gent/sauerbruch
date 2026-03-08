@@ -1,9 +1,17 @@
-<div class="layout-wrapper">
-  <aside class="sidebar">
+<div *ngIf="!isAuthorized()" class="auth-wrapper">
+  <div class="auth-card">
+    <h1>Sauerbruch 3</h1>
+    <p>Bitte Passwort eingeben</p>
+    <input type="password" (input)="checkPassword($event)" placeholder="Passwort..." autofocus />
+  </div>
+</div>
+
+<div *ngIf="isAuthorized()" class="layout-wrapper" [class.sidebar-collapsed]="isSidebarCollapsed()">
+  <aside class="sidebar" [class.collapsed]="isSidebarCollapsed()">
     <div class="sidebar-header">
-      <h1>Sauerbruch 3</h1>
-      <button (click)="toggleTheme()" class="theme-toggle" [title]="isDarkMode() ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
-        {{ isDarkMode() ? '🌙' : '☀️' }}
+      <h1 *ngIf="!isSidebarCollapsed()">Sauerbruch 3</h1>
+      <button (click)="toggleSidebar()" class="sidebar-toggle">
+        {{ isSidebarCollapsed() ? '➡️' : '⬅️' }}
       </button>
     </div>
     

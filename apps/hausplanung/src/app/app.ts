@@ -13,23 +13,30 @@ import roomsData from '../../public/assets/data/rooms.json';
 })
 export class App implements OnInit {
   rooms = roomsData;
-  isDarkMode = signal(true);
+  isDarkMode = signal(false);
+  isAuthorized = signal(false);
+  isSidebarCollapsed = signal(true);
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-      const savedTheme = localStorage.getItem('theme');
-      this.isDarkMode.set(savedTheme !== 'light');
       this.applyTheme();
+
+      const auth = localStorage.getItem('auth');
+      if (auth === 'bubu') {
+        this.isAuthorized.set(true);
+      }
     }
   }
 
-  toggleTheme() {
-    this.isDarkMode.update(v => !v);
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('theme', this.isDarkMode() ? 'dark' : 'light');
-      this.applyTheme();
+  checkPassword(event: Event) {
+    const input = (event.target as HTMLInputElement).value;
+    if (input === 'bubu') {
+      this.isAuthorized.set(true);
+      if (isPlatformBrowser(this.platformId)) {
+        localStorage.setItem('auth', 'bubu');
+      }
     }
   }
 
@@ -37,5 +44,9 @@ export class App implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       document.body.setAttribute('data-theme', this.isDarkMode() ? 'dark' : 'light');
     }
+  }
+
+  toggleSidebar() {
+    this.isSidebarCollapsed.update((v) => !v);
   }
 }
