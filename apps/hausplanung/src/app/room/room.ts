@@ -286,13 +286,17 @@ export class RoomComponent implements OnInit {
       'assets/rooms/wc/medien/plan/grundriss.JPG', 
       'assets/rooms/wc/medien/plan/plan.JPG'
     ],
-    'diele': [
-      'assets/rooms/diele/medien/ist/flur_ansicht_eingang.jpg', 
-      'assets/rooms/diele/medien/inspiration/kamin_clean_look.jpg',
-      'assets/rooms/diele/medien/ist/flur_durchgang_wohnzimmer.jpg', 
-      'assets/rooms/diele/medien/ist/flur_eingangstuer_innen.jpg', 
-      'assets/rooms/diele/medien/ist/flur_schrank_detail.jpg',
-      'assets/rooms/diele/medien/plan/grundriss.JPG'
+    'flur': [
+      'assets/rooms/flur/medien/ist/flur_ansicht_eingang.jpg', 
+      'assets/rooms/flur/medien/ist/flur_durchgang_wohnzimmer.jpg', 
+      'assets/rooms/flur/medien/ist/flur_eingangstuer_innen.jpg', 
+      'assets/rooms/flur/medien/ist/flur_garderobe_schrank.jpg', 
+      'assets/rooms/flur/medien/ist/flur_schrank_detail.jpg',
+      'assets/rooms/flur/medien/ist/flur_treppenaufgang_blick_unten.jpg',
+      'assets/rooms/flur/medien/inspiration/flur_fenster_regenbogen.png',
+      'assets/rooms/flur/medien/inspiration/kamin_clean_look.jpg',
+      'assets/rooms/flur/medien/inspiration/kamin_farbiger_teppich.jpg',
+      'assets/rooms/flur/medien/plan/grundriss.JPG'
     ],
     'wohnraum': [
       'assets/rooms/wohnraum/medien/ist/wohnzimmer_1.jpeg',
