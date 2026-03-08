@@ -5,7 +5,7 @@
     "area": 12.25,
     "area_derivation": "laut Grundriss",
     "status": "In Planung",
-    "budget": 5000.00,
+    "budget": 5720.00,
     "path": "rooms/diele/planung.md"
   },
   {
@@ -14,7 +14,7 @@
     "area": 20.02,
     "area_derivation": "laut Grundriss",
     "status": "In Planung",
-    "budget": 4220.00,
+    "budget": 5590.00,
     "path": "rooms/wohnraum/planung.md"
   },
   {
