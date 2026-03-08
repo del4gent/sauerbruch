@@ -72,7 +72,12 @@ import roomsData from '../../public/assets/data/rooms.json';
       </section>
     </div>
   `,
-  styles: [`
+    .dashboard {
+      width: 100%;
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+
     .hero-header { 
       position: relative; 
       height: 520px; 

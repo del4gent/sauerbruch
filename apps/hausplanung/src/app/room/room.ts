@@ -103,7 +103,12 @@ import roomsData from '../../../public/assets/data/rooms.json';
     </ng-template>
   `,
   styles: [`
-    .room-page { animation: fadeIn 0.4s ease-out; }
+    .room-page { 
+      animation: fadeIn 0.4s ease-out; 
+      width: 100%;
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
 
     .room-banner {
       height: 450px;

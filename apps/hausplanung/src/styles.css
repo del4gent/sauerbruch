@@ -21,10 +21,16 @@
   --sidebar-text: #f1f5f9;
 }
 
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
   font-family: 'Inter', -apple-system, sans-serif;
   background-color: var(--bg-color);
@@ -36,6 +42,13 @@ html, body {
 h1, h2, h3 {
   font-weight: 800;
   letter-spacing: -0.02em;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
 }
 
 .glass-card {
@@ -46,6 +59,7 @@ h1, h2, h3 {
   border-radius: 20px;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  max-width: 100%;
 }
 
 .glass-card:hover {
@@ -69,6 +83,7 @@ h1, h2, h3 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  white-space: nowrap;
 }
 
 .status-active { 
@@ -109,6 +124,7 @@ h1, h2, h3 {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  max-width: 100%;
 }
 
 .btn-primary:hover { 
@@ -144,13 +160,13 @@ h1, h2, h3 {
   
   .glass-card {
     border-radius: 16px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15); /* More visible on mobile screens */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
   }
 
   .btn-primary {
     padding: 1rem 2rem;
     font-size: 1.1rem;
-    width: 100%; /* Most buttons should be full-width on mobile for better thumb reach */
+    width: 100%;
     box-shadow: 0 8px 15px rgba(59, 130, 246, 0.3);
   }
   
@@ -185,6 +201,7 @@ h1, h2, h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
   }
   
   .details-table td::before {
@@ -193,6 +210,7 @@ h1, h2, h3 {
     font-size: 0.75rem;
     text-transform: uppercase;
     opacity: 0.5;
+    flex-shrink: 0;
   }
 
   .details-table tfoot td {
@@ -200,4 +218,3 @@ h1, h2, h3 {
     justify-content: space-between;
   }
 }
-
