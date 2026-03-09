@@ -1,4 +1,4 @@
-# Planung: Wohnraum
+# Planung: Wohnzimmer
 
 ## 📏 BASISDATEN
 - Fläche: 20,02 m² (Derivation: 5.51m x 3.635m)

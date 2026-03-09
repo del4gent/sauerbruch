@@ -1,0 +1,40 @@
+<div class="details-container">
+  <header class="details-header">
+    <h1 class="gradient-text">Fortschritt Herleitung</h1>
+    <p class="subtitle">Übersicht der erreichten Meilensteine</p>
+  </header>
+
+  <div class="glass-card table-card">
+    <table class="details-table">
+      <thead>
+        <tr>
+          <th>Meilenstein</th>
+          <th class="text-right">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of milestones">
+          <td data-label="Meilenstein">{{ m.name }}</td>
+          <td data-label="Status" class="text-right">
+            <app-status-badge 
+              [label]="m.done ? 'Erledigt' : 'Offen'" 
+              [variant]="m.done ? 'done' : 'pending'"
+              [showDot]="false">
+            </app-status-badge>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td data-label="Zusammenfassung">Gesamtfortschritt</td>
+          <td data-label="Prozent" class="text-right font-mono">{{ calculateProgress() }}%</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="glass-card info-box">
+    <h3>💡 Info zur Berechnung</h3>
+    <p>Der Fortschritt berechnet sich aus dem Verhältnis der erledigten zu den geplanten Meilensteinen ({{ doneCount() }}/{{ milestones.length }}).</p>
+  </div>
+</div>

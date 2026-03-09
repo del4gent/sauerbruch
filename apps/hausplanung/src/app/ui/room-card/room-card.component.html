@@ -1,0 +1,19 @@
+<div class="glass-card room-card" [routerLink]="['/room', room.id]">
+  <div class="room-preview-container">
+    <div *ngFor="let img of images; let i = index" 
+         class="room-preview" 
+         [class.active]="i === currentImageIndex"
+         [style.backgroundImage]="'url(' + img + ')'">
+    </div>
+    <div class="no-preview" *ngIf="images.length === 0">
+    </div>
+  </div>
+  <div class="room-overlay"></div>
+  <div class="room-content-wrapper">
+    <div class="room-info">
+      <h3>{{ room.name }}</h3>
+      <p>{{ room.area }} m² <span class="derivation-hint" *ngIf="room.area_derivation">({{ room.area_derivation }})</span></p>
+      <app-status-badge [status]="room.status"></app-status-badge>
+    </div>
+  </div>
+</div>

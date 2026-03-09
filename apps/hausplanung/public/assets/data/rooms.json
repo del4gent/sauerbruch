@@ -41,7 +41,7 @@
     "area": 14.47,
     "area_derivation": "3.175m x 4.555m",
     "status": "Pausiert",
-    "budget": 15000.00,
+    "budget": null,
     "path": "rooms/kueche/planung.md"
   },
   {
@@ -50,7 +50,7 @@
     "area": 17.70,
     "area_derivation": "3.885m x 4.555m",
     "status": "Fertig",
-    "budget": 2000.00,
+    "budget": null,
     "path": "rooms/schlafzimmer/planung.md"
   },
   {
@@ -59,7 +59,7 @@
     "area": 12.56,
     "area_derivation": "3.885m x 3.232m",
     "status": "Pausiert",
-    "budget": 1500.00,
+    "budget": null,
     "path": "rooms/kinderzimmer/planung.md"
   },
   {
@@ -68,7 +68,7 @@
     "area": 10.35,
     "area_derivation": "2.85m x 3.635m",
     "status": "Pausiert",
-    "budget": 1200.00,
+    "budget": null,
     "path": "rooms/zimmer/planung.md"
   },
   {
@@ -77,7 +77,7 @@
     "area": 25.24,
     "area_derivation": "laut Grundriss",
     "status": "Pausiert",
-    "budget": 1000.00,
+    "budget": null,
     "path": "rooms/garage/planung.md"
   },
   {
@@ -95,7 +95,7 @@
     "area": 12.60,
     "area_derivation": "laut Grundriss",
     "status": "Pausiert",
-    "budget": 0.00,
+    "budget": null,
     "path": "rooms/keller_buero/planung.md"
   }
 ]

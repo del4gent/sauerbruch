@@ -1,0 +1,20 @@
+.details-container { max-width: 1200px; margin: 0 auto; padding-bottom: 5rem; }
+.details-header { margin-bottom: 3rem; }
+
+.floorplan-section { margin-bottom: 3rem; }
+
+.table-card { padding: 0; overflow: hidden; }
+.table-header { padding: 2rem 2rem 1rem 2rem; border-bottom: 1px solid var(--border-color); }
+.table-header h3 { margin: 0; opacity: 0.8; font-size: 1.25rem; }
+
+.clickable-row { cursor: pointer; transition: background 0.2s; }
+.clickable-row:hover { background: rgba(255,255,255,0.03); }
+
+.opacity-60 { opacity: 0.6; }
+.italic { font-style: italic; }
+
+.total-row { background: rgba(16, 185, 129, 0.1); }
+
+@media (max-width: 768px) {
+  .details-header { margin-bottom: 2rem; }
+}

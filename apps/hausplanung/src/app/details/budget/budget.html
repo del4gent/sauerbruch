@@ -1,0 +1,45 @@
+<div class="details-container">
+  <header class="details-header">
+    <h1 class="gradient-text">Materialkosten Herleitung</h1>
+    <p class="subtitle">Detaillierte Kostenaufstellung pro Raum</p>
+  </header>
+
+  <div class="glass-card table-card">
+    <table class="details-table">
+      <thead>
+        <tr>
+          <th>Raum</th>
+          <th>Status</th>
+          <th class="text-right">Kalkulierte Materialkosten</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let room of roomService.getRooms()">
+          <td data-label="Raum">{{ room.name }}</td>
+          <td data-label="Status">
+            <app-status-badge [status]="room.status" [showDot]="false"></app-status-badge>
+          </td>
+          <td data-label="Budget" class="text-right font-mono">
+            <ng-container *ngIf="room.budget !== null; else noBudget">
+              {{ room.budget | number:'1.2-2':'de-DE' }} €
+            </ng-container>
+            <ng-template #noBudget>
+              <span class="opacity-50 italic text-sm">Nicht definiert</span>
+            </ng-template>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="2" data-label="Gesamt">Gesamtsumme</td>
+          <td data-label="Summe" class="text-right font-mono">{{ roomService.totalBudget() | number:'1.2-2':'de-DE' }} €</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="glass-card info-box">
+    <h3>💡 Info zur Kalkulation</h3>
+    <p>Die Beträge basieren auf ersten Schätzungen und Materiallisten. Finale Kosten werden nach Auftragserteilung an Fachbetriebe aktualisiert.</p>
+  </div>
+</div>

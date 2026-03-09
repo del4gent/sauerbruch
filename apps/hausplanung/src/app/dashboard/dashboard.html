@@ -1,0 +1,49 @@
+<div class="dashboard">
+  <header class="hero-header">
+    <div class="hero-image" style="background-image: url('assets/plan/house_hero.jpg')"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-text-wrapper">
+        <span class="hero-tag">PROJEKT-ÜBERSICHT</span>
+        <h1 class="hero-title">Sauerbruch 3</h1>
+        <p class="hero-subtitle">Sanierung & Modernisierung des Wohngebäudes</p>
+      </div>
+      
+      <div class="hero-stats-bar">
+        <div class="stat-item" routerLink="/details/progress">
+          <div class="stat-icon progress-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20V10M18 20V4M6 20v-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label">Fortschritt</span>
+            <span class="stat-value">{{ totalProgress }}%</span>
+          </div>
+        </div>
+
+        <div class="stat-item" routerLink="/details/area">
+          <div class="stat-icon area-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 3h18v18H3zM9 3v18M3 9h18" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label">Fläche</span>
+            <span class="stat-value">{{ roomService.totalArea().toLocaleString('de-DE') }} m²</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="rooms-section">
+    <div class="section-header">
+      <h2>Raumplanung</h2>
+    </div>
+    
+    <div class="room-grid">
+      <app-room-card *ngFor="let room of roomService.getRooms()" 
+        [room]="room" 
+        [images]="roomService.getRoomImages(room.id)" 
+        [currentImageIndex]="currentImageIndices[room.id]">
+      </app-room-card>
+    </div>
+  </section>
+</div>

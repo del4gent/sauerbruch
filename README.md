@@ -10,7 +10,7 @@ Dieses Repository ist das zentrale Tool zur Planung, Dokumentation und Kostenüb
 
 Das Projekt ist als **Nx Monorepo** organisiert:
 
-*   **`apps/hausplanung`**: Die Angular-App (v21). Sie dient als interaktives Dashboard für Flächen, Budgets und den Fortschritt.
+*   **`apps/hausplanung`**: Die Angular-App (v21). Sie dient als interaktives Dashboard für Flächen, Materialkosten und den Fortschritt.
 *   **`apps/hausplanung/public/assets`**: Das "Gehirn" des Projekts. Hier liegen alle Daten:
     *   **`rooms/`**: Pro Raum ein Ordner mit einer `planung.md` und Medien (`ist/`, `inspiration/`, `plan/`, `material/`).
     *   **`pdf_builder/`**: Modularer Python-Kern zur Verarbeitung der Markdown-Daten.

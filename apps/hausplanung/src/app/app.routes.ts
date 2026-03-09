@@ -3,7 +3,7 @@ import { Route } from '@angular/router';
 export const appRoutes: Route[] = [
   { 
     path: '', 
-    loadComponent: () => import('./nx-welcome').then(m => m.NxWelcomeComponent) 
+    loadComponent: () => import('./dashboard/dashboard').then(m => m.DashboardComponent) 
   },
   { 
     path: 'room/:room', 

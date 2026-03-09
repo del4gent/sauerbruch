@@ -1,0 +1,71 @@
+{
+  "bad": [
+    "assets/rooms/bad/medien/ist/vorher.png",
+    "assets/rooms/bad/medien/inspiration/titel.png",
+    "assets/rooms/bad/medien/ist/IMG_9974.jpg", 
+    "assets/rooms/bad/medien/ist/IMG_9976.jpg", 
+    "assets/rooms/bad/medien/material/fliesen2.jpg", 
+    "assets/rooms/bad/medien/material/schrank.JPG",
+    "assets/rooms/bad/medien/plan/grundriss.png",
+    "assets/rooms/bad/medien/plan/grundriss_ausschnitt.png",
+    "assets/rooms/bad/medien/inspiration/f9203bbf-e397-43e0-997a-3b0dceafdddd.JPG"
+  ],
+  "wc": [
+    "assets/rooms/wc/medien/ist/gaestebad_ist.png",
+    "assets/rooms/wc/medien/inspiration/titel.jpg",
+    "assets/rooms/wc/medien/ist/IMG_9971.jpg", 
+    "assets/rooms/wc/medien/ist/IMG_9972.jpg", 
+    "assets/rooms/wc/medien/plan/grundriss.JPG", 
+    "assets/rooms/wc/medien/plan/plan.JPG",
+    "assets/rooms/wc/medien/plan/grundriss_ausschnitt.png"
+  ],
+  "flur": [
+    "assets/rooms/flur/medien/ist/flur_ansicht_eingang.jpg", 
+    "assets/rooms/flur/medien/ist/flur_durchgang_wohnzimmer.jpg", 
+    "assets/rooms/flur/medien/ist/flur_eingangstuer_innen.jpg", 
+    "assets/rooms/flur/medien/ist/flur_garderobe_schrank.jpg", 
+    "assets/rooms/flur/medien/ist/flur_schrank_detail.jpg",
+    "assets/rooms/flur/medien/ist/flur_treppenaufgang_blick_unten.jpg",
+    "assets/rooms/flur/medien/inspiration/flur_fenster_regenbogen.png",
+    "assets/rooms/flur/medien/inspiration/kamin_clean_look.jpg",
+    "assets/rooms/flur/medien/inspiration/kamin_farbiger_teppich.jpg",
+    "assets/rooms/flur/medien/plan/grundriss.JPG",
+    "assets/rooms/flur/medien/plan/grundriss_gesamt.png"
+  ],
+  "wohnraum": [
+    "assets/rooms/wohnraum/medien/ist/wohnzimmer_1.jpeg",
+    "assets/rooms/wohnraum/medien/ist/wohnzimmer_2.jpeg",
+    "assets/rooms/wohnraum/medien/ist/wohnzimmer_3.jpeg",
+    "assets/rooms/wohnraum/medien/ist/wohnzimmer_4.jpeg",
+    "assets/rooms/wohnraum/medien/ist/wohnzimmer_5.jpeg",
+    "assets/rooms/wohnraum/medien/ist/IMG_9983.jpg", 
+    "assets/rooms/wohnraum/medien/ist/IMG_6989.jpg", 
+    "assets/rooms/wohnraum/medien/ist/IMG_6990.jpg", 
+    "assets/rooms/wohnraum/medien/ist/IMG_6991.jpg", 
+    "assets/rooms/wohnraum/medien/ist/IMG_7360.jpg", 
+    "assets/rooms/wohnraum/medien/ist/IMG_7861.jpg", 
+    "assets/rooms/wohnraum/medien/plan/grundriss.JPG",
+    "assets/rooms/wohnraum/medien/plan/grundriss_gesamt.png"
+  ],
+  "kellerflur": [
+    "assets/rooms/kellerflur/medien/ist/kellerflur_ansicht_eingang.jpg", 
+    "assets/rooms/kellerflur/medien/ist/kellerflur_ansicht_flur_lang.jpg",
+    "assets/rooms/kellerflur/medien/ist/kellerflur_wand_mit_kasten.jpg",
+    "assets/rooms/kellerflur/medien/ist/kellerflur_treppe_seite.jpg",
+    "assets/rooms/kellerflur/medien/ist/kellerflur_treppe_blick_unten.jpg",
+    "assets/rooms/kellerflur/medien/ist/kellerflur_ansicht_schrank.jpg",
+    "assets/rooms/kellerflur/medien/ist/kellerflur_fenster_detail.jpg",
+    "assets/rooms/kellerflur/medien/plan/grundriss_keller.JPG",
+    "assets/rooms/kellerflur/medien/plan/grundriss_detail.png",
+    "assets/rooms/kellerflur/medien/inspiration/kellerflur_detail_2.jpg",
+    "assets/rooms/kellerflur/medien/inspiration/kellerflur_detail_3.jpg",
+    "assets/rooms/kellerflur/medien/inspiration/kellerflur_detail_4.jpg"
+  ],
+  "keller_buero": [
+    "assets/rooms/keller_buero/medien/ist/ist2.png",
+    "assets/rooms/keller_buero/medien/inspiration/soll.png",
+    "assets/rooms/keller_buero/medien/inspiration/IMG_0029.png",
+    "assets/rooms/keller_buero/medien/inspiration/IMG_0031.png",
+    "assets/rooms/keller_buero/medien/plan/grundriss.png"
+  ]
+}

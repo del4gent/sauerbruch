@@ -4,13 +4,13 @@
 Dieses Dokument bildet die Grundlage für die Ausschreibung und Ausführung der Renovierungsmaßnahmen in der Sauerbruch 3. 
 
 - **Transparenz:** Die aufgeführten m²-Angaben enthalten zur Nachvollziehbarkeit ihre Herleitungen (z.B. Länge x Breite).
-- **Zielwerte:** Die Kostenschätzungen dienen der Budgetplanung; die finalen Werte ergeben sich aus den Angeboten der Fachbetriebe.
+- **Zielwerte:** Die Kostenschätzungen dienen der Materialkostenplanung; die finalen Werte ergeben sich aus den Angeboten der Fachbetriebe.
 - **Ist-Zustand:** Die fotografische Dokumentation dient der Vorab-Beurteilung der Baustellensituation.
 
 ## 🏠 Räume & Status (Priorisiert nach Renovierungsplan)
 | Raum | Fläche (m²) | Status | Link |
 | :--- | :--- | :--- | :--- |
-| Bad | 6,64 | 🏗️ Angefangen | [Details](./rooms/bad/planung.md) |
+| Bad | 6,64 | 🏗️ In Arbeit | [Details](./rooms/bad/planung.md) |
 | Gästebad | 2,86 | ⏳ In Planung | [Details](./rooms/wc/planung.md) |
 | Flur | 20,88 | ⏳ In Planung | [Details](./rooms/flur/planung.md) |
 | Wohnzimmer | 40,23 | ⏳ In Planung | [Details](./rooms/wohnzimmer/planung.md) |
@@ -20,12 +20,12 @@ Dieses Dokument bildet die Grundlage für die Ausschreibung und Ausführung der 
 | Zimmer (Büro) | 10,35 | ⏳ Pausiert | [Details](./rooms/zimmer/planung.md) |
 | Garage | 25,24 | ⏳ Pausiert | [Details](./rooms/garage/planung.md) |
 | Kellerflur | 14,52 | ⏳ In Planung | [Details](./rooms/kellerflur/planung.md) |
-| Keller Büro | 12,60 | ⏳ In Planung | [Details](./rooms/keller_buero/planung.md) |
+| Keller Büro | 12,60 | ⏳ Pausiert | [Details](./rooms/keller_buero/planung.md) |
 
 ## 💰 Kosten-Zusammenfassung
 | Kategorie | Geschätzte Kosten | Tatsächliche Kosten | Differenz |
 | :--- | :--- | :--- | :--- |
-| **Gesamt** | **50.320 €** (Summe aller Räume laut rooms.json) | **0,00 €** | **-50.320 €** |
+| **Gesamt** | **28.620 €** (Summe der definierten Räume laut rooms.json) | **0,00 €** | **-28.620 €** |
 | Eigenleistung (Material) | 0,00 € | 0,00 € | 0,00 € |
 | Fachbetriebe (Arbeit & Mat.) | 0,00 € | 0,00 € | 0,00 € |
 
