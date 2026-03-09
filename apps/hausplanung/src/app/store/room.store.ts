@@ -12,7 +12,7 @@ export interface Material {
   brand: string;
   specs: string;
   image: string;
-  status: 'noch am aussuchen' | 'gekauft' | 'ausgesucht, aber muss noch gekauft werden';
+  status: 'In Auswahl' | 'Gekauft' | 'Ausgesucht';
   quantity: string;
   price: string;
   shop: string;

@@ -214,9 +214,9 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   getStatusClass(status: string): string {
     const s = status.toLowerCase();
-    if (s.includes('gekauft') && !s.includes('noch')) return 'gekauft';
-    if (s.includes('ausgesucht')) return 'ausgesucht';
-    if (s.includes('noch am aussuchen')) return 'noch-aussuchen';
+    if (s === 'gekauft') return 'gekauft';
+    if (s === 'ausgesucht') return 'ausgesucht';
+    if (s === 'in auswahl') return 'noch-aussuchen';
     return '';
   }
 
