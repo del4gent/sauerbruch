@@ -189,7 +189,12 @@
                       <span class="step-title-small">{{ row[0] }}</span>
                       <div class="step-meta-micro">
                         <span class="step-date-micro" *ngIf="row[2] || row[3]">
-                          {{ row[2] }}<span *ngIf="row[2] && row[3]"> – </span>{{ row[3] }}
+                          <ng-container *ngIf="row[2] && row[3]; else singleDate">
+                            {{ row[2] | date:'MMMM yyyy' }} – {{ row[3] | date:'MMMM yyyy' }}
+                          </ng-container>
+                          <ng-template #singleDate>
+                            ab {{ (row[2] || row[3]) | date:'MMMM yyyy' }}
+                          </ng-template>
                         </span>
                         <span class="step-status-tag-micro" *ngIf="isCurrent(section, i)">{{ row[1] || 'Aktiv' }}</span>
                       </div>
