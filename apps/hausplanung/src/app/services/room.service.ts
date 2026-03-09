@@ -83,8 +83,7 @@ export class RoomService {
 
   getRoomInspirationImages(id: string): string[] {
     const images = this.getRoomImages(id);
-    const inspiration = images.filter(img => img.includes('/inspiration/'));
-    return inspiration.length > 0 ? inspiration : images;
+    return images.filter(img => img.includes('/inspiration/'));
   }
 
   updateBreadcrumb() {
