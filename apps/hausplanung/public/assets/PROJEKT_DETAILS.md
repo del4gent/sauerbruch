@@ -83,7 +83,7 @@
 
 ## ZIMMER 2
 - **Fläche:** 12.56 m² (3.885m x 3.232m)
-- **Status:** In Arbeit
+- **Status:** Pausiert
 
 ---
 
