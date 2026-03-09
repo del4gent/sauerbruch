@@ -81,6 +81,12 @@ export class RoomService {
     return this.roomImagesMap[id] || [];
   }
 
+  getRoomInspirationImages(id: string): string[] {
+    const images = this.getRoomImages(id);
+    const inspiration = images.filter(img => img.includes('/inspiration/'));
+    return inspiration.length > 0 ? inspiration : images;
+  }
+
   updateBreadcrumb() {
     let route = this.activatedRoute.root;
     while (route.firstChild) {

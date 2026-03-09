@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.intervalId = setInterval(() => {
       this.roomService.getRooms().forEach(room => {
-        const imgs = this.roomService.getRoomImages(room.id);
+        const imgs = this.roomService.getRoomInspirationImages(room.id);
         if (imgs.length > 1) {
           this.currentImageIndices[room.id] = (this.currentImageIndices[room.id] + 1) % imgs.length;
         }

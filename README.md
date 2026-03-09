@@ -1,4 +1,4 @@
-# 🏠 Projekt Sauerbruch 3 - Hausplanung & Renovierung
+# 🏠 SAUERBRUCH 3 | HAUSPLANUNG & RENOVIERUNG
 
 Dieses Repository ist das zentrale Tool zur Planung, Dokumentation und Kostenüberwachung der Renovierungsmaßnahmen in der Sauerbruchstraße 3. Es kombiniert eine **Angular-Web-App** zur Visualisierung mit einem **Markdown-basierten Daten-Workflow** und automatisierter **PDF-Generierung**.
 

@@ -1,4 +1,4 @@
-# 🏠 SAUERBRUCH 3 - GESAMTPLANUNG
+# 🏠 SAUERBRUCH 3 | HAUSPLANUNG & RENOVIERUNG
 
 **Gesamtfläche:** 178.05 m²
 **Gesamtkosten:** 28.620,00 EUR

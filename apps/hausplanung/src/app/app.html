@@ -21,7 +21,8 @@
 <ng-template #loginTpl>
   <div class="login-screen">
     <div class="glass-card login-card">
-      <h1>Sauerbruch 3</h1>
+      <h1 class="gradient-text">SAUERBRUCH 3</h1>
+      <p style="text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.8rem; opacity: 0.5; font-weight: 500; margin-top: -1rem; margin-bottom: 2rem;">Hausplanung & Renovierung</p>
       <p>Bitte gib das Passwort ein, um die Planung zu sehen.</p>
       <div class="login-input-wrapper">
         <input #pwdInput type="password" (input)="checkPassword($event)" (keyup.enter)="checkPassword(pwdInput.value)" placeholder="Passwort..." autofocus>
