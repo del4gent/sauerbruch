@@ -264,13 +264,14 @@
 @media (max-width: 768px) {
   .desktop-only { display: none; }
   .mobile-only { display: flex; }
-  
+
   .top-nav { height: 64px; }
   .nav-container { padding: 0 1.25rem; }
-  
+
   .main-content {
     padding: 1.25rem;
   }
+
 
   .mobile-breadcrumb {
     display: flex;

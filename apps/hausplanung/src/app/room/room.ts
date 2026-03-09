@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, signal, Inject, PLATFORM_ID, computed } from '@angular/core';
+import { StatusBadgeComponent } from '../ui/status-badge/status-badge.component';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -16,7 +17,7 @@ interface ImageGroup {
 @Component({
   selector: 'app-room',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, StatusBadgeComponent],
   template: `
     <div class="room-page" *ngIf="!error(); else errorTpl">
       <!-- HERO SECTION -->
@@ -49,10 +50,7 @@ interface ImageGroup {
               {{ roomDetails()?.area }} m² 
               <span class="derivation-hint" *ngIf="roomDetails()?.area_derivation">({{ roomDetails()?.area_derivation }})</span>
             </p>
-            <div class="badge" [ngClass]="getStatusClass(roomDetails()?.status)">
-              <span class="status-dot"></span>
-              {{ roomDetails()?.status }}
-            </div>
+            <app-status-badge [status]="roomDetails()?.status"></app-status-badge>
           </div>
         </div>
       </section>
@@ -203,19 +201,6 @@ interface ImageGroup {
     .area-text { margin: 0; font-size: 1.25rem; font-weight: 600; color: white; opacity: 0.9; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
     .derivation-hint { font-size: 0.85em; font-style: italic; opacity: 0.6; font-weight: 400; }
 
-    /* EXACT DASHBOARD STATUS STYLING */
-    .badge { padding: 0.25rem 0; border-radius: 8px; font-size: 0.7rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-    
-    .status-active { color: #60a5fa; }
-    .status-active .status-dot { background: #60a5fa; box-shadow: 0 0 10px #3b82f6; }
-    .status-planned { color: #94a3b8; }
-    .status-planned .status-dot { background: #94a3b8; }
-    .status-onhold { color: #f87171; }
-    .status-onhold .status-dot { background: #f87171; }
-    .status-finished { color: #4ade80; }
-    .status-finished .status-dot { background: #4ade80; box-shadow: 0 0 10px #22c55e; }
-
     /* CONTENT CONTAINER */
     .content-container {
       position: relative;
@@ -285,8 +270,12 @@ interface ImageGroup {
     @media (max-width: 768px) {
       .minimal-title { font-size: 3rem; }
       .hero-content-wrapper { left: 1.5rem; bottom: 40px; }
-      .content-container { padding: 2rem 1.5rem 3rem 1.5rem; }
-      .room-hero { height: 50vh; }
+      .content-container { padding: 2rem 0 3rem 0; }
+      .room-hero { height: 50vh; margin: -1.25rem -1.25rem 0 -1.25rem; }
+      .documentation-section { border-radius: 0; padding: 2rem 1.25rem; }
+      .group-header { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .masonry-grid { gap: 2px; }
+      .masonry-item { border-radius: 0; border-left: none; border-right: none; }
     }
 
     @keyframes fadeIn {
@@ -502,15 +491,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.sliderPos.set(parseInt(value));
   }
 
-  getStatusClass(status: string): string {
-    switch (status) {
-      case 'Angefangen': return 'status-active';
-      case 'In Planung': return 'status-planned';
-      case 'Fertig': return 'status-finished';
-      case 'On hold': return 'status-onhold';
-      default: return 'status-planned';
-    }
-  }
+  
 
   openImage(url: string) {
     window.open(url, '_blank');

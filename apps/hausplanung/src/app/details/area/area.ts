@@ -60,19 +60,13 @@ import roomsData from '../../../../public/assets/data/rooms.json';
     .table-header { padding: 2rem 2rem 1rem 2rem; border-bottom: 1px solid var(--border-color); }
     .table-header h3 { margin: 0; opacity: 0.8; font-size: 1.25rem; }
 
-    .details-table { width: 100%; border-collapse: collapse; }
-    .details-table th, .details-table td { padding: 1.25rem 2rem; border-bottom: 1px solid var(--border-color); text-align: left; }
-    .details-table th { background: rgba(255,255,255,0.05); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; }
-    
     .clickable-row { cursor: pointer; transition: background 0.2s; }
     .clickable-row:hover { background: rgba(255,255,255,0.03); }
 
-    .font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-weight: 700; }
     .opacity-60 { opacity: 0.6; }
     .italic { font-style: italic; }
     
-    .total-row { background: rgba(16, 185, 129, 0.1); font-size: 1.25rem; font-weight: 800; }
-    .total-row td { border-bottom: none; }
+    .total-row { background: rgba(16, 185, 129, 0.1); }
 
     @media (max-width: 768px) {
       .details-header { margin-bottom: 2rem; }

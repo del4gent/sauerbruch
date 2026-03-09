@@ -1,12 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { StatusBadgeComponent } from '../../ui/status-badge/status-badge.component';
 import roomsData from '../../../../public/assets/data/rooms.json';
 
 @Component({
   selector: 'app-budget',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, StatusBadgeComponent],
   template: `
     <div class="details-container">
       <header class="details-header">
@@ -27,7 +28,9 @@ import roomsData from '../../../../public/assets/data/rooms.json';
           <tbody>
             <tr *ngFor="let room of rooms">
               <td data-label="Raum">{{ room.name }}</td>
-              <td data-label="Status"><span class="badge">{{ room.status }}</span></td>
+              <td data-label="Status">
+                <app-status-badge [status]="room.status" [showDot]="false"></app-status-badge>
+              </td>
               <td data-label="Budget" class="text-right font-mono">{{ formatCurrency(room.budget) }}</td>
             </tr>
           </tbody>
@@ -53,21 +56,12 @@ import roomsData from '../../../../public/assets/data/rooms.json';
     .btn-back { color: var(--primary-color); text-decoration: none; font-weight: 700; margin-bottom: 1rem; display: inline-block; }
     
     .table-card { padding: 0; overflow: hidden; }
-    .details-table { width: 100%; border-collapse: collapse; }
-    .details-table th, .details-table td { padding: 1.25rem 2rem; border-bottom: 1px solid var(--border-color); text-align: left; }
-    .details-table th { background: rgba(255,255,255,0.05); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; }
     
-    .text-right { text-align: right !important; }
-    .font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-weight: 700; }
-    
-    .total-row { background: rgba(59, 130, 246, 0.1); font-size: 1.25rem; font-weight: 800; }
-    .total-row td { border-bottom: none; }
+    .total-row { background: rgba(59, 130, 246, 0.1); }
 
     .info-box { margin-top: 2rem; padding: 2rem; }
     .info-box h3 { margin-top: 0; color: var(--primary-color); }
     .info-box p { margin-bottom: 0; opacity: 0.7; }
-
-    .badge { background: rgba(255,255,255,0.1); padding: 0.25rem 0.75rem; border-radius: 8px; font-size: 0.8rem; }
   `]
 })
 export class BudgetComponent {

@@ -1,4 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { StatusBadgeComponent } from './ui/status-badge/status-badge.component';
+import { RoomCardComponent } from './ui/room-card/room-card.component';
+import { StatCardComponent } from './ui/stat-card/stat-card.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import roomsData from '../../public/assets/data/rooms.json';
@@ -6,7 +9,7 @@ import roomsData from '../../public/assets/data/rooms.json';
 @Component({
   selector: 'app-nx-welcome',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, StatusBadgeComponent, RoomCardComponent, StatCardComponent],
   template: `
     <div class="dashboard">
       <header class="hero-header glass-card">
@@ -16,23 +19,24 @@ import roomsData from '../../public/assets/data/rooms.json';
           <h1 class="gradient-text">Projekt Sauerbruch 3</h1>
           
           <div class="stats-grid overlay-stats">
-            <div class="stat-item transparent" routerLink="/details/progress">
-              <span class="stat-label">Gesamtfortschritt</span>
-              <div class="progress-container">
-                <div class="progress-bar" style="width: 24%"></div>
-              </div>
-              <span class="stat-value">24%</span>
-            </div>
+            <app-stat-card 
+              label="Gesamtfortschritt" 
+              value="24%" 
+              [progress]="24" 
+              link="/details/progress">
+            </app-stat-card>
 
-            <div class="stat-item transparent" routerLink="/details/area">
-              <span class="stat-label">Gesamtfläche</span>
-              <span class="stat-value">178,05 m²</span>
-            </div>
+            <app-stat-card 
+              label="Gesamtfläche" 
+              value="178,05 m²" 
+              link="/details/area">
+            </app-stat-card>
 
-            <div class="stat-item transparent" routerLink="/details/budget">
-              <span class="stat-label">Materialbudget</span>
-              <span class="stat-value">50.320 €</span>
-            </div>
+            <app-stat-card 
+              label="Materialbudget" 
+              value="50.320 €" 
+              link="/details/budget">
+            </app-stat-card>
           </div>
         </div>
       </header>
@@ -47,29 +51,7 @@ import roomsData from '../../public/assets/data/rooms.json';
         
         <div class="room-grid">
 
-          <div *ngFor="let room of rooms" class="glass-card room-card" [routerLink]="['/room', room.id]">
-            <div class="room-preview-container">
-              <div *ngFor="let img of getRoomImages(room.id); let i = index" 
-                   class="room-preview" 
-                   [class.active]="i === currentImageIndices[room.id]"
-                   [style.backgroundImage]="'url(' + img + ')'">
-              </div>
-              <div class="no-preview" *ngIf="getRoomImages(room.id).length === 0">
-                <span>Kein Vorschaubild</span>
-              </div>
-            </div>
-            <div class="room-overlay"></div>
-            <div class="room-content-wrapper">
-              <div class="room-info">
-                <h3>{{ room.name }}</h3>
-                <p>{{ room.area }} m² <span class="derivation-hint">({{ room.area_derivation }})</span></p>
-                <div class="badge" [ngClass]="getStatusClass(room.status)">
-                  <span class="status-dot"></span>
-                  {{ room.status }}
-                </div>
-              </div>
-            </div>
-          </div>
+          <app-room-card *ngFor="let room of rooms" [room]="room" [images]="getRoomImages(room.id)" [currentImageIndex]="currentImageIndices[room.id]"></app-room-card>
         </div>
       </section>
     </div>
@@ -121,47 +103,6 @@ import roomsData from '../../public/assets/data/rooms.json';
       gap: 2rem; 
       width: 100%;
     }
-    .stat-item { 
-      padding: 1.75rem; 
-      display: flex; 
-      flex-direction: column; 
-      cursor: pointer; 
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      border-radius: 24px;
-    }
-    .stat-item.transparent {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-    }
-    .stat-item:hover { 
-      transform: translateY(-10px); 
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-    .stat-label { 
-      font-size: 0.7rem; 
-      text-transform: uppercase; 
-      letter-spacing: 0.15em; 
-      color: white; 
-      font-weight: 800; 
-      margin-bottom: 1.25rem; 
-      opacity: 0.5;
-    }
-    .stat-value { 
-      font-size: 2.25rem; 
-      font-weight: 800; 
-      color: white; 
-      line-height: 1;
-      letter-spacing: -0.02em;
-    }
-
-    .progress-container { background: rgba(255, 255, 255, 0.1); height: 6px; border-radius: 3px; margin: 0.5rem 0 1.25rem 0; overflow: hidden; }
-    .progress-bar { 
-      background: #fff; 
-      height: 100%; 
-      border-radius: 3px; 
-    }
 
     .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; }
     .section-header h2 { font-size: 2rem; margin: 0; font-weight: 800; letter-spacing: -0.02em; }
@@ -173,87 +114,6 @@ import roomsData from '../../public/assets/data/rooms.json';
     .filter-chip.active { background: var(--text-color); color: var(--bg-color); border-color: var(--text-color); }
 
     .room-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 2.5rem; }
-    
-    .room-card { 
-      aspect-ratio: 16/10;
-      display: flex; 
-      cursor: pointer; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative; overflow: hidden;
-      border-radius: 24px;
-      padding: 0;
-      background: #0f172a;
-      border: 1px solid var(--border-color);
-    }
-    .room-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.3); }
-    
-    .room-preview-container {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 0;
-    }
-
-    .room-preview {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      z-index: 0;
-      pointer-events: none;
-      transition: opacity 1.5s ease-in-out, transform 6s ease-in-out;
-      transform: scale(1);
-    }
-
-    .room-preview.active {
-      opacity: 0.6;
-      transform: scale(1.08);
-    }
-
-    .room-card:hover .room-preview.active {
-      opacity: 0.8;
-    }
-
-    .no-preview {
-      display: flex; align-items: center; justify-content: center; height: 100%;
-      background: #1e293b; color: rgba(255,255,255,0.2); font-size: 0.8rem; font-weight: 600;
-    }
-
-    .room-overlay {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.2) 60%);
-      z-index: 1;
-    }
-
-    .room-content-wrapper {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 2rem;
-      width: 100%;
-      color: white;
-    }
-
-    .room-info h3 { margin: 0; font-size: 1.75rem; font-weight: 800; color: white; letter-spacing: -0.02em; }
-    .room-info p { margin: 0.4rem 0 1rem 0; opacity: 0.5; font-size: 0.9rem; color: white; font-weight: 500; }
-    .derivation-hint { font-size: 0.8em; font-style: italic; opacity: 0.7; }
-
-    .badge { padding: 0.25rem 0; border-radius: 8px; font-size: 0.7rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-    
-    .status-active { color: #60a5fa; }
-    .status-active .status-dot { background: #60a5fa; box-shadow: 0 0 10px #3b82f6; }
-    
-    .status-planned { color: #94a3b8; }
-    .status-planned .status-dot { background: #94a3b8; }
-
-    .status-onhold { color: #f87171; }
-    .status-onhold .status-dot { background: #f87171; }
-
-    .status-finished { color: #4ade80; }
-    .status-finished .status-dot { background: #4ade80; box-shadow: 0 0 10px #22c55e; }
 
     @media (max-width: 1024px) {
       .hero-header { height: 450px; padding: 2.5rem; margin-bottom: 3rem; }
@@ -262,10 +122,15 @@ import roomsData from '../../public/assets/data/rooms.json';
     }
 
     @media (max-width: 768px) {
-      .hero-header { height: 400px; padding: 2rem; border-radius: 24px; }
-      .hero-content h1 { font-size: 3rem; }
+      .hero-header { height: 350px; padding: 1.25rem; border-radius: 0; margin: -1.25rem -1.25rem 2rem -1.25rem; border-left: none; border-right: none; }
+      .hero-content h1 { font-size: 2.75rem; margin-bottom: 1.5rem; }
+      .room-grid { 
+        grid-template-columns: 1fr; 
+        gap: 0; 
+        margin: 0 -1.25rem; 
+      }
+      .section-header { padding: 0 1.25rem; margin-bottom: 1.5rem; }
       .stat-value { font-size: 1.75rem; }
-      .room-grid { grid-template-columns: 1fr; }
     }
   `],
   encapsulation: ViewEncapsulation.None,
@@ -330,13 +195,5 @@ export class NxWelcomeComponent implements OnInit, OnDestroy {
     return this.roomImagesMap[roomId] || [];
   }
 
-  getStatusClass(status: string): string {
-    switch (status) {
-      case 'Angefangen': return 'status-active';
-      case 'In Planung': return 'status-planned';
-      case 'Fertig': return 'status-finished';
-      case 'On hold': return 'status-onhold';
-      default: return 'status-planned';
-    }
-  }
+  
 }

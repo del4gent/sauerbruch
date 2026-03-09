@@ -1,11 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { StatusBadgeComponent } from '../../ui/status-badge/status-badge.component';
 
 @Component({
   selector: 'app-progress',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, StatusBadgeComponent],
   template: `
     <div class="details-container">
       <header class="details-header">
@@ -26,7 +27,11 @@ import { RouterModule } from '@angular/router';
             <tr *ngFor="let m of milestones">
               <td data-label="Meilenstein">{{ m.name }}</td>
               <td data-label="Status" class="text-right">
-                <span class="badge" [class.badge-done]="m.done">{{ m.done ? '✅ Erledigt' : '⏳ Offen' }}</span>
+                <app-status-badge 
+                  [label]="m.done ? 'Erledigt' : 'Offen'" 
+                  [variant]="m.done ? 'done' : 'pending'"
+                  [showDot]="false">
+                </app-status-badge>
               </td>
             </tr>
           </tbody>
@@ -58,23 +63,12 @@ import { RouterModule } from '@angular/router';
     }
 
     .table-card { padding: 0; overflow: hidden; }
-    .details-table { width: 100%; border-collapse: collapse; }
-
-    .details-table th, .details-table td { padding: 1.25rem 2rem; border-bottom: 1px solid var(--border-color); text-align: left; }
-    .details-table th { background: rgba(255,255,255,0.05); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; }
     
-    .text-right { text-align: right !important; }
-    .font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-weight: 700; }
-    
-    .total-row { background: rgba(59, 130, 246, 0.1); font-size: 1.25rem; font-weight: 800; }
-    .total-row td { border-bottom: none; }
+    .total-row { background: rgba(59, 130, 246, 0.1); }
 
     .info-box { margin-top: 2rem; padding: 2rem; }
     .info-box h3 { margin-top: 0; color: var(--primary-color); }
     .info-box p { margin-bottom: 0; opacity: 0.7; }
-
-    .badge { background: rgba(255,255,255,0.05); padding: 0.4rem 0.8rem; border-radius: 10px; font-size: 0.8rem; font-weight: 700; display: inline-block; border: 1px solid rgba(255,255,255,0.1); }
-    .badge-done { background: rgba(34, 197, 94, 0.1); color: #4ade80; border-color: rgba(34, 197, 94, 0.2); }
   `]
 })
 export class ProgressComponent {
