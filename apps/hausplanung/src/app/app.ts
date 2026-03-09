@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { RoomService } from './services/room.service';
+import { RoomStore } from './store/room.store';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,9 @@ import { RoomService } from './services/room.service';
   styleUrl: './app.css',
 })
 export class App implements OnInit {
-  constructor(public roomService: RoomService) {}
+  public roomService = inject(RoomStore);
+
+  constructor() {}
 
   ngOnInit() {
     this.roomService.updateBreadcrumb();

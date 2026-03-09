@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy, signal, Inject, PLATFORM_ID, computed } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, Inject, PLATFORM_ID, computed, inject } from '@angular/core';
 import { StatusBadgeComponent } from '../ui/status-badge/status-badge.component';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { marked } from 'marked';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { RoomService, Room } from '../services/room.service';
+import { RoomStore, Room } from '../store/room.store';
 
 interface ImageGroup {
   id: string;
@@ -27,9 +27,6 @@ export class RoomComponent implements OnInit, OnDestroy {
   content = signal<SafeHtml>('');
   images = signal<string[]>([]);
   heroImage = signal<string | null>(null);
-  beforeImage = signal<string | null>(null);
-  afterImage = signal<string | null>(null);
-  sliderPos = signal(50);
   error = signal(false);
   progress = signal<{ total: number; completed: number; percentage: number }>({ total: 0, completed: 0, percentage: 0 });
   upcomingTasks = signal<string[]>([]);
@@ -65,13 +62,12 @@ export class RoomComponent implements OnInit, OnDestroy {
     return groups;
   });
 
-  private animationInterval: any;
+  public roomService = inject(RoomStore);
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     public sanitizer: DomSanitizer,
-    public roomService: RoomService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -82,13 +78,11 @@ export class RoomComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.stopAnimation();
   }
 
   loadRoomData(roomId: string) {
     this.roomName.set(roomId);
     this.error.set(false);
-    this.stopAnimation();
     
     const details = this.roomService.getRoomById(roomId);
     this.roomDetails.set(details || null);
@@ -124,19 +118,7 @@ export class RoomComponent implements OnInit, OnDestroy {
           
           const roomImgs = this.roomService.getRoomImages(roomId);
           this.images.set(roomImgs);
-
-          const istImg = roomImgs.find(img => img.includes('/ist/'));
-          const planImg = roomImgs.find(img => img.includes('/plan/') || img.includes('/inspiration/'));
-
-          if (istImg && planImg) {
-            this.beforeImage.set(istImg);
-            this.afterImage.set(planImg);
-            this.startAnimation();
-          } else {
-            this.beforeImage.set(null);
-            this.afterImage.set(null);
-            this.heroImage.set(roomImgs.length > 0 ? roomImgs[0] : null);
-          }
+          this.heroImage.set(roomImgs.length > 0 ? roomImgs[0] : null);
         } else {
           this.content.set(md);
         }
@@ -146,33 +128,6 @@ export class RoomComponent implements OnInit, OnDestroy {
         this.error.set(true);
       }
     });
-  }
-
-  private startAnimation() {
-    this.stopAnimation();
-    if (!isPlatformBrowser(this.platformId)) return;
-    
-    const startTime = Date.now();
-    const cycleDuration = 24000;
-    
-    this.animationInterval = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const pos = (Math.sin((elapsed / cycleDuration) * 2 * Math.PI - Math.PI / 2) + 1) / 2 * 100;
-      this.sliderPos.set(pos);
-    }, 20); 
-  }
-
-  private stopAnimation() {
-    if (this.animationInterval) {
-      clearInterval(this.animationInterval);
-      this.animationInterval = null;
-    }
-  }
-
-  onSliderChange(event: Event) {
-    this.stopAnimation();
-    const value = (event.target as HTMLInputElement).value;
-    this.sliderPos.set(parseInt(value));
   }
 
   openImage(url: string) {

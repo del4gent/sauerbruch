@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FloorPlanComponent } from '../../floor-plan/floor-plan';
-import { RoomService } from '../../services/room.service';
+import { RoomStore } from '../../store/room.store';
 
 @Component({
   selector: 'app-area',
@@ -12,7 +12,9 @@ import { RoomService } from '../../services/room.service';
   styleUrl: './area.css'
 })
 export class AreaComponent {
-  constructor(private router: Router, public roomService: RoomService) {}
+  public roomService = inject(RoomStore);
+
+  constructor(private router: Router) {}
 
   onRoomSelected(roomId: string) {
     this.router.navigate(['/room', roomId]);

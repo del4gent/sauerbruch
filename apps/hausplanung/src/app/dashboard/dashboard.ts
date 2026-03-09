@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { RoomCardComponent } from '../ui/room-card/room-card.component';
 import { StatCardComponent } from '../ui/stat-card/stat-card.component';
-import { RoomService } from '../services/room.service';
+import { RoomStore } from '../store/room.store';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,7 +32,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   currentImageIndices: Record<string, number> = {};
   private intervalId: any;
 
-  constructor(public roomService: RoomService) {}
+  public roomService = inject(RoomStore);
+
+  constructor() {}
 
   ngOnInit() {
     this.roomService.sortedRooms().forEach(room => {

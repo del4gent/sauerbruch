@@ -27,7 +27,7 @@
        [class.status-planned]="getRoomStatus('garage') === 'In Planung'">
       <rect x="20" y="40" width="180" height="505" rx="4" fill="none" stroke="#dfe4e8" stroke-dasharray="4" />
       <text x="110" y="280" class="room-label opacity-60">Garage</text>
-      <text x="110" y="300" class="room-detail opacity-60">25,24 m²</text>
+      <text x="110" y="300" class="room-detail opacity-60">{{ roomService.getRoomById('garage')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
 
     <!-- Wohnzimmer -->
@@ -39,7 +39,7 @@
        [class.status-planned]="getRoomStatus('wohnraum') === 'In Planung'">
       <rect x="230" y="40" width="334" height="218" rx="2" />
       <text x="397" y="130" class="room-label">Wohnzimmer</text>
-      <text x="397" y="150" class="room-area">40,23 m²</text>
+      <text x="397" y="150" class="room-area">{{ roomService.getRoomById('wohnraum')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
 
     <!-- Küche -->
@@ -51,8 +51,8 @@
        [class.status-planned]="getRoomStatus('kueche') === 'In Planung'">
       <rect x="230" y="258" width="190" height="180" rx="2" />
       <text x="325" y="325" class="room-label">Küche</text>
-      <text x="325" y="345" class="room-detail">3,18m x 4,56m</text>
-      <text x="325" y="360" class="room-area">14,47 m²</text>
+      <text x="325" y="345" class="room-detail">{{ roomService.getRoomById('kueche')?.area_derivation }}</text>
+      <text x="325" y="360" class="room-area">{{ roomService.getRoomById('kueche')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
 
     <!-- Flur -->
@@ -64,7 +64,7 @@
        [class.status-planned]="getRoomStatus('flur') === 'In Planung'">
       <rect x="420" y="258" width="264" height="180" rx="2" />
       <text x="552" y="345" class="room-label">Flur</text>
-      <text x="552" y="370" class="room-area">20,88 m²</text>
+      <text x="552" y="370" class="room-area">{{ roomService.getRoomById('flur')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
 
     <!-- Bad -->
@@ -76,7 +76,7 @@
        [class.status-planned]="getRoomStatus('bad') === 'In Planung'">
       <rect x="564" y="40" width="120" height="218" rx="2" />
       <text x="624" y="135" class="room-label-small">Bad</text>
-      <text x="624" y="163" class="room-area-tiny">6,64 m²</text>
+      <text x="624" y="163" class="room-area-tiny">{{ roomService.getRoomById('bad')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
 
     <!-- Schlafzimmer -->
@@ -88,7 +88,7 @@
        [class.status-planned]="getRoomStatus('schlafzimmer') === 'In Planung'">
       <rect x="684" y="40" width="233" height="398" rx="2" />
       <text x="800" y="220" class="room-label">Schlafzimmer</text>
-      <text x="800" y="255" class="room-area">17,70 m²</text>
+      <text x="800" y="255" class="room-area">{{ roomService.getRoomById('schlafzimmer')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
 
     <!-- WC -->
@@ -100,7 +100,7 @@
        [class.status-planned]="getRoomStatus('wc') === 'In Planung'">
       <rect x="420" y="438" width="100" height="117" rx="2" />
       <text x="470" y="495" class="room-label-small">WC</text>
-      <text x="470" y="515" class="room-area-tiny">2,86 m²</text>
+      <text x="470" y="515" class="room-area-tiny">{{ roomService.getRoomById('wc')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
 
     <!-- Zimmer / Büro -->
@@ -112,7 +112,7 @@
        [class.status-planned]="getRoomStatus('zimmer') === 'In Planung'">
       <rect x="520" y="438" width="164" height="117" rx="2" />
       <text x="602" y="495" class="room-label-small">Zimmer</text>
-      <text x="602" y="515" class="room-area-tiny">10,35 m²</text>
+      <text x="602" y="515" class="room-area-tiny">{{ roomService.getRoomById('zimmer')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
 
     <!-- Kinderzimmer -->
@@ -124,7 +124,7 @@
        [class.status-planned]="getRoomStatus('kinderzimmer') === 'In Planung'">
       <rect x="684" y="438" width="233" height="117" rx="2" />
       <text x="800" y="495" class="room-label">Kinderzimmer</text>
-      <text x="800" y="515" class="room-area-tiny">12,56 m²</text>
+      <text x="800" y="515" class="room-area-tiny">{{ roomService.getRoomById('kinderzimmer')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
   </svg>
 
@@ -158,7 +158,7 @@
       <rect x="420" y="280" width="264" height="250" rx="2" />
       <text x="552" y="390" class="room-label-small">Kellerflur</text>
       <text x="552" y="410" class="room-label-tiny opacity-40">Spielbereich</text>
-      <text x="552" y="435" class="room-area-tiny">14,52 m²</text>
+      <text x="552" y="435" class="room-area-tiny">{{ roomService.getRoomById('kellerflur')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
 
     <!-- BÜRO KELLER -->
@@ -170,7 +170,7 @@
        [class.status-planned]="getRoomStatus('keller_buero') === 'In Planung'">
       <rect x="684" y="280" width="233" height="250" rx="2" />
       <text x="800" y="405" class="room-label-small">Büro</text>
-      <text x="800" y="430" class="room-area-tiny">12,60 m²</text>
+      <text x="800" y="430" class="room-area-tiny">{{ roomService.getRoomById('keller_buero')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
 
     <!-- ANSCHLUSSKELLER -->

@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RoomService } from '../services/room.service';
+import { RoomStore } from '../store/room.store';
 
 @Component({
   selector: 'app-floor-plan',
@@ -15,7 +15,7 @@ export class FloorPlanComponent {
 
   currentView: 'eg' | 'keller' = 'eg';
 
-  constructor(private roomService: RoomService) {}
+  public roomService = inject(RoomStore);
 
   getRoomStatus(roomId: string): string {
     const room = this.roomService.getRoomById(roomId);

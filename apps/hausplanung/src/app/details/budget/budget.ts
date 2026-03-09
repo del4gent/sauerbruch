@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { StatusBadgeComponent } from '../../ui/status-badge/status-badge.component';
-import { RoomService } from '../../services/room.service';
+import { RoomStore } from '../../store/room.store';
 
 @Component({
   selector: 'app-budget',
@@ -12,5 +12,5 @@ import { RoomService } from '../../services/room.service';
   styleUrl: './budget.css'
 })
 export class BudgetComponent {
-  constructor(public roomService: RoomService) {}
+  public roomService = inject(RoomStore);
 }
