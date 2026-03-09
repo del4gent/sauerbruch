@@ -89,7 +89,7 @@ export class StatusBadgeComponent {
       case 'Angefangen': return 'status-active';
       case 'In Planung': return 'status-planned';
       case 'Fertig': return 'status-finished';
-      case 'On hold': return 'status-onhold';
+      case 'Pausiert': return 'status-onhold';
       default: return 'status-planned';
     }
   }

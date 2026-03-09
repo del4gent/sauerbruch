@@ -10,7 +10,6 @@ import { StatusBadgeComponent } from '../../ui/status-badge/status-badge.compone
   template: `
     <div class="details-container">
       <header class="details-header">
-        <a routerLink="/" class="btn-back">← Dashboard</a>
         <h1 class="gradient-text">Fortschritt Herleitung</h1>
         <p class="subtitle">Übersicht der erreichten Meilensteine</p>
       </header>
@@ -54,7 +53,6 @@ import { StatusBadgeComponent } from '../../ui/status-badge/status-badge.compone
   styles: [`
     .details-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
     .details-header { margin-bottom: 3rem; }
-    .btn-back { color: var(--primary-color); text-decoration: none; font-weight: 700; margin-bottom: 1rem; display: inline-block; }
     
     @media (max-width: 768px) {
       .details-container { padding: 1.25rem; }

@@ -14,7 +14,6 @@ import roomsData from '../../public/assets/data/rooms.json';
 })
 export class App implements OnInit {
   rooms = roomsData;
-  isDarkMode = signal(false);
   isAuthorized = signal(false);
   isSidebarCollapsed = signal(true);
   isOtherRoomsExpanded = signal(false);
@@ -22,13 +21,24 @@ export class App implements OnInit {
   // Breadcrumb logic
   breadcrumbTitle = signal<string | null>(null);
 
-  // Filtered rooms: Active planning (In Planung, Angefangen) vs Others
+  private statusOrder: Record<string, number> = {
+    'In Arbeit': 1,
+    'In Planung': 2,
+    'Pausiert': 3,
+    'Fertig': 4
+  };
+
+  // Filtered rooms: Active planning (In Planung, In Arbeit) vs Others, both sorted
   activeRooms = computed(() => 
-    this.rooms.filter(r => r.status === 'In Planung' || r.status === 'Angefangen')
+    [...this.rooms]
+      .filter(r => r.status === 'In Planung' || r.status === 'In Arbeit')
+      .sort((a, b) => (this.statusOrder[a.status] || 99) - (this.statusOrder[b.status] || 99))
   );
 
   otherRooms = computed(() => 
-    this.rooms.filter(r => r.status !== 'In Planung' && r.status !== 'Angefangen')
+    [...this.rooms]
+      .filter(r => r.status !== 'In Planung' && r.status !== 'In Arbeit')
+      .sort((a, b) => (this.statusOrder[a.status] || 99) - (this.statusOrder[b.status] || 99))
   );
 
   constructor(
@@ -53,7 +63,7 @@ export class App implements OnInit {
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-      this.applyTheme();
+      document.body.setAttribute('data-theme', 'light');
       this.updateBreadcrumb();
 
       // Check for 'invite=sauerbruch' in URL query parameters (magic link)
@@ -104,12 +114,6 @@ export class App implements OnInit {
       if (isPlatformBrowser(this.platformId)) {
         localStorage.setItem('auth', 'bubu');
       }
-    }
-  }
-
-  public applyTheme() {
-    if (isPlatformBrowser(this.platformId)) {
-      document.body.setAttribute('data-theme', this.isDarkMode() ? 'dark' : 'light');
     }
   }
 

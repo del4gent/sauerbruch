@@ -17,42 +17,55 @@ import { RouterModule } from '@angular/router';
   `,
   styles: [`
     .stat-item { 
-      padding: 1.75rem; 
+      padding: 1.25rem 1.5rem; 
       display: flex; 
       flex-direction: column; 
       cursor: pointer; 
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      border-radius: 24px;
+      border-radius: 20px;
       height: 100%;
     }
 
     @media (max-width: 768px) {
       .stat-item {
-        padding: 1.25rem;
-        border-radius: 16px;
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
+      }
+      .stat-label {
+        font-size: 0.55rem;
+        margin-bottom: 0.4rem;
+      }
+      .stat-value {
+        font-size: 1.25rem;
+      }
+      .progress-container {
+        height: 3px;
+        margin-bottom: 0.6rem;
       }
     }
     .stat-item.transparent {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
     }
     .stat-item:hover { 
-      transform: translateY(-10px); 
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-8px); 
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     }
     .stat-label { 
-      font-size: 0.7rem; 
+      font-size: 0.65rem; 
       text-transform: uppercase; 
-      letter-spacing: 0.15em; 
+      letter-spacing: 0.12em; 
       color: white; 
       font-weight: 800; 
-      margin-bottom: 1.25rem; 
+      margin-bottom: 1rem; 
       opacity: 0.5;
     }
     .stat-value { 
-      font-size: 2.25rem; 
+      font-size: 1.75rem; 
       font-weight: 800; 
       color: white; 
       line-height: 1;

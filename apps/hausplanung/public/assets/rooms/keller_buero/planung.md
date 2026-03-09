@@ -2,7 +2,7 @@
 
 ## 📏 BASISDATEN
 - Fläche: 12,60 m² (Derivation: laut Grundriss)
-- Status: In Planung
+- Status: Pausiert
 
 ## 📸 IST-ZUSTAND
 Der Raum wird aktuell als Büro genutzt. Besonderheit: Ein Waschbecken ist im Raum vorhanden.

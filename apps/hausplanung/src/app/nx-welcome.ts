@@ -12,41 +12,37 @@ import roomsData from '../../public/assets/data/rooms.json';
   imports: [CommonModule, RouterModule, StatusBadgeComponent, RoomCardComponent, StatCardComponent],
   template: `
     <div class="dashboard">
-      <header class="hero-header glass-card">
+      <header class="hero-header">
         <div class="hero-image" style="background-image: url('assets/plan/house_hero.jpg')"></div>
         <div class="hero-overlay"></div>
         <div class="hero-content">
           <h1 class="gradient-text">Projekt Sauerbruch 3</h1>
-          
+
           <div class="stats-grid overlay-stats">
-            <app-stat-card 
-              label="Gesamtfortschritt" 
-              value="24%" 
-              [progress]="24" 
+            <app-stat-card
+              label="Gesamtfortschritt"
+              value="24%"
+              [progress]="24"
               link="/details/progress">
             </app-stat-card>
 
-            <app-stat-card 
-              label="Gesamtfläche" 
-              value="178,05 m²" 
+            <app-stat-card
+              label="Gesamtfläche"
+              value="178,05 m²"
               link="/details/area">
             </app-stat-card>
 
-            <app-stat-card 
-              label="Materialbudget" 
-              value="50.320 €" 
+            <app-stat-card
+              label="Materialbudget"
+              value="50.320 €"
               link="/details/budget">
             </app-stat-card>
           </div>
         </div>
       </header>
-
       <section class="rooms-section">
         <div class="section-header">
           <h2>Raumplanung</h2>
-          <div class="view-filters">
-            <span class="filter-chip active">Alle Räume</span>
-          </div>
         </div>
         
         <div class="room-grid">
@@ -63,44 +59,46 @@ import roomsData from '../../public/assets/data/rooms.json';
       max-width: 100vw;
       padding-bottom: 5rem;
     }
-
-    .hero-header { 
-      position: relative; 
-      height: 520px; 
-      border-radius: 30px; 
-      overflow: hidden; 
-      margin-bottom: 4rem;
-      display: flex;
-      align-items: flex-end;
-      padding: 3.5rem;
-      border: 1px solid var(--border-color);
+    .hero-header {
+      position: relative;
+      height: 520px;
+      border-radius: 24px;
+      overflow: hidden;
+      margin-bottom: 3rem;
+      background: #0f172a;
     }
-    .hero-image { 
-      position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
+    .hero-image {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
       background-size: cover; background-position: center 40%;
-      transition: transform 0.8s ease;
     }
-    .hero-header:hover .hero-image { transform: scale(1.03); }
-    .hero-overlay { 
-      position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
-      background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.4) 50%, rgba(15, 23, 42, 0.1) 100%);
+    .hero-overlay {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.2) 60%, transparent 100%);
     }
-    .hero-content { position: relative; z-index: 1; width: 100%; display: flex; flex-direction: column; height: 100%; justify-content: flex-end; }
-    .hero-content h1 { 
-      font-size: 5.5rem; 
-      margin: 0 0 auto 0; 
-      padding-top: 2rem;
-      line-height: 0.9; 
-      font-weight: 900;
-      letter-spacing: -0.05em;
-      background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .hero-content { 
+      position: relative; z-index: 1; height: 100%; width: 100%;
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 3rem; 
     }
-
-    .stats-grid { 
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-      gap: 2rem; 
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin: 0 0 auto 0;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      max-width: 800px;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+    
+    .overlay-stats {
+      margin-top: 2rem;
+      width: 100%;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
       width: 100%;
     }
 
@@ -122,21 +120,44 @@ import roomsData from '../../public/assets/data/rooms.json';
     }
 
     @media (max-width: 768px) {
-      .hero-header { height: 350px; padding: 1.25rem; border-radius: 0; margin: -1.25rem -1.25rem 2rem -1.25rem; border-left: none; border-right: none; }
-      .hero-content h1 { font-size: 2.75rem; margin-bottom: 1.5rem; }
+      .dashboard { padding: 0; }
+      .hero-header { height: 420px; padding: 1.25rem; border-radius: 0; margin: 0; border: none; }
+      .hero-content { padding: 1.25rem; }
+      .hero-content h1 { font-size: 2.25rem; margin-bottom: auto; padding-top: 1rem; }
+      .overlay-stats { margin-top: 1.5rem; }
+      .stats-grid { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 0.75rem; 
+      }
+      /* Das dritte Widget (Budget) über die volle Breite, wenn es ungerade ist */
+      .stats-grid > :nth-child(3) { grid-column: span 2; }
+      
+      .rooms-section { padding: 1.25rem; }
       .room-grid { 
         grid-template-columns: 1fr; 
         gap: 0; 
         margin: 0 -1.25rem; 
       }
-      .section-header { padding: 0 1.25rem; margin-bottom: 1.5rem; }
-      .stat-value { font-size: 1.75rem; }
+      .section-header { padding: 0; margin-bottom: 1.25rem; }
     }
   `],
   encapsulation: ViewEncapsulation.None,
 })
 export class NxWelcomeComponent implements OnInit, OnDestroy {
-  rooms = roomsData;
+  // Sort order definition
+  private statusOrder: Record<string, number> = {
+    'In Arbeit': 1,
+    'In Planung': 2,
+    'Pausiert': 3,
+    'Fertig': 4
+  };
+
+  rooms = [...roomsData].sort((a, b) => {
+    const orderA = this.statusOrder[a.status] || 99;
+    const orderB = this.statusOrder[b.status] || 99;
+    return orderA - orderB;
+  });
+
   currentImageIndices: Record<string, number> = {};
   private intervalId: any;
 

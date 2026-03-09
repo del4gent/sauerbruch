@@ -28,130 +28,122 @@ import { CommonModule } from '@angular/common';
 
         <!-- Garage -->
         <g class="room garage" (click)="onRoomClick('garage')" [class.active]="activeRoomId === 'garage'">
-          <rect x="20" y="250" width="180" height="505" rx="4" />
-          <text x="110" y="480" class="room-label">Garage</text>
-          <text x="110" y="500" class="room-detail">25,24 m²</text>
+          <rect x="20" y="40" width="180" height="505" rx="4" fill="none" stroke="#dfe4e8" stroke-dasharray="4" />
+          <text x="110" y="280" class="room-label opacity-60">Garage</text>
+          <text x="110" y="300" class="room-detail opacity-60">25,24 m²</text>
         </g>
 
         <!-- Wohnzimmer Gesamt (Wohnraum + Essraum) -->
         <g class="room" (click)="onRoomClick('wohnraum')" [class.active]="activeRoomId === 'wohnraum'">
-          <rect x="230" y="40" width="330" height="218" rx="2" />
-          <rect x="230" y="258" width="334" height="218" rx="2" />
-          
-          <text x="395" y="130" class="room-label">Wohnzimmer</text>
-          <text x="395" y="150" class="room-detail">(Gesamt)</text>
-          <text x="395" y="170" class="room-area">40,23 m²</text>
-          
-          <text x="397" y="350" class="room-label-small opacity-40">Essbereich</text>
+          <rect x="230" y="40" width="334" height="218" rx="2" />
+          <text x="397" y="130" class="room-label">Wohnzimmer</text>
+          <text x="397" y="150" class="room-detail">(Gesamt)</text>
+          <text x="397" y="170" class="room-area">40,23 m²</text>
         </g>
 
         <!-- Küche -->
         <g class="room" (click)="onRoomClick('kueche')" [class.active]="activeRoomId === 'kueche'">
-          <rect x="230" y="476" width="190" height="273" rx="2" />
-          <text x="325" y="600" class="room-label">Küche</text>
-          <text x="325" y="620" class="room-detail">3,18m x 4,56m</text>
-          <text x="325" y="635" class="room-area">14,47 m²</text>
+          <rect x="230" y="258" width="190" height="180" rx="2" />
+          <text x="325" y="325" class="room-label">Küche</text>
+          <text x="325" y="345" class="room-detail">3,18m x 4,56m</text>
+          <text x="325" y="360" class="room-area">14,47 m²</text>
         </g>
 
-        <!-- Flur Gesamt (Diele + Garderobe + Flur Privat) -->
+        <!-- Flur Gesamt (zentraler Bereich) -->
         <g class="room" (click)="onRoomClick('flur')" [class.active]="activeRoomId === 'flur'">
-          <!-- Diele -->
-          <rect x="420" y="476" width="144" height="130" rx="2" />
-          <!-- Garderobe -->
-          <rect x="420" y="606" width="120" height="143" rx="2" />
-          <!-- Flur Privat -->
-          <rect x="564" y="258" width="69" height="218" rx="2" />
-          
-          <text x="492" y="535" class="room-label">Diele</text>
-          <text x="492" y="555" class="room-area">20,88 m²</text>
-          <text x="480" y="670" class="room-label-tiny opacity-40">Garderobe</text>
-          <text x="598" y="367" class="room-label-tiny opacity-40" transform="rotate(-90, 598, 367)">Flur (P)</text>
-        </g>
-
-        <!-- WC -->
-        <g class="room" (click)="onRoomClick('wc')" [class.active]="activeRoomId === 'wc'">
-          <rect x="540" y="606" width="72" height="143" rx="2" />
-          <text x="576" y="670" class="room-label-small">WC</text>
-          <text x="576" y="698" class="room-area-tiny">2,86 m²</text>
+          <rect x="420" y="258" width="264" height="180" rx="2" />
+          <text x="552" y="345" class="room-label">Flur</text>
+          <text x="552" y="370" class="room-area">20,88 m²</text>
         </g>
 
         <!-- Bad -->
         <g class="room" (click)="onRoomClick('bad')" [class.active]="activeRoomId === 'bad'">
-          <rect x="633" y="40" width="120" height="198" rx="2" />
-          <text x="693" y="120" class="room-label-small">Bad</text>
-          <text x="693" y="153" class="room-area-tiny">6,64 m²</text>
+          <rect x="564" y="40" width="120" height="218" rx="2" />
+          <text x="624" y="135" class="room-label-small">Bad</text>
+          <text x="624" y="163" class="room-area-tiny">6,64 m²</text>
         </g>
 
         <!-- Schlafzimmer -->
         <g class="room" (click)="onRoomClick('schlafzimmer')" [class.active]="activeRoomId === 'schlafzimmer'">
-          <rect x="753" y="40" width="233" height="273" rx="2" />
-          <text x="870" y="160" class="room-label">Schlafzimmer</text>
-          <text x="870" y="195" class="room-area">17,70 m²</text>
+          <rect x="684" y="40" width="233" height="398" rx="2" />
+          <text x="800" y="220" class="room-label">Schlafzimmer</text>
+          <text x="800" y="255" class="room-area">17,70 m²</text>
         </g>
 
-        <!-- Kinderzimmer -->
-        <g class="room" (click)="onRoomClick('kinderzimmer')" [class.active]="activeRoomId === 'kinderzimmer'">
-          <rect x="753" y="313" width="233" height="194" rx="2" />
-          <text x="870" y="400" class="room-label">Kind</text>
-          <text x="870" y="435" class="room-area">12,56 m²</text>
+        <!-- WC -->
+        <g class="room" (click)="onRoomClick('wc')" [class.active]="activeRoomId === 'wc'">
+          <rect x="420" y="438" width="100" height="117" rx="2" />
+          <text x="470" y="495" class="room-label-small">WC</text>
+          <text x="470" y="515" class="room-area-tiny">2,86 m²</text>
         </g>
 
         <!-- Zimmer / Büro -->
         <g class="room" (click)="onRoomClick('zimmer')" [class.active]="activeRoomId === 'zimmer'">
-          <rect x="633" y="507" width="171" height="218" rx="2" />
-          <text x="718" y="600" class="room-label-small">Büro</text>
-          <text x="718" y="633" class="room-area-tiny">10,35 m²</text>
+          <rect x="520" y="438" width="164" height="117" rx="2" />
+          <text x="602" y="495" class="room-label-small">Zimmer</text>
+          <text x="602" y="515" class="room-area-tiny">10,35 m²</text>
+        </g>
+
+        <!-- Kinderzimmer -->
+        <g class="room" (click)="onRoomClick('kinderzimmer')" [class.active]="activeRoomId === 'kinderzimmer'">
+          <rect x="684" y="438" width="233" height="117" rx="2" />
+          <text x="800" y="495" class="room-label">Kinderzimmer</text>
+          <text x="800" y="515" class="room-area-tiny">12,56 m²</text>
         </g>
       </svg>
 
       <!-- KELLER VIEW -->
       <svg *ngIf="currentView === 'keller'" viewBox="0 0 1100 850" xmlns="http://www.w3.org/2000/svg" class="floor-plan-svg">
-        <!-- KELLERFLUR -->
-        <g class="room" (click)="onRoomClick('kellerflur')" [class.active]="activeRoomId === 'kellerflur'">
-          <rect x="420" y="258" width="144" height="348" rx="2" />
-          <text x="492" y="430" class="room-label-small" transform="rotate(-90, 492, 430)">Kellerflur</text>
-          <text x="492" y="450" class="room-area-tiny">14,52 m²</text>
+        <!-- KELLERRAUM 2 -->
+        <g class="room secondary" (click)="onRoomClick('kellerflur')">
+          <rect x="230" y="40" width="190" height="120" rx="2" />
+          <text x="325" y="105" class="room-label-small">Keller 2</text>
+        </g>
+
+        <!-- KELLERRAUM 1 -->
+        <g class="room secondary" (click)="onRoomClick('kellerflur')">
+          <rect x="230" y="160" width="190" height="120" rx="2" />
+          <text x="325" y="225" class="room-label-small">Keller 1</text>
         </g>
 
         <!-- HEIZRAUM -->
         <g class="room secondary" (click)="onRoomClick('kellerflur')">
-          <rect x="230" y="450" width="190" height="218" rx="2" />
-          <text x="325" y="550" class="room-label-small">Heizraum</text>
-          <text x="325" y="570" class="room-detail-tiny">14,47 m²</text>
+          <rect x="230" y="280" width="190" height="250" rx="2" />
+          <text x="325" y="405" class="room-label-small">Heizraum</text>
         </g>
 
-        <!-- SPIELRAUM / KELLER -->
+        <!-- KELLERFLUR -->
+        <g class="room" (click)="onRoomClick('kellerflur')" [class.active]="activeRoomId === 'kellerflur'">
+          <rect x="420" y="280" width="264" height="250" rx="2" />
+          <text x="552" y="390" class="room-label-small">Kellerflur</text>
+          <text x="552" y="410" class="room-label-tiny opacity-40">Spielbereich</text>
+          <text x="552" y="435" class="room-area-tiny">14,52 m²</text>
+        </g>
+
+        <!-- BÜRO KELLER -->
+        <g class="room" (click)="onRoomClick('keller_buero')" [class.active]="activeRoomId === 'keller_buero'">
+          <rect x="684" y="280" width="233" height="250" rx="2" />
+          <text x="800" y="405" class="room-label-small">Büro</text>
+          <text x="800" y="430" class="room-area-tiny">12,60 m²</text>
+        </g>
+
+        <!-- ANSCHLUSSKELLER -->
         <g class="room secondary" (click)="onRoomClick('kellerflur')">
-          <rect x="564" y="450" width="190" height="218" rx="2" />
-          <text x="659" y="550" class="room-label-small">Spielraum</text>
-          <text x="659" y="570" class="room-detail-tiny">25,14 m²</text>
+          <rect x="420" y="530" width="132" height="120" rx="2" />
+          <text x="486" y="585" class="room-label-tiny">Anschluss</text>
+        </g>
+
+        <!-- WASCHRAUM -->
+        <g class="room secondary" (click)="onRoomClick('kellerflur')">
+          <rect x="552" y="530" width="132" height="120" rx="2" />
+          <text x="618" y="585" class="room-label-tiny">Waschraum</text>
         </g>
 
         <!-- TROCKENRAUM -->
         <g class="room secondary" (click)="onRoomClick('kellerflur')">
-          <rect x="754" y="507" width="233" height="194" rx="2" />
-          <text x="870" y="590" class="room-label-small">Trockenraum</text>
-          <text x="870" y="610" class="room-detail-tiny">28,88 m²</text>
-        </g>
-
-        <!-- ZIMMER KELLER (BÜRO) -->
-        <g class="room" (click)="onRoomClick('keller_buero')" [class.active]="activeRoomId === 'keller_buero'">
-          <rect x="754" y="313" width="233" height="194" rx="2" />
-          <text x="870" y="400" class="room-label">Büro</text>
-          <text x="870" y="420" class="room-detail">12,60 m²</text>
-        </g>
-
-        <!-- WEITERE KELLERRÄUME OBEN -->
-        <g class="room secondary" (click)="onRoomClick('kellerflur')">
-          <rect x="230" y="40" width="330" height="218" rx="2" />
-          <text x="395" y="140" class="room-label-small">Keller 1</text>
-          <text x="395" y="160" class="room-detail-tiny">20,35 m²</text>
-        </g>
-        
-        <g class="room secondary" (click)="onRoomClick('kellerflur')">
-          <rect x="230" y="258" width="190" height="192" rx="2" />
-          <text x="325" y="340" class="room-label-small">Keller 2</text>
-          <text x="325" y="360" class="room-detail-tiny">20,21 m²</text>
+          <rect x="684" y="530" width="233" height="120" rx="2" />
+          <text x="800" y="585" class="room-label-tiny">Trockenraum</text>
+          <text x="800" y="605" class="room-detail-tiny">28,88 m²</text>
         </g>
       </svg>
     </div>

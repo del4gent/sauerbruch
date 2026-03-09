@@ -11,14 +11,14 @@ Dieses Dokument bildet die Grundlage für die Ausschreibung und Ausführung der 
 | Raum | Fläche (m²) | Status | Link |
 | :--- | :--- | :--- | :--- |
 | Bad | 6,64 | 🏗️ Angefangen | [Details](./rooms/bad/planung.md) |
-| WC (Gästebad) | 2,86 | ⏳ In Planung | [Details](./rooms/wc/planung.md) |
-| Flur (Gesamt) | 20,88 | ⏳ In Planung | [Details](./rooms/flur/planung.md) |
-| Wohnzimmer (Gesamt) | 40,23 | ⏳ In Planung | [Details](./rooms/wohnzimmer/planung.md) |
-| Küche | 14,47 | ⏳ On hold | [Details](./rooms/kueche/planung.md) |
+| Gästebad | 2,86 | ⏳ In Planung | [Details](./rooms/wc/planung.md) |
+| Flur | 20,88 | ⏳ In Planung | [Details](./rooms/flur/planung.md) |
+| Wohnzimmer | 40,23 | ⏳ In Planung | [Details](./rooms/wohnzimmer/planung.md) |
+| Küche | 14,47 | ⏳ Pausiert | [Details](./rooms/kueche/planung.md) |
 | Schlafzimmer | 17,70 | ✅ Fertig | [Details](./rooms/schlafzimmer/planung.md) |
-| Kinderzimmer | 12,56 | ⏳ On hold | [Details](./rooms/kinderzimmer/planung.md) |
-| Zimmer (Büro) | 10,35 | ⏳ On hold | [Details](./rooms/zimmer/planung.md) |
-| Garage | 25,24 | ⏳ On hold | [Details](./rooms/garage/planung.md) |
+| Kinderzimmer | 12,56 | ⏳ Pausiert | [Details](./rooms/kinderzimmer/planung.md) |
+| Zimmer (Büro) | 10,35 | ⏳ Pausiert | [Details](./rooms/zimmer/planung.md) |
+| Garage | 25,24 | ⏳ Pausiert | [Details](./rooms/garage/planung.md) |
 | Kellerflur | 14,52 | ⏳ In Planung | [Details](./rooms/kellerflur/planung.md) |
 | Keller Büro | 12,60 | ⏳ In Planung | [Details](./rooms/keller_buero/planung.md) |
 

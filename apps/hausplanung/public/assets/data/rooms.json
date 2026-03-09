@@ -10,7 +10,7 @@
   },
   {
     "id": "wc",
-    "name": "WC (Gästebad)",
+    "name": "Gästebad",
     "area": 2.86,
     "area_derivation": "1.20m x 2.385m",
     "status": "In Planung",
@@ -19,7 +19,7 @@
   },
   {
     "id": "flur",
-    "name": "Flur (Gesamt)",
+    "name": "Flur",
     "area": 20.88,
     "area_derivation": "12.25 (Diele) + 4.79 (Garderobe) + 3.84 (Flur privat)",
     "status": "In Planung",
@@ -28,7 +28,7 @@
   },
   {
     "id": "wohnraum",
-    "name": "Wohnzimmer (Gesamt)",
+    "name": "Wohnzimmer",
     "area": 40.23,
     "area_derivation": "20.02 (Wohnraum) + 20.21 (Essraum)",
     "status": "In Planung",
@@ -40,7 +40,7 @@
     "name": "Küche",
     "area": 14.47,
     "area_derivation": "3.175m x 4.555m",
-    "status": "On hold",
+    "status": "Pausiert",
     "budget": 15000.00,
     "path": "rooms/kueche/planung.md"
   },
@@ -58,7 +58,7 @@
     "name": "Kinderzimmer",
     "area": 12.56,
     "area_derivation": "3.885m x 3.232m",
-    "status": "On hold",
+    "status": "Pausiert",
     "budget": 1500.00,
     "path": "rooms/kinderzimmer/planung.md"
   },
@@ -67,7 +67,7 @@
     "name": "Zimmer (Büro)",
     "area": 10.35,
     "area_derivation": "2.85m x 3.635m",
-    "status": "On hold",
+    "status": "Pausiert",
     "budget": 1200.00,
     "path": "rooms/zimmer/planung.md"
   },
@@ -76,7 +76,7 @@
     "name": "Garage",
     "area": 25.24,
     "area_derivation": "laut Grundriss",
-    "status": "On hold",
+    "status": "Pausiert",
     "budget": 1000.00,
     "path": "rooms/garage/planung.md"
   },
@@ -94,7 +94,7 @@
     "name": "Keller Büro",
     "area": 12.60,
     "area_derivation": "laut Grundriss",
-    "status": "In Planung",
+    "status": "Pausiert",
     "budget": 0.00,
     "path": "rooms/keller_buero/planung.md"
   }

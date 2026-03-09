@@ -1,7 +1,7 @@
 # 🏠 SAUERBRUCH 3 - GESAMTPLANUNG
 
 **Gesamtfläche:** 178.05 m²  
-**Gesamtkosten:** 50.320,00 EUR
+**Gesamtkosten:** 1.295.00 EUR
 
 ---
 
@@ -9,15 +9,16 @@
 
 ## 📏 BASISDATEN
 - Fläche: 6,64 m² (Derivation: 2.01m x 3.305m)
-- Status: Angefangen
+- Status: In Arbeit
 
 ## 📸 IST-ZUSTAND
-Das Bad befindet sich im Originalzustand aus den 70ern/80ern mit grünen Sanitärobjekten (Waschbecken, WC) und gemusterten Fliesen.
+Das Bad wurde vollständig entkernt. Alle alten Sanitärobjekte sowie die Fliesen an Wänden und Boden wurden entfernt.
 
 - [x] Dokumentation des Bestands (siehe vorher.png, IMG_9974.jpg, IMG_9976.jpg)
+- [x] Entkernung (Fliesen und Sanitäranlagen entfernt)
 
 ## 🛠️ GEPLANTE MASSNAHMEN
-- [ ] Entkernung der alten Sanitärobjekte
+- [x] Entkernung der alten Sanitärobjekte
 - [ ] Erneuerung der Wasserleitungen
 - [ ] Neuverfliesung (Boden und Wände)
 - [ ] Installation neuer Sanitärobjekte (Waschtisch, WC, Dusche/Badewanne)
@@ -25,7 +26,7 @@ Das Bad befindet sich im Originalzustand aus den 70ern/80ern mit grünen Sanitä
 
 ---
 
-## WC (GÄSTEBAD)
+## GÄSTEBAD
 
 ## 📏 BASISDATEN
 - Fläche: 2,86 m² (Derivation: 1.20m x 2.385m)
@@ -34,7 +35,7 @@ Das Bad befindet sich im Originalzustand aus den 70ern/80ern mit grünen Sanitä
 
 ---
 
-## DIELE (EINGANG)
+## FLUR
 
 ## 📏 BASISDATEN
 - Fläche: 12,25 m² (laut Grundriss)
@@ -47,6 +48,12 @@ Das Bad befindet sich im Originalzustand aus den 70ern/80ern mit grünen Sanitä
 | NYM-J 3x1,5 mm² Kabel | 25 | m | 1,20 € | 30,00 € |
 | Einbaudosen & Klemmen | 1 | Set | 35,00 € | 35,00 € |
 
+## 🖼️ INSPIRATION
+![Regenbogen Fenster-Effekt](rooms/flur/medien/inspiration/flur_fenster_regenbogen.png)
+- **Konzept:** Nutzung von schmalen Fensterausschnitten für Lichteffekte (z.B. Regenbogenfolie oder Prismen-Effekt).
+- **Materialität:** Warme Betonoptik an den Wänden kombiniert mit dunklem Steinboden.
+- **Akzente:** Minimalistisches Lichtdesign und offener Treppenaufgang.
+
 ## 🛠️ AUSFÜHRUNG
 - [ ] Deckenausschnitt erstellen
 - [ ] Verkabelung zu den Brennstellen ziehen
@@ -55,7 +62,7 @@ Das Bad befindet sich im Originalzustand aus den 70ern/80ern mit grünen Sanitä
 
 ---
 
-## WOHNRAUM
+## WOHNZIMMER
 
 ## 📏 BASISDATEN
 - Fläche: 20,02 m² (Derivation: 5.51m x 3.635m)
@@ -77,20 +84,11 @@ Das Bad befindet sich im Originalzustand aus den 70ern/80ern mit grünen Sanitä
 
 ---
 
-## ESSRAUM
-
-## 📏 BASISDATEN
-- Fläche: 20,21 m² (Derivation: 5.56m x 3.635m)
-- Status: On hold
-
-
----
-
 ## KÜCHE
 
 ## 📏 BASISDATEN
 - Fläche: 14,47 m² (Derivation: 3.175m x 4.555m)
-- Status: On hold
+- Status: Pausiert
 
 
 ---
@@ -108,7 +106,7 @@ Das Bad befindet sich im Originalzustand aus den 70ern/80ern mit grünen Sanitä
 
 ## 📏 BASISDATEN
 - Fläche: 12,56 m² (Derivation: 3.885m x 3.232m)
-- Status: On hold
+- Status: Pausiert
 
 
 ---
@@ -117,30 +115,13 @@ Das Bad befindet sich im Originalzustand aus den 70ern/80ern mit grünen Sanitä
 
 ## 📏 BASISDATEN
 - Fläche: 10,35 m² (Derivation: 2.85m x 3.635m)
-- Status: On hold
-
-
----
-
-## FLUR (PRIVAT)
-
-## 📏 BASISDATEN
-- Fläche: 3,84 m² (Derivation: 1.15m x 3.34m)
-- Status: On hold
-
-
----
-
-## GARDEROBE
-
-## 📏 BASISDATEN
-- Fläche: 4,79 m² (Derivation: 2.01m x 2.385m)
-- Status: On hold
+- Status: Pausiert
 
 
 ---
 
 ## GARAGE
+
 
 
 ---
@@ -158,7 +139,7 @@ Das Bad befindet sich im Originalzustand aus den 70ern/80ern mit grünen Sanitä
 
 ## 📏 BASISDATEN
 - Fläche: 12,60 m² (Derivation: laut Grundriss)
-- Status: In Planung
+- Status: Pausiert
 
 ## 📸 IST-ZUSTAND
 Der Raum wird aktuell als Büro genutzt. Besonderheit: Ein Waschbecken ist im Raum vorhanden.
@@ -177,3 +158,4 @@ Das Ziel ist ein moderner, heller Arbeitsplatz mit funktionaler Ausstattung.
 
 
 ---
+

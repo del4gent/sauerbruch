@@ -11,7 +11,6 @@ import roomsData from '../../../../public/assets/data/rooms.json';
   template: `
     <div class="details-container">
       <header class="details-header">
-        <a routerLink="/" class="btn-back">← Dashboard</a>
         <h1 class="gradient-text">Flächen & Grundriss</h1>
         <p class="subtitle">Interaktive Übersicht und Herleitung der m²-Angaben</p>
       </header>
@@ -52,7 +51,6 @@ import roomsData from '../../../../public/assets/data/rooms.json';
   styles: [`
     .details-container { max-width: 1200px; margin: 0 auto; padding-bottom: 5rem; }
     .details-header { margin-bottom: 3rem; }
-    .btn-back { color: var(--primary-color); text-decoration: none; font-weight: 700; margin-bottom: 1rem; display: inline-block; }
     
     .floorplan-section { margin-bottom: 3rem; }
 

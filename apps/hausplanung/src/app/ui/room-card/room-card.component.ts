@@ -16,7 +16,6 @@ import { StatusBadgeComponent } from '../status-badge/status-badge.component';
              [style.backgroundImage]="'url(' + img + ')'">
         </div>
         <div class="no-preview" *ngIf="images.length === 0">
-          <span>Kein Vorschaubild</span>
         </div>
       </div>
       <div class="room-overlay"></div>
@@ -47,9 +46,12 @@ import { StatusBadgeComponent } from '../status-badge/status-badge.component';
         border-radius: 0;
         border-left: none;
         border-right: none;
+        border-top: none;
         aspect-ratio: 16/9;
+        margin: 0;
       }
       .room-card:hover { transform: none; }
+      .room-content-wrapper { padding: 1.5rem; }
     }
     
     .room-preview-container {
@@ -81,7 +83,8 @@ import { StatusBadgeComponent } from '../status-badge/status-badge.component';
 
     .no-preview {
       display: flex; align-items: center; justify-content: center; height: 100%;
-      background: #1e293b; color: rgba(255,255,255,0.2); font-size: 0.8rem; font-weight: 600;
+      background: radial-gradient(circle at 30% 20%, #1e293b 0%, #0f172a 100%);
+      opacity: 0.8;
     }
 
     .room-overlay {

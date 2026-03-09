@@ -11,7 +11,6 @@ import roomsData from '../../../../public/assets/data/rooms.json';
   template: `
     <div class="details-container">
       <header class="details-header">
-        <a routerLink="/" class="btn-back">← Dashboard</a>
         <h1 class="gradient-text">Budget Herleitung</h1>
         <p class="subtitle">Detaillierte Kostenaufstellung pro Raum</p>
       </header>
@@ -53,7 +52,6 @@ import roomsData from '../../../../public/assets/data/rooms.json';
   styles: [`
     .details-container { max-width: 900px; margin: 0 auto; }
     .details-header { margin-bottom: 3rem; }
-    .btn-back { color: var(--primary-color); text-decoration: none; font-weight: 700; margin-bottom: 1rem; display: inline-block; }
     
     .table-card { padding: 0; overflow: hidden; }
     

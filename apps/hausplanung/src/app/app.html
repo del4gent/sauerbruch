@@ -1,50 +1,14 @@
 <div class="app-container" *ngIf="isAuthorized(); else loginTpl">
-  <header class="top-nav">
+  <header class="top-nav" *ngIf="breadcrumbTitle()">
     <div class="nav-container">
       <div class="nav-brand" routerLink="/">
-        <span class="logo-icon" *ngIf="!breadcrumbTitle()">🏠</span>
-        <span class="logo-text" *ngIf="!breadcrumbTitle()">Sauerbruch 3</span>
-        
-        <!-- Mobile Header Breadcrumb -->
-        <nav class="header-breadcrumb mobile-only" *ngIf="breadcrumbTitle()">
-          <span class="breadcrumb-item" routerLink="/">Dashboard</span>
+        <nav class="header-breadcrumb">
+          <span class="breadcrumb-item">Dashboard</span>
           <span class="breadcrumb-separator">
             <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
           </span>
           <span class="breadcrumb-current">{{ breadcrumbTitle() }}</span>
         </nav>
-      </div>
-      
-      <nav class="nav-links desktop-only">
-        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Dashboard</a>
-        
-        <div class="nav-dropdown">
-          <span class="dropdown-trigger">Räume</span>
-          <div class="dropdown-content glass-card">
-            <div class="dropdown-section">
-              <span class="section-title">In Planung</span>
-              <a *ngFor="let room of activeRooms()" [routerLink]="['/room', room.id]" routerLinkActive="active" class="dropdown-item">
-                {{ getRoomEmoji(room.id) }} {{ room.name }}
-              </a>
-            </div>
-            <div class="dropdown-divider"></div>
-            <div class="dropdown-section">
-              <span class="section-title">Weitere</span>
-              <a *ngFor="let room of otherRooms()" [routerLink]="['/room', room.id]" routerLinkActive="active" class="dropdown-item">
-                {{ getRoomEmoji(room.id) }} {{ room.name }}
-              </a>
-            </div>
-          </div>
-        </div>
-        
-        <a routerLink="/details/area" routerLinkActive="active" class="nav-link">Flächen</a>
-        <a routerLink="/details/budget" routerLinkActive="active" class="nav-link">Budget</a>
-      </nav>
-
-      <div class="nav-actions">
-        <button class="theme-toggle" (click)="isDarkMode.set(!isDarkMode()); applyTheme()">
-          {{ isDarkMode() ? '☀️' : '🌙' }}
-        </button>
       </div>
     </div>
   </header>
