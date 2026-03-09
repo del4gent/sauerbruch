@@ -70,9 +70,8 @@
 ---
 
 ## KÜCHE
-
 - **Fläche:** 14.47 m² (3.175m x 4.555m)
-- **Status:** Pausiert
+- **Status:** Fertig
 
 ---
 
