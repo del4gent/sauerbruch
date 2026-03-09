@@ -71,21 +71,19 @@
 
 ## KÜCHE
 - **Fläche:** 14.47 m² (3.175m x 4.555m)
-- **Status:** Fertig
+- **Status:** Pausiert
 
 ---
 
 ## SCHLAFZIMMER
-
 - **Fläche:** 17.70 m² (3.885m x 4.555m)
 - **Status:** Fertig
 
 ---
 
 ## ZIMMER 2
-
 - **Fläche:** 12.56 m² (3.885m x 3.232m)
-- **Status:** Pausiert
+- **Status:** In Arbeit
 
 ---
 

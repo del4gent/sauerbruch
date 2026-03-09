@@ -45,7 +45,7 @@
     "emoji": "🍳",
     "area": 14.47,
     "area_derivation": "3.175m x 4.555m",
-    "status": "Fertig",
+    "status": "Pausiert",
     "budget": null,
     "path": "rooms/kueche/planung.json"
   },
@@ -65,7 +65,7 @@
     "emoji": "🎨",
     "area": 12.56,
     "area_derivation": "3.885m x 3.232m",
-    "status": "In Planung",
+    "status": "In Arbeit",
     "budget": null,
     "path": "rooms/zimmer2/planung.json"
   },
