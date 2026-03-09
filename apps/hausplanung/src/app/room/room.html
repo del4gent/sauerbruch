@@ -57,10 +57,11 @@
     <div class="main-layout">
       <main class="primary-content">
         <div class="room-sections">
-          <section *ngFor="let section of roomSections()" class="content-section">
-            <h2 class="section-title">
-              {{ section.title }}
-            </h2>
+          <ng-container *ngFor="let section of roomSections()">
+            <section *ngIf="!section.title.toUpperCase().includes('ABLAUFPLAN')" class="content-section">
+              <h2 class="section-title">
+                {{ section.title }}
+              </h2>
             
             <ng-container [ngSwitch]="section.type">
               <!-- Standard Checklist -->
@@ -93,6 +94,7 @@
               </div>
             </ng-container>
           </section>
+          </ng-container>
         </div>
 
         <!-- GROUPED MEDIA SECTIONS -->

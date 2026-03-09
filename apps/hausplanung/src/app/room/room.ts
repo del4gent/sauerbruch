@@ -3,7 +3,6 @@ import { StatusBadgeComponent } from '../ui/status-badge/status-badge.component'
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { marked } from 'marked';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RoomStore, Room, Material } from '../store/room.store';
 import { StatCardComponent } from '../ui/stat-card/stat-card.component';
@@ -67,7 +66,10 @@ export class RoomComponent implements OnInit, OnDestroy {
   groupedImages = computed(() => {
     const all = this.images();
     const roomId = this.roomName();
-    const materials = this.roomService.getRoomMaterials(roomId);
+    const materials = [...this.roomService.getRoomMaterials(roomId)].sort((a, b) => {
+      const order: Record<string, number> = { 'Gekauft': 1, 'Ausgesucht': 2, 'In Auswahl': 3 };
+      return (order[a.status] || 99) - (order[b.status] || 99);
+    });
 
     const groups: ImageGroup[] = [
       { 
@@ -201,16 +203,8 @@ export class RoomComponent implements OnInit, OnDestroy {
         this.upcomingTasks.set(upcoming);
         this._allSections.set(data.sections);
 
-        // 2. Filter sections for main content
-        this.roomSections.set(data.sections.filter(s => {
-          const t = s.title.toUpperCase();
-          return !['BASISDATEN', 'IST-ZUSTAND'].includes(t) && 
-                 !t.includes('ABLAUFPLAN') && 
-                 !t.includes('RENOVIERUNGS-ABLAUF') && 
-                 !t.includes('RENOVIERUNGSABLAUF') &&
-                 !t.includes('MATERIALKOSTEN') &&
-                 !t.includes('CHECKLISTE');
-        }));
+        // 2. Set all sections from JSON
+        this.roomSections.set(data.sections);
 
         // 3. Handle Images
         if (isPlatformBrowser(this.platformId)) {

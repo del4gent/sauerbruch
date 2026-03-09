@@ -83,12 +83,19 @@
     "assets/rooms/kueche/medien/inspiration/icon.svg"
   ],
   "zimmer2": [
-    "assets/rooms/zimmer2/medien/inspiration/icon.svg"
+    "assets/rooms/zimmer2/medien/inspiration/icon.svg",
+    "assets/rooms/zimmer2/medien/inspiration/zimmer2_inspiration.png"
   ],
   "garage": [
     "assets/rooms/garage/medien/inspiration/icon.svg"
   ],
   "zimmer": [
-    "assets/rooms/zimmer/medien/inspiration/icon.svg"
+    "assets/rooms/zimmer/medien/inspiration/icon.svg",
+    "assets/rooms/zimmer/medien/inspiration/atelier_inspiration.png"
+  ],
+  "dach": [
+    "assets/rooms/dach/medien/inspiration/pv_dach_inspiration.png",
+    "assets/rooms/dach/medien/inspiration/pv_dach_detail.png",
+    "assets/plan/querschnitt.JPG"
   ]
 }

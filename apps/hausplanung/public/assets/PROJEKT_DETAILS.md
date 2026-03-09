@@ -10,18 +10,6 @@
 - **Fläche:** 6.64 m² (2.01m x 3.305m)
 - **Status:** In Arbeit
 
-### ABLAUFPLAN
-
-| Titel | Status | Anfang | Ende |
-| --- | --- | --- | --- |
-| Entkernung | Fertig | 2025-10-01 | 2026-01-31 |
-| Letzte Kleinarbeiten (WC & Wand) | In Arbeit | 2026-02-01 | 2026-03-15 |
-| Fenster austauschen | In Arbeit | 2026-03-01 | 2026-03-31 |
-| Rohre verlegen | Ausstehend | 2026-04-01 | None |
-| Fliesen | Ausstehend | 2026-04-01 | None |
-| Sanitär-Endmontage | Ausstehend | 2026-04-01 | None |
-
-
 ---
 
 ## GÄSTEBAD
@@ -29,46 +17,12 @@
 - **Fläche:** 2.86 m² (1.20m x 2.385m)
 - **Status:** In Planung
 
-### ABLAUFPLAN RENOVIERUNG
-
-| Gewerk / Schritt | Status | Start | Ende |
-| --- | --- | --- | --- |
-| Demontage & Entkernung (Sanitär/Fliesen) | Geplant | 2026-03-16 | 2026-03-18 |
-| Wand abbauen und vergrößern | Geplant | 2026-03-19 | 2026-03-21 |
-| Fenster erneuern | Geplant | 2026-03-23 | 2026-03-24 |
-| Rohinstallation Wasser/Abwasser/Elektro | Geplant | 2026-03-25 | 2026-03-28 |
-| Fußbodenheizung verlegen | Geplant | 2026-03-30 | 2026-03-31 |
-| Estrich / Bodenausgleich & Trocknung | Geplant | 2026-04-01 | 2026-04-07 |
-| Abdichtung Nassbereich (Dusche) | Geplant | 2026-04-08 | 2026-04-09 |
-| Fliesenlegen (Wand & Boden) | Geplant | 2026-04-10 | 2026-04-15 |
-| Verfugung & Silikonarbeiten | Geplant | 2026-04-16 | 2026-04-17 |
-| Endmontage (WC, Dusche, Waschbecken) | Geplant | 2026-04-20 | 2026-04-22 |
-| Elektro-Endmontage & Abschluss | Geplant | 2026-04-23 | 2026-04-24 |
-
-
 ---
 
 ## FLUR
 
 - **Fläche:** 20.88 m² (12.25 (Diele) + 4.79 (Garderobe) + 3.84 (Flur privat))
 - **Status:** In Planung
-
-### ABLAUFPLAN
-
-| Titel | Status | Anfang | Ende |
-| --- | --- | --- | --- |
-| Vorbereitung: Treppe abdecken & Schutzmaßnahmen | Ausstehend | 2026-03-14 | 2026-03-14 |
-| Demontage: Einbauschrank & Glastür (Garderobe) | Ausstehend | 2026-03-14 | 2026-03-15 |
-| Demontage: Treppengeländer & Telefondose | Ausstehend | 2026-03-16 | 2026-03-16 |
-| Abriss: Tapete entfernen | Ausstehend | 2026-03-17 | 2026-03-19 |
-| Abriss: Bodenbelag rausreißen | Ausstehend | 2026-03-20 | 2026-03-22 |
-| Fenster im Flur austauschen | Ausstehend | 2026-03-23 | 2026-03-24 |
-| Elektro: Lichtschalter verstecken & Bewegungsmelder | Ausstehend | 2026-03-25 | 2026-03-26 |
-| Fußbodenheizung verlegen | Ausstehend | 2026-03-27 | 2026-03-30 |
-| Wände verputzen & Trocknung | Ausstehend | 2026-04-01 | 2026-04-12 |
-| Decke abhängen & LED Spots (12 Stk. berechnet) | Ausstehend | 2026-04-13 | 2026-04-16 |
-| Fliesen verlegen | Ausstehend | 2026-04-17 | 2026-04-22 |
-| Fußleisten montieren | Ausstehend | 2026-04-23 | 2026-04-24 |
 
 ### ELEKTRO-PLANUNG (MATERIALKOSTEN)
 
@@ -86,27 +40,12 @@
 - **Materialität:** Warme Betonoptik an den Wänden kombiniert mit dunkhem Steinboden.
 - **Akzente:** Minimalistisches Lichtdesign und offener Treppenaufgang.
 
-
 ---
 
 ## WOHNZIMMER
 
 - **Fläche:** 20.02 m² (5.51m x 3.635m)
 - **Status:** In Planung
-
-### RENOVIERUNGS-ABLAUF
-
-| Phase | Schritt | Beschreibung |
-| --- | --- | --- |
-| 1. Demontage | Heizkörper ab | Demontage der alten Heizkörper vor Bodenarbeiten |
-| 1. Demontage | Tapete & Parkett | Entfernung der alten Wand- und Bodenbeläge |
-| 1. Demontage | Decke ab | Abhängen der alten Deckenverkleidung |
-| 2. Fenster | Austausch | Einbau von 3 neuen Fenstern (energetische Sanierung) |
-| 3. Installation | FBH verlegen | Installation der Fußbodenheizung (Trockensystem) |
-| 3. Installation | Decke & LED | Unterkonstruktion, Verkabelung der 14 LED-Spots und Beplankung |
-| 4. Oberflächen | Tapezieren | Wände neu tapezieren |
-| 4. Oberflächen | Bodenbelag | Verlegen des neuen Parketts auf FBH |
-| 4. Oberflächen | Fußleisten | Abschlussmontage der Sockelleisten |
 
 ### MATERIALKOSTEN (BERECHNET)
 
@@ -128,14 +67,12 @@
 - [ ] Raster für 14 LED-Spots an der Decke anzeichnen
 - [ ] Fußbodenheizung auf ebenem Untergrund verlegen
 
-
 ---
 
 ## KÜCHE
 
 - **Fläche:** 14.47 m² (3.175m x 4.555m)
 - **Status:** Pausiert
-
 
 ---
 
@@ -144,24 +81,12 @@
 - **Fläche:** 17.70 m² (3.885m x 4.555m)
 - **Status:** Fertig
 
-### ABLAUFPLAN
-
-| Titel | Status | Anfang | Ende |
-| --- | --- | --- | --- |
-| Entrümpelt | Fertig | 2025-10-01 | 2025-10-31 |
-| Tapete ab | Fertig | 2025-11-01 | 2025-11-30 |
-| Neu tapeziert | Fertig | 2025-12-01 | 2026-01-31 |
-| Neue Steckdosen und Lampen | Fertig | 2026-02-01 | 2026-02-28 |
-| Möbilisiert und fertiggestellt | Fertig | 2026-02-01 | 2026-02-28 |
-
-
 ---
 
 ## ZIMMER 2
 
 - **Fläche:** 12.56 m² (3.885m x 3.232m)
 - **Status:** Pausiert
-
 
 ---
 
@@ -170,7 +95,6 @@
 - **Fläche:** 10.35 m² (2.85m x 3.635m)
 - **Status:** Pausiert
 
-
 ---
 
 ## GARAGE
@@ -178,14 +102,12 @@
 - **Fläche:** 25.24 m² (laut Grundriss)
 - **Status:** Pausiert
 
-
 ---
 
 ## KELLERFLUR
 
 - **Fläche:** 14.52 m² (5.2m x 2.8m (netto)
 - **Status:** In Planung
-
 
 ---
 
@@ -202,6 +124,19 @@
 
 - [x] Inspirationsbilder hinterlegt (siehe IMG_0029.png, IMG_0031.png, soll.png)
 
-
 ---
 
+## DACH
+
+- **Fläche:** 150.93 m² (Herleitung: 6.64 + 2.86 + 20.88 + 40.23 + 14.47 + 17.70 + 12.56 + 10.35 + 25.24 [Flachdach])
+- **Status:** In Planung
+
+### NOTIZEN
+
+- Flachdach-Sanierung (1:1 Grundfläche der Erdgeschossräume + Garage).
+- **Inspiration:** Kombiniertes Gründach mit PV-Anlage (siehe Bilder).
+- Energieberater kommt am Donnerstag, den 12.03.2026.
+- Fokus auf energetische Sanierung (Dämmwerte nach GEG).
+- Förderung durch KfW/BAFA prüfen.
+
+---

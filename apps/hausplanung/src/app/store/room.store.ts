@@ -80,7 +80,9 @@ export const RoomStore = signalStore(
         .filter(r => r.status !== 'In Planung' && r.status !== 'In Arbeit')
         .sort((a, b) => (statusOrder[a.status] || 99) - (statusOrder[b.status] || 99))
     ),
-    totalArea: computed(() => rooms().reduce((acc, r) => acc + r.area, 0)),
+    totalArea: computed(() => rooms()
+      .filter(r => r.id !== 'dach')
+      .reduce((acc, r) => acc + r.area, 0)),
     totalBudget: computed(() => rooms().reduce((acc, r) => acc + (r.budget || 0), 0)),
   })),
   withMethods((store) => {

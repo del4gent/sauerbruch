@@ -108,5 +108,15 @@
     "status": "Pausiert",
     "budget": null,
     "path": "rooms/keller_buero/planung.json"
+  },
+  {
+    "id": "dach",
+    "name": "Dach",
+    "emoji": "🏠",
+    "area": 150.93,
+    "area_derivation": "Summe aller Räume (6.64+2.86+20.88+40.23+14.47+17.70+12.56+10.35) + Garage (25.24)",
+    "status": "In Planung",
+    "budget": null,
+    "path": "rooms/dach/planung.json"
   }
 ]

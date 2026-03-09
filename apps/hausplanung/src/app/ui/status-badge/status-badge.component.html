@@ -1,4 +1,13 @@
 <div class="badge" [ngClass]="statusClass">
-  <span class="status-dot" *ngIf="showDot"></span>
+  <span class="status-dot" *ngIf="showDot && statusClass !== 'status-finished' && statusClass !== 'status-done' && status !== 'Pausiert'"></span>
+  
+  <svg *ngIf="statusClass === 'status-finished' || statusClass === 'status-done'" class="checkmark" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="20 6 9 17 4 12"></polyline>
+  </svg>
+
+  <svg *ngIf="status === 'Pausiert'" class="status-square" xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor">
+    <rect x="2" y="2" width="20" height="20" rx="2"></rect>
+  </svg>
+
   {{ label || status }}
 </div>

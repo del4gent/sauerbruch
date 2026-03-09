@@ -122,8 +122,8 @@
        [class.status-working]="getRoomStatus('zimmer2') === 'In Arbeit'"
        [class.status-paused]="getRoomStatus('zimmer2') === 'Pausiert'"
        [class.status-planned]="getRoomStatus('zimmer2') === 'In Planung'">
-      <rect x="700" y="380" width="200" height="230" class="room-rect"/>
-      <text x="800" y="495" class="room-label">Zimmer 2</text>
+      <rect x="684" y="438" width="233" height="117" class="room-rect"/>
+      <text x="800" y="495" class="room-label-small">Zimmer 2</text>
       <text x="800" y="515" class="room-area-tiny">{{ roomService.getRoomById('zimmer2')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
   </svg>

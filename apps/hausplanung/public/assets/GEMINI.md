@@ -7,6 +7,6 @@
 - **Konsistenz:** Dieses Format muss sowohl in den Markdown-Dateien als auch im generierten PDF beibehalten werden.
 
 ## 📁 Struktur-Regeln
-- Räume werden immer in `raeume/[raumname]/planung.md` gepflegt.
+- Räume werden immer in `rooms/[raumname]/planung.json` gepflegt.
 - Bilder liegen immer in den Unterordnern `ist`, `inspiration`, `plan` und `material` innerhalb des jeweiligen Raum-Ordners.
 - Der PDF-Generator (`generator.py`) muss diese Herleitungen unterstützen und im PDF anzeigen.

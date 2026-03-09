@@ -1,9 +1,30 @@
 {
   "title": "Zimmer 2",
   "basisdaten": {
-    "flaeche": "12,56 m²",
+    "flaeche": "12,56 m² (Derivation: 3.885m x 3.232m)",
     "herleitung": "3.885m x 3.232m",
-    "status": "Pausiert"
+    "status": "In Planung"
   },
-  "sections": []
+  "sections": [
+    {
+      "title": "ABLAUFPLAN",
+      "type": "table",
+      "items": {
+        "headers": [
+          "Titel",
+          "Status",
+          "Anfang",
+          "Ende"
+        ],
+        "rows": [
+          [
+            "Planung & Vorbereitung",
+            "In Arbeit",
+            "2026-03-09",
+            null
+          ]
+        ]
+      }
+    }
+  ]
 }
