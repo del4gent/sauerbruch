@@ -10,23 +10,16 @@
   background-color: #0f172a;
 }
 
+.static-hero, .image-before, .image-after {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
 .slider-container {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-}
-
-.image-before, .image-after {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background-size: cover;
-  background-position: center;
-}
-
-.static-hero {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background-size: cover;
-  background-position: center;
 }
 
 .hero-overlay {
@@ -217,20 +210,10 @@ app-stat-card {
 
 /* SIDEBAR */
 .sticky-sidebar { position: sticky; top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
-.action-card, .info-card { padding: 2rem; border: none; }
+.info-card { padding: 2rem; border: none; }
 
 .card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; opacity: 0.6; }
 .card-header h3 { margin: 0; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; }
-
-.action-list { display: flex; flex-direction: column; gap: 0.75rem; }
-.action-btn { 
-  display: flex; align-items: center; gap: 1rem; width: 100%; padding: 1rem 1.25rem; 
-  border-radius: 12px; border: none; font-weight: 700; cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  font-size: 0.95rem;
-}
-.action-btn.primary { background: var(--text-color); color: var(--bg-color); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-.action-btn.secondary { background: transparent; color: var(--text-color); border: 1.5px solid var(--border-color); }
-.action-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
 
 /* Progress Styling */
 .progress-details { display: flex; flex-direction: column; gap: 1rem; }
