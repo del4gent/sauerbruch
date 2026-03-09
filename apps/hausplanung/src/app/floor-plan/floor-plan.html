@@ -111,20 +111,20 @@
        [class.status-paused]="getRoomStatus('zimmer') === 'Pausiert'"
        [class.status-planned]="getRoomStatus('zimmer') === 'In Planung'">
       <rect x="520" y="438" width="164" height="117" rx="2" />
-      <text x="602" y="495" class="room-label-small">Zimmer</text>
+      <text x="602" y="495" class="room-label-small">Zimmer 1</text>
       <text x="602" y="515" class="room-area-tiny">{{ roomService.getRoomById('zimmer')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
 
-    <!-- Kinderzimmer -->
-    <g class="room" (click)="onRoomClick('kinderzimmer')" 
-       [class.active]="activeRoomId === 'kinderzimmer'"
-       [class.status-finished]="getRoomStatus('kinderzimmer') === 'Fertig'"
-       [class.status-working]="getRoomStatus('kinderzimmer') === 'In Arbeit'"
-       [class.status-paused]="getRoomStatus('kinderzimmer') === 'Pausiert'"
-       [class.status-planned]="getRoomStatus('kinderzimmer') === 'In Planung'">
-      <rect x="684" y="438" width="233" height="117" rx="2" />
-      <text x="800" y="495" class="room-label">Kinderzimmer</text>
-      <text x="800" y="515" class="room-area-tiny">{{ roomService.getRoomById('kinderzimmer')?.area | number:'1.2-2':'de-DE' }} m²</text>
+    <!-- Zimmer 2 -->
+    <g class="room" (click)="onRoomClick('zimmer2')"
+       [class.active]="activeRoomId === 'zimmer2'"
+       [class.status-finished]="getRoomStatus('zimmer2') === 'Fertig'"
+       [class.status-working]="getRoomStatus('zimmer2') === 'In Arbeit'"
+       [class.status-paused]="getRoomStatus('zimmer2') === 'Pausiert'"
+       [class.status-planned]="getRoomStatus('zimmer2') === 'In Planung'">
+      <rect x="700" y="380" width="200" height="230" class="room-rect"/>
+      <text x="800" y="495" class="room-label">Zimmer 2</text>
+      <text x="800" y="515" class="room-area-tiny">{{ roomService.getRoomById('zimmer2')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
   </svg>
 

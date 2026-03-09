@@ -308,9 +308,16 @@ class ArchitectPDF(FPDF):
         self.set_font(FONT_PRIMARY, '', 10)
         self.set_text_color(120)
         self.cell(60, 8, f'FLÄCHE: {room.area:.2f} m2', align='L')
-        status_color = C_STATUS_PLAN
-        if 'todo' in room.status.lower(): status_color = C_STATUS_TODO
-        elif 'erledigt' in room.status.lower() or 'fertig' in room.status.lower(): status_color = C_STATUS_DONE
+        
+        # Status Color Mapping
+        status_color = C_STATUS_PLAN # Default Orange
+        s_lower = room.status.lower()
+        if 'todo' in s_lower or 'ausstehend' in s_lower: status_color = C_STATUS_TODO
+        elif 'erledigt' in s_lower or 'fertig' in s_lower: status_color = C_STATUS_DONE
+        elif 'arbeit' in s_lower or 'angefangen' in s_lower: status_color = C_STATUS_WORK
+        elif 'pause' in s_lower or 'pausiert' in s_lower: status_color = C_STATUS_PAUSED
+        elif 'planung' in s_lower: status_color = C_STATUS_PLAN
+        
         self.set_fill_color(*status_color)
         self.set_text_color(255)
         self.set_font(FONT_PRIMARY, 'B', 8)
@@ -325,7 +332,7 @@ class ArchitectPDF(FPDF):
             self.ln(5)
             sec_color = C_SLATE
             if 'todo' in section.key: sec_color = C_STATUS_TODO
-            elif 'ablauf' in section.key: sec_color = C_BLUE
+            elif 'ablauf' in section.key: sec_color = C_STATUS_PLAN
             self.set_font(FONT_PRIMARY, 'B', 12)
             self.set_text_color(*sec_color)
             self.cell(0, 10, clean_text(section.title), new_x=XPos.LMARGIN, new_y=YPos.NEXT)

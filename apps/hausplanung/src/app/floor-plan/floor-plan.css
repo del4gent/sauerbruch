@@ -107,26 +107,30 @@
 }
 
 .room.status-working rect {
-  fill: rgba(59, 130, 246, 0.1);
-  stroke: #3b82f6;
+  fill: rgba(219, 39, 119, 0.1);
+  stroke: #db2777;
 }
 
 .room.status-working:hover rect {
-  fill: rgba(59, 130, 246, 0.2);
+  fill: rgba(219, 39, 119, 0.2);
 }
 
 .room.status-paused rect {
+  fill: rgba(148, 163, 184, 0.05);
+  stroke: #94a3b8;
+}
+
+.room.status-paused:hover rect {
+  fill: rgba(148, 163, 184, 0.1);
+}
+
+.room.status-planned rect {
   fill: rgba(245, 158, 11, 0.1);
   stroke: #f59e0b;
 }
 
-.room.status-paused:hover rect {
+.room.status-planned:hover rect {
   fill: rgba(245, 158, 11, 0.2);
-}
-
-.room.status-planned rect {
-  fill: rgba(148, 163, 184, 0.05);
-  stroke: #94a3b8;
 }
 
 .room.active.status-finished rect {
@@ -135,11 +139,16 @@
 }
 
 .room.active.status-working rect {
-  fill: #3b82f6;
-  stroke: #2563eb;
+  fill: #db2777;
+  stroke: #be185d;
 }
 
 .room.active.status-paused rect {
+  fill: #94a3b8;
+  stroke: #64748b;
+}
+
+.room.active.status-planned rect {
   fill: #f59e0b;
   stroke: #d97706;
 }
@@ -187,17 +196,17 @@
 
 .room.status-working .room-area, 
 .room.status-working .room-area-tiny {
-  fill: #2563eb;
+  fill: #be185d;
 }
 
 .room.status-paused .room-area, 
 .room.status-paused .room-area-tiny {
-  fill: #d97706;
+  fill: #64748b;
 }
 
 .room.status-planned .room-area, 
 .room.status-planned .room-area-tiny {
-  fill: #64748b;
+  fill: #d97706;
 }
 
 .room.active text { fill: #ffffff !important; }

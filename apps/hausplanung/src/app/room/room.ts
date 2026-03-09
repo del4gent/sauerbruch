@@ -122,6 +122,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   loadRoomData(roomId: string) {
     this.roomName.set(roomId);
     this.error.set(false);
+    this.isAblaufExpanded.set(false);
     this.stopAnimation();
     
     const details = this.roomService.getRoomById(roomId);
@@ -276,6 +277,75 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   asChecklist(items: any): ChecklistItem[] {
     return items as ChecklistItem[];
+  }
+
+  isPast(section: RoomSection, index: number): boolean {
+    if (section.type === 'checklist' && Array.isArray(section.items)) {
+      return (section.items[index] as ChecklistItem).done;
+    }
+    if (section.type === 'table' && typeof section.items !== 'string' && 'rows' in section.items) {
+      const row = (section.items as TableData).rows[index];
+      const status = row[1]?.toLowerCase() || '';
+      return status === 'fertig' || status === 'erledigt' || status === '✅ fertig';
+    }
+    return false;
+  }
+
+  isCurrent(section: RoomSection, index: number): boolean {
+    if (this.isPast(section, index)) return false;
+    // Current is the FIRST item that is NOT past
+    for (let i = 0; i < index; i++) {
+      if (!this.isPast(section, i)) return false;
+    }
+    return true;
+  }
+
+  isFuture(section: RoomSection, index: number): boolean {
+    if (this.isPast(section, index) || this.isCurrent(section, index)) return false;
+    return true;
+  }
+
+  getCompletedCount(section: RoomSection): number {
+    if (section.type === 'checklist' && Array.isArray(section.items)) {
+      return section.items.filter(item => item.done).length;
+    }
+    if (section.type === 'table' && typeof section.items !== 'string' && 'rows' in section.items) {
+      return (section.items as TableData).rows.filter(row => {
+        const status = row[1]?.toLowerCase() || '';
+        return status === 'fertig' || status === 'erledigt' || status === '✅ fertig';
+      }).length;
+    }
+    return 0;
+  }
+
+  getTotalCount(section: RoomSection): number {
+    if (section.type === 'checklist' && Array.isArray(section.items)) {
+      return section.items.length;
+    }
+    if (section.type === 'table' && typeof section.items !== 'string' && 'rows' in section.items) {
+      return (section.items as TableData).rows.length;
+    }
+    return 0;
+  }
+
+  getSectionProgress(section: RoomSection): number {
+    const total = this.getTotalCount(section);
+    if (total === 0) return 0;
+    return Math.round((this.getCompletedCount(section) / total) * 100);
+  }
+
+  getTaskIcon(label: string): string {
+    const l = label.toLowerCase();
+    if (l.includes('entkern') || l.includes('abbruch') || l.includes('raus')) return '🔨';
+    if (l.includes('elektro') || l.includes('kabel') || l.includes('dose') || l.includes('steckdose')) return '⚡';
+    if (l.includes('sanitär') || l.includes('rohr') || l.includes('wasser') || l.includes('leitung')) return '🚰';
+    if (l.includes('fliesen') || l.includes('boden')) return '🧱';
+    if (l.includes('montage') || l.includes('einbau') || l.includes('setzen')) return '🔧';
+    if (l.includes('maler') || l.includes('streich') || l.includes('tapete') || l.includes('putz')) return '🎨';
+    if (l.includes('licht') || l.includes('lampe') || l.includes('spot')) return '💡';
+    if (l.includes('fenster') || l.includes('tür')) return '🪟';
+    if (l.includes('möbel') || l.includes('schrank') || l.includes('küche')) return '🛋️';
+    return '📋';
   }
 
   generatePdf() {

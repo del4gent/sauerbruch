@@ -14,9 +14,13 @@ C_BLUE = (52, 152, 219)
 C_TEXT = (40, 40, 40)
 C_GRAY_LIGHT = (248, 249, 250)
 C_GRAY_DIVIDER = (220, 225, 230)
-C_STATUS_PLAN = (52, 152, 219)
-C_STATUS_TODO = (231, 76, 60)
-C_STATUS_DONE = (46, 204, 113)
+
+# Status Colors
+C_STATUS_DONE = (46, 204, 113)   # Green
+C_STATUS_WORK = (219, 39, 119)   # Vibrant Magenta
+C_STATUS_PLAN = (243, 156, 18)   # Orange
+C_STATUS_PAUSED = (149, 165, 166) # Gray
+C_STATUS_TODO = (231, 76, 60)    # Red
 
 # Fonts & Layout
 FONT_PRIMARY = "helvetica"

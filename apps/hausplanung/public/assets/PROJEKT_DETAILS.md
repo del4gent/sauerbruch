@@ -10,19 +10,13 @@
 - **Fläche:** 6.64 m² (2.01m x 3.305m)
 - **Status:** In Arbeit
 
-### IST-ZUSTAND
-
-- [x] Dokumentation des Bestands (siehe vorher.png, IMG_9974.jpg, IMG_9976.jpg)
-- [x] Entkernung (Fliesen und Sanitäranlagen entfernt)
-
 ### ABLAUFPLAN
 
-| Titel | Status | Anfang | Ende |
-| --- | --- | --- | --- |
-| Entkernung | Fertig | Januar | Januar |
-| Rohinstallation | In Arbeit | Februar | März |
-| Fliesenarbeiten | Ausstehend | April | Mai |
-| Endmontage | Ausstehend | Juni | Juni |
+- [x] Entkernung
+- [ ] Fenster austauschen
+- [ ] Rohre verlegen
+- [ ] Fliesen
+- [ ] Sanitär-Endmontage
 
 
 ---
@@ -100,12 +94,6 @@
 - **Fläche:** 17.70 m² (3.885m x 4.555m)
 - **Status:** Fertig
 
-### IST-ZUSTAND
-
-- [x] Dokumentation des Bestands
-- [x] Entrümpelung
-- [x] Entfernung der alten Tapeten
-
 ### ABLAUFPLAN
 
 | Titel | Status | Anfang | Ende |
@@ -119,7 +107,7 @@
 
 ---
 
-## KINDERZIMMER
+## ZIMMER 2
 
 - **Fläche:** 12.56 m² (3.885m x 3.232m)
 - **Status:** Pausiert
@@ -127,7 +115,7 @@
 
 ---
 
-## ZIMMER (BÜRO)
+## ZIMMER 1
 
 - **Fläche:** 10.35 m² (2.85m x 3.635m)
 - **Status:** Pausiert

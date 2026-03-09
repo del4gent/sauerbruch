@@ -60,18 +60,18 @@
     "path": "rooms/schlafzimmer/planung.json"
   },
   {
-    "id": "kinderzimmer",
-    "name": "Kinderzimmer",
-    "emoji": "🧸",
+    "id": "zimmer2",
+    "name": "Zimmer 2",
+    "emoji": "🎨",
     "area": 12.56,
     "area_derivation": "3.885m x 3.232m",
-    "status": "Pausiert",
+    "status": "In Planung",
     "budget": null,
-    "path": "rooms/kinderzimmer/planung.json"
+    "path": "rooms/zimmer2/planung.json"
   },
   {
     "id": "zimmer",
-    "name": "Zimmer (Büro)",
+    "name": "Zimmer 1",
     "emoji": "💻",
     "area": 10.35,
     "area_derivation": "2.85m x 3.635m",

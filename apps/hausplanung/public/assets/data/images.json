@@ -78,5 +78,17 @@
   "schlafzimmer": [
     "assets/rooms/schlafzimmer/medien/ist/schlafzimmer_vorher.png",
     "assets/rooms/schlafzimmer/medien/inspiration/schlafzimmer_nachher.png"
+  ],
+  "kueche": [
+    "assets/rooms/kueche/medien/inspiration/icon.svg"
+  ],
+  "zimmer2": [
+    "assets/rooms/zimmer2/medien/inspiration/icon.svg"
+  ],
+  "garage": [
+    "assets/rooms/garage/medien/inspiration/icon.svg"
+  ],
+  "zimmer": [
+    "assets/rooms/zimmer/medien/inspiration/icon.svg"
   ]
 }
