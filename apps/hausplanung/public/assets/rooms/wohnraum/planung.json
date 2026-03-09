@@ -7,7 +7,57 @@
   },
   "sections": [
     {
-      "title": "ELEKTRO-PLANUNG (MATERIALKOSTEN)",
+      "title": "RENOVIERUNGS-ABLAUF",
+      "type": "table",
+      "items": {
+        "headers": [
+          "Schritt",
+          "Beschreibung",
+          "Anfang",
+          "Ende"
+        ],
+        "rows": [
+          [
+            "Demontage",
+            "Heizkörper, Tapeten, Parkett & Decke entfernen",
+            "2026-03-30",
+            "2026-04-01"
+          ],
+          [
+            "Fenster-Austausch",
+            "Einbau von 3 neuen Fenstern",
+            "2026-04-02",
+            "2026-04-03"
+          ],
+          [
+            "FBH Installation",
+            "Fußbodenheizung (Trockensystem) verlegen",
+            "2026-04-06",
+            "2026-04-08"
+          ],
+          [
+            "Decke & LED",
+            "Unterkonstruktion, Verkabelung & Beplankung",
+            "2026-04-09",
+            "2026-04-10"
+          ],
+          [
+            "Wand-Finish",
+            "Tapezieren der Wände",
+            "2026-04-13",
+            "2026-04-15"
+          ],
+          [
+            "Boden-Finish",
+            "Parkett verlegen & Fußleisten montieren",
+            "2026-04-16",
+            "2026-04-20"
+          ]
+        ]
+      }
+    },
+    {
+      "title": "MATERIALKOSTEN (BERECHNET)",
       "type": "table",
       "items": {
         "headers": [
@@ -19,50 +69,79 @@
         ],
         "rows": [
           [
-            "LED Einbauspots (Smart Home fähig)",
-            "8 (Akzentbeleuchtung)",
+            "Fenster (2-fach verglast)",
+            "3",
+            "Stk.",
+            "750,00 €",
+            "2.250,00 € (Quelle: Schätzung 3 Fenster)"
+          ],
+          [
+            "Fußbodenheizung (Trockensystem)",
+            "20,02",
+            "m²",
+            "45,00 €",
+            "900,90 € (Herleitung: 20.02m² x 45€)"
+          ],
+          [
+            "LED Einbauspots (Dimmbar)",
+            "14",
             "Stk.",
             "65,00 €",
-            "520,00 €"
+            "910,00 € (Herleitung: 1 Spot pro 1.43m²)"
           ],
           [
-            "Einbau-Gehäuse für Betondecke",
-            "8",
-            "Stk.",
-            "25,00 €",
-            "200,00 €"
+            "Parkett (Eiche)",
+            "21,02",
+            "m²",
+            "75,00 €",
+            "1.576,50 € (Herleitung: 20.02m² + 5% Verschnitt [1m²] x 75€)"
           ],
           [
-            "Smart Home Controller & Gateway",
-            "1",
-            "Stk.",
-            "180,00 €",
-            "180,00 €"
+            "Tapete (Vlies)",
+            "45,73",
+            "m²",
+            "2,50 €",
+            "114,33 € (Herleitung: 18.29m Umfang x 2.5m Höhe)"
           ],
           [
-            "NYM-J 5x1,5 mm² Kabel",
-            "40",
+            "Fußleisten",
+            "18,29",
             "m",
-            "1,50 €",
-            "60,00 €"
+            "6,50 €",
+            "118,89 € (Herleitung: Raumumfang laut Maßen)"
+          ],
+          [
+            "Deckenplatten (Gipskarton)",
+            "20,02",
+            "m²",
+            "12,00 €",
+            "240,24 € (Herleitung: 20.02m² x 12€)"
           ]
         ]
       }
     },
     {
-      "title": "AUSFÜHRUNG",
+      "title": "CHECKLISTE AUSFÜHRUNG",
       "type": "checklist",
       "items": [
         {
-          "label": "Positionierung der Brennstellen festlegen",
+          "label": "Heizkörper fachgerecht entleeren und abmontieren",
           "done": false
         },
         {
-          "label": "Montage der Einbaugehäuse",
+          "label": "Altes Parkett und Trittschalldämmung entsorgen",
           "done": false
         },
         {
-          "label": "Einbindung in das Smart-Home-System",
+          "label": "Fensteraustausch koordinieren",
+          "done": false
+        },
+        {
+          "label": "Raster für 14 LED-Spots an der Decke anzeichnen",
+          "done": false
+        },
+        {
+          "label": "Fußbodenheizung auf ebenem Untergrund verlegen",
           "done": false
         }
       ]

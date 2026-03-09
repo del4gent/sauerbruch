@@ -106,11 +106,12 @@ export class RoomComponent implements OnInit, OnDestroy {
     if (!sections || sections.length === 0) return null;
     
     // Robust search for the Ablaufplan section
-    const found = sections.find(s => s.title.trim().toUpperCase() === 'ABLAUFPLAN');
+    const found = sections.find(s => {
+      const t = s.title.trim().toUpperCase();
+      return t.includes('ABLAUFPLAN') || t.includes('RENOVIERUNGS-ABLAUF') || t.includes('RENOVIERUNGSABLAUF');
+    });
     if (found) return found;
 
-    // Fallback: If no explicit ABLAUFPLAN section exists, but we have upcoming tasks,
-    // we could create a virtual section, but let's first ensure the explicit one works.
     return null;
   });
 
@@ -158,19 +159,31 @@ export class RoomComponent implements OnInit, OnDestroy {
         const upcoming: string[] = [];
 
         data.sections.forEach(section => {
-          const isAblauf = section.title.toUpperCase() === 'ABLAUFPLAN';
+          const sectionTitle = section.title.toUpperCase();
+          const isAblauf = sectionTitle.includes('ABLAUFPLAN') || 
+                           sectionTitle.includes('RENOVIERUNGS-ABLAUF') || 
+                           sectionTitle.includes('RENOVIERUNGSABLAUF');
           
           if (section.type === 'table' && typeof section.items !== 'string' && 'rows' in section.items) {
             const table = section.items as TableData;
-            table.rows.forEach(row => {
-              total++;
-              const status = row[1]?.toLowerCase() || '';
-              if (status === 'fertig' || status === 'erledigt' || status === '✅ fertig') {
-                completed++;
-              } else if (upcoming.length < 5) {
-                upcoming.push(row[0]);
-              }
-            });
+            // Only count progress from Ablaufplan tables
+            if (isAblauf) {
+              const statusIndex = table.headers.findIndex(h => h.toUpperCase().includes('STATUS'));
+              const titleIndex = Math.max(0, table.headers.findIndex(h => {
+                const head = h.toUpperCase();
+                return head.includes('TITEL') || head.includes('SCHRITT') || head.includes('GEWERK');
+              }));
+
+              table.rows.forEach(row => {
+                total++;
+                const status = statusIndex !== -1 ? (row[statusIndex]?.toLowerCase() || '') : '';
+                if (status === 'fertig' || status === 'erledigt' || status === '✅ fertig') {
+                  completed++;
+                } else if (upcoming.length < 5) {
+                  upcoming.push(row[titleIndex]);
+                }
+              });
+            }
           } else if (section.type === 'checklist' && Array.isArray(section.items)) {
             section.items.forEach(item => {
               total++;
@@ -189,10 +202,15 @@ export class RoomComponent implements OnInit, OnDestroy {
         this._allSections.set(data.sections);
 
         // 2. Filter sections for main content
-        // We show everything EXCEPT "BASISDATEN", "IST-ZUSTAND" AND "ABLAUFPLAN"
-        this.roomSections.set(data.sections.filter(s => 
-          !['BASISDATEN', 'IST-ZUSTAND', 'ABLAUFPLAN'].includes(s.title.toUpperCase())
-        ));
+        this.roomSections.set(data.sections.filter(s => {
+          const t = s.title.toUpperCase();
+          return !['BASISDATEN', 'IST-ZUSTAND'].includes(t) && 
+                 !t.includes('ABLAUFPLAN') && 
+                 !t.includes('RENOVIERUNGS-ABLAUF') && 
+                 !t.includes('RENOVIERUNGSABLAUF') &&
+                 !t.includes('MATERIALKOSTEN') &&
+                 !t.includes('CHECKLISTE');
+        }));
 
         // 3. Handle Images
         if (isPlatformBrowser(this.platformId)) {
@@ -272,7 +290,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     if (filename.includes('wc')) return 'Wand-WC (Spülrandlos)';
     if (filename.includes('badewanne')) return 'Einbau-Badewanne (Acryl)';
     if (filename.includes('spiegel')) return 'LED-Spiegel (Rund)';
-    if (filename.includes('fenster')) return 'Kunststoff-Fenster (3-fach verglast)';
+    if (filename.includes('fenster')) return 'Kunststoff-Fenster (2-fach verglast)';
     if (filename.includes('lampe')) return 'Philips Hue Tento (IP44, Smart Home)';
     if (filename.includes('duschrinne')) return 'Duschrinne (Edelstahl)';
     return filename.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
@@ -299,8 +317,9 @@ export class RoomComponent implements OnInit, OnDestroy {
       return (section.items[index] as ChecklistItem).done;
     }
     if (section.type === 'table' && typeof section.items !== 'string' && 'rows' in section.items) {
-      const row = (section.items as TableData).rows[index];
-      const status = row[1]?.toLowerCase() || '';
+      const table = section.items as TableData;
+      const row = table.rows[index];
+      const status = this.getRowStatus(table, row).toLowerCase();
       return status === 'fertig' || status === 'erledigt' || status === '✅ fertig';
     }
     return false;
@@ -320,15 +339,44 @@ export class RoomComponent implements OnInit, OnDestroy {
     return true;
   }
 
+  getRowTitle(table: TableData, row: string[]): string {
+    const idx = table.headers.findIndex(h => {
+      const t = h.toUpperCase();
+      return t.includes('TITEL') || t.includes('SCHRITT') || t.includes('GEWERK');
+    });
+    return idx !== -1 ? row[idx] : row[0];
+  }
+
+  getRowStatus(table: TableData, row: string[]): string {
+    const idx = table.headers.findIndex(h => h.toUpperCase().includes('STATUS'));
+    return idx !== -1 ? row[idx] : '';
+  }
+
+  getRowDescription(table: TableData, row: string[]): string {
+    const idx = table.headers.findIndex(h => h.toUpperCase().includes('BESCHREIBUNG'));
+    return idx !== -1 ? row[idx] : '';
+  }
+
+  getRowStart(table: TableData, row: string[]): string {
+    const idx = table.headers.findIndex(h => {
+      const t = h.toUpperCase();
+      return t.includes('ANFANG') || t.includes('START');
+    });
+    return idx !== -1 ? row[idx] : '';
+  }
+
+  getRowEnd(table: TableData, row: string[]): string {
+    const idx = table.headers.findIndex(h => h.toUpperCase().includes('ENDE'));
+    return idx !== -1 ? row[idx] : '';
+  }
+
   getCompletedCount(section: RoomSection): number {
     if (section.type === 'checklist' && Array.isArray(section.items)) {
       return section.items.filter(item => item.done).length;
     }
     if (section.type === 'table' && typeof section.items !== 'string' && 'rows' in section.items) {
-      return (section.items as TableData).rows.filter(row => {
-        const status = row[1]?.toLowerCase() || '';
-        return status === 'fertig' || status === 'erledigt' || status === '✅ fertig';
-      }).length;
+      const table = section.items as TableData;
+      return table.rows.filter((row, i) => this.isPast(section, i)).length;
     }
     return 0;
   }

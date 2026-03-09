@@ -1,10 +1,97 @@
 {
   "title": "Flur",
   "basisdaten": {
-    "flaeche": "12,25 m²",
+    "flaeche": "20,88 m²",
+    "herleitung": "12.25 (Diele) + 4.79 (Garderobe) + 3.84 (Flur privat)",
     "status": "In Planung"
   },
   "sections": [
+    {
+      "title": "ABLAUFPLAN",
+      "type": "table",
+      "items": {
+        "headers": [
+          "Titel",
+          "Status",
+          "Anfang",
+          "Ende"
+        ],
+        "rows": [
+          [
+            "Vorbereitung: Treppe abdecken & Schutzmaßnahmen",
+            "Ausstehend",
+            "2026-03-14",
+            "2026-03-14"
+          ],
+          [
+            "Demontage: Einbauschrank & Glastür (Garderobe)",
+            "Ausstehend",
+            "2026-03-14",
+            "2026-03-15"
+          ],
+          [
+            "Demontage: Treppengeländer & Telefondose",
+            "Ausstehend",
+            "2026-03-16",
+            "2026-03-16"
+          ],
+          [
+            "Abriss: Tapete entfernen",
+            "Ausstehend",
+            "2026-03-17",
+            "2026-03-19"
+          ],
+          [
+            "Abriss: Bodenbelag rausreißen",
+            "Ausstehend",
+            "2026-03-20",
+            "2026-03-22"
+          ],
+          [
+            "Fenster im Flur austauschen",
+            "Ausstehend",
+            "2026-03-23",
+            "2026-03-24"
+          ],
+          [
+            "Elektro: Lichtschalter verstecken & Bewegungsmelder",
+            "Ausstehend",
+            "2026-03-25",
+            "2026-03-26"
+          ],
+          [
+            "Fußbodenheizung verlegen",
+            "Ausstehend",
+            "2026-03-27",
+            "2026-03-30"
+          ],
+          [
+            "Wände verputzen & Trocknung",
+            "Ausstehend",
+            "2026-04-01",
+            "2026-04-12"
+          ],
+          [
+            "Decke abhängen & LED Spots (12 Stk. berechnet)",
+            "Ausstehend",
+            "2026-04-13",
+            "2026-04-16"
+          ],
+          [
+            "Fliesen verlegen",
+            "Ausstehend",
+            "2026-04-17",
+            "2026-04-22"
+          ],
+          [
+            "Fußleisten montieren",
+            "Ausstehend",
+            "2026-04-23",
+            "2026-04-24"
+          ]
+        ]
+      }
+    },
     {
       "title": "ELEKTRO-PLANUNG (MATERIALKOSTEN)",
       "type": "table",
@@ -19,17 +106,17 @@
         "rows": [
           [
             "LED Einbauspots (warmweiß, dimmbar)",
-            "6 (3x Eingang, 3x Flur)",
+            "12 (Berechnet auf 20.88 m²)",
             "Stk.",
             "45,00 €",
-            "270,00 €"
+            "540,00 €"
           ],
           [
             "NYM-J 3x1,5 mm² Kabel",
-            "25",
+            "40",
             "m",
             "1,20 €",
-            "30,00 €"
+            "48,00 €"
           ],
           [
             "Einbaudosen & Klemmen",
@@ -37,6 +124,13 @@
             "Set",
             "35,00 €",
             "35,00 €"
+          ],
+          [
+            "Bewegungsmelder (Unterputz)",
+            "1",
+            "Stk.",
+            "85,00 €",
+            "85,00 €"
           ]
         ]
       }
@@ -44,25 +138,7 @@
     {
       "title": "INSPIRATION",
       "type": "text",
-      "items": "![Regenbogen Fenster-Effekt](medien/inspiration/flur_fenster_regenbogen.png)\n- **Konzept:** Nutzung von schmalen Fensterausschnitten für Lichteffekte (z.B. Regenbogenfolie oder Prismen-Effekt).\n- **Materialität:** Warme Betonoptik an den Wänden kombiniert mit dunklem Steinboden.\n- **Akzente:** Minimalistisches Lichtdesign und offener Treppenaufgang."
-    },
-    {
-      "title": "AUSFÜHRUNG",
-      "type": "checklist",
-      "items": [
-        {
-          "label": "Deckenausschnitt erstellen",
-          "done": false
-        },
-        {
-          "label": "Verkabelung zu den Brennstellen ziehen",
-          "done": false
-        },
-        {
-          "label": "Dimmer im Schalterprogramm integrieren",
-          "done": false
-        }
-      ]
+      "items": "![Regenbogen Fenster-Effekt](medien/inspiration/flur_fenster_regenbogen.png)\n- **Konzept:** Nutzung von schmalen Fensterausschnitten für Lichteffekte (z.B. Regenbogenfolie oder Prismen-Effekt).\n- **Materialität:** Warme Betonoptik an den Wänden kombiniert mit dunkhem Steinboden.\n- **Akzente:** Minimalistisches Lichtdesign und offener Treppenaufgang."
     }
   ]
 }

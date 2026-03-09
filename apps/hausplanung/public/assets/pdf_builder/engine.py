@@ -462,7 +462,9 @@ class ArchitectPDF(FPDF):
             row_heights = [6]
             for i, val in enumerate(row):
                 if i >= len(ws): break
-                img_match = re.search(r'!\[.*?\]\((.*?)\)', val)
+                # Ensure val is a string for re.search
+                val_str = str(val) if val is not None else ""
+                img_match = re.search(r'!\[.*?\]\((.*?)\)', val_str)
                 if img_match:
                     img_path = self._resolve_image_path(room.path, img_match.group(1))
                     if img_path:

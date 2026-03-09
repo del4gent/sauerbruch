@@ -147,18 +147,17 @@
             </section>
           </ng-container>
         </div>
-      </main>
 
-      <aside class="secondary-content">
-        <div class="sticky-sidebar">
-          <!-- ABLAUFPLAN SIDEBAR CARD -->
-          <div class="sidebar-section" *ngIf="ablaufSection() as section">
-            <div class="sidebar-header-group">
-              <h3 class="sidebar-title">Ablaufplan</h3>
-              <span class="sidebar-progress-badge">{{ getSectionProgress(section) }}%</span>
-            </div>
-            
-            <div class="minimal-roadmap sidebar-timeline">
+        <!-- ABLAUFPLAN SECTION (Moved to bottom) -->
+        <div class="room-sections ablauf-bottom-section" *ngIf="ablaufSection() as section">
+          <section class="content-section">
+            <h2 class="section-title">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>
+              Ablaufplan
+              <span class="sidebar-progress-badge" style="margin-left: auto;">{{ getSectionProgress(section) }}%</span>
+            </h2>
+
+            <div class="minimal-roadmap full-width-roadmap">
               <div class="sequence-container">
                 <div class="sequence-line"></div>
 
@@ -171,8 +170,11 @@
                        [class.future]="isFuture(section, i)">
                     <div class="sequence-marker"></div>
                     <div class="sequence-content">
-                      <span class="step-title-small">{{ item.label }}</span>
-                      <span class="step-status-micro" *ngIf="isCurrent(section, i)">In Arbeit</span>
+                      <div class="step-header">
+                        <span class="step-title">{{ item.label }}</span>
+                        <span class="step-status-tag" *ngIf="isCurrent(section, i)">In Arbeit</span>
+                        <span class="step-status-tag past" *ngIf="isPast(section, i)">Erledigt</span>
+                      </div>
                     </div>
                   </div>
                 </ng-container>
@@ -186,26 +188,34 @@
                        [class.future]="isFuture(section, i)">
                     <div class="sequence-marker"></div>
                     <div class="sequence-content">
-                      <span class="step-title-small">{{ row[0] }}</span>
-                      <div class="step-meta-micro">
-                        <span class="step-date-micro" *ngIf="row[2] || row[3]">
-                          <ng-container *ngIf="row[2] && row[3]; else singleDate">
-                            {{ row[2] | date:'MMMM yyyy' }} – {{ row[3] | date:'MMMM yyyy' }}
-                          </ng-container>
-                          <ng-template #singleDate>
-                            ab {{ (row[2] || row[3]) | date:'MMMM yyyy' }}
-                          </ng-template>
-                        </span>
-                        <span class="step-status-tag-micro" *ngIf="isCurrent(section, i)">{{ row[1] || 'Aktiv' }}</span>
+                      <div class="step-header">
+                        <div class="step-title-group">
+                          <span class="step-title">{{ getRowTitle(asTable(section.items), row) }}</span>
+                          <p class="step-description" *ngIf="getRowDescription(asTable(section.items), row)">
+                            {{ getRowDescription(asTable(section.items), row) }}
+                          </p>
+                        </div>
+                        <div class="step-meta">
+                          <span class="step-date" *ngIf="getRowStart(asTable(section.items), row) || getRowEnd(asTable(section.items), row)">
+                            <ng-container *ngIf="getRowStart(asTable(section.items), row) && getRowEnd(asTable(section.items), row); else singleDate">
+                              {{ getRowStart(asTable(section.items), row) | date:'MMMM yyyy' }} – {{ getRowEnd(asTable(section.items), row) | date:'MMMM yyyy' }}
+                            </ng-container>
+                            <ng-template #singleDate>
+                              ab {{ (getRowStart(asTable(section.items), row) || getRowEnd(asTable(section.items), row)) | date:'MMMM yyyy' }}
+                            </ng-template>
+                          </span>
+                          <span class="step-status-tag" *ngIf="isCurrent(section, i)">{{ getRowStatus(asTable(section.items), row) || 'Aktiv' }}</span>
+                          <span class="step-status-tag past" *ngIf="isPast(section, i)">Erledigt</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </ng-container>
               </div>
             </div>
-          </div>
+          </section>
         </div>
-      </aside>
+      </main>
     </div>
   </div>
 </div>
