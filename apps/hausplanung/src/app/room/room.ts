@@ -57,7 +57,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   heroImage = signal<string | null>(null);
   beforeImage = signal<string | null>(null);
   afterImage = signal<string | null>(null);
-  sliderPos = signal(50);
+  sliderPos = signal(0);
   error = signal(false);
   progress = signal<{ total: number; completed: number; percentage: number }>({ total: 0, completed: 0, percentage: 0 });
   upcomingTasks = signal<string[]>([]);
@@ -229,7 +229,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     
     this.animationInterval = setInterval(() => {
       const elapsed = Date.now() - startTime;
-      const pos = (Math.sin((elapsed / cycleDuration) * 2 * Math.PI + Math.PI / 2) + 1) / 2 * 100;
+      const pos = (Math.sin((elapsed / cycleDuration) * 2 * Math.PI - Math.PI / 2) + 1) / 2 * 100;
       this.sliderPos.set(pos);
     }, 20); 
   }

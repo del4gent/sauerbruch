@@ -3,7 +3,7 @@
   <section class="room-hero">
     <div class="slider-container" *ngIf="beforeImage() && afterImage(); else staticHero">
       <div class="image-before" [style.backgroundImage]="'url(' + beforeImage() + ')'"></div>
-      <div class="image-after" [style.backgroundImage]="'url(' + afterImage() + ')'" [style.clipPath]="'inset(0 0 0 ' + (100 - sliderPos()) + '%)'"></div>
+      <div class="image-after" [style.backgroundImage]="'url(' + afterImage() + ')'" [style.clipPath]="'polygon(0% 0%, ' + (sliderPos() / 2) + '% 0%, ' + (sliderPos() / 2) + '% 100%, 0% 100%, 100% 100%, ' + (100 - sliderPos() / 2) + '% 100%, ' + (100 - sliderPos() / 2) + '% 0%, 100% 0%)'"></div>
     </div>
 
     <ng-template #staticHero>
