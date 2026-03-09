@@ -1,5 +1,6 @@
 import os
 import re
+import json
 import subprocess
 import tempfile
 from fpdf import FPDF
@@ -17,8 +18,18 @@ class ArchitectPDF(FPDF):
         super().__init__(orientation='P', unit='mm', format='A4')
         self.toc_data = []
         self.temp_images = []
+        self.project_data = {}
         self.set_margins(MARGIN_L, MARGIN_T, MARGIN_R)
         self.set_auto_page_break(True, MARGIN_B)
+        self._load_project_data()
+
+    def _load_project_data(self):
+        try:
+            if os.path.exists(PROJECT_JSON_PATH):
+                with open(PROJECT_JSON_PATH, 'r', encoding='utf-8') as f:
+                    self.project_data = json.load(f)
+        except Exception as e:
+            print(f"Warning: Could not load project.json: {e}")
 
     def _resolve_image_path(self, room_path, rel_path):
         # If it's already an absolute path and exists, use it
@@ -90,21 +101,24 @@ class ArchitectPDF(FPDF):
 
     def header(self):
         if self.page_no() > 1:
+            p_name = self.project_data.get('project_name', 'SAUERBRUCH 3').upper()
+            p_rev = self.project_data.get('version', '2.2')
             self.set_font(FONT_PRIMARY, '', 8)
             self.set_text_color(120)
-            self.cell(0, 10, 'PROJEKT: SAUERBRUCH 3 | DOKUMENTATION 2026', align='L', new_x=XPos.RIGHT, new_y=YPos.TOP)
-            self.cell(0, 10, 'REVISION: 2.2', align='R', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+            self.cell(0, 10, f'PROJEKT: {p_name} | DOKUMENTATION 2026', align='L', new_x=XPos.RIGHT, new_y=YPos.TOP)
+            self.cell(0, 10, f'REVISION: {p_rev}', align='R', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
             self.set_draw_color(*C_GRAY_DIVIDER)
             self.line(MARGIN_L, 22, 210 - MARGIN_R, 22)
             self.ln(10)
 
     def footer(self):
         self.set_y(-20)
+        p_name = self.project_data.get('project_name', 'SAUERBRUCH 3').upper()
         self.set_font(FONT_PRIMARY, '', 8)
         self.set_text_color(150)
         self.set_draw_color(*C_GRAY_DIVIDER)
         self.line(MARGIN_L, 277, 210 - MARGIN_R, 277)
-        self.cell(100, 10, 'ARCHITEKTUR & PLANUNG | SAUERBRUCH 3', align='L')
+        self.cell(100, 10, f'ARCHITEKTUR & PLANUNG | {p_name}', align='L')
         self.cell(0, 10, f'SEITE {self.page_no()}', align='R')
 
     def add_toc_entry(self, title, level=0):
@@ -127,22 +141,37 @@ class ArchitectPDF(FPDF):
         self.set_fill_color(*C_BLUE)
         self.rect(MARGIN_L, 60, 3, 50, 'F')
         self.set_xy(MARGIN_L + 10, 60)
+        
+        p_name = self.project_data.get('project_name', 'SAUERBRUCH').upper()
+        p_title = self.project_data.get('project_title', 'ARCHITEKTUR-SPEZIFIKATION & LEISTUNGSVERZEICHNIS').upper()
+        p_date = self.project_data.get('date', 'AUSGABE MÄRZ 2026').upper()
+        p_version = self.project_data.get('version', '2.2')
+
         self.set_font(FONT_PRIMARY, 'B', 54)
         self.set_text_color(255)
-        self.cell(0, 22, 'SAUERBRUCH', align='L', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        # Handle "Sauerbruch 3" by splitting if needed or just display
+        name_main = p_name
+        name_sub = "03"
+        if " " in p_name:
+            parts = p_name.split(" ")
+            name_main = parts[0]
+            name_sub = parts[1] if len(parts[1]) == 1 else "03"
+
+        self.cell(0, 22, name_main, align='L', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
         self.set_x(MARGIN_L + 10)
         self.set_font(FONT_PRIMARY, '', 32)
-        self.cell(0, 15, '03', align='L', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        self.cell(0, 15, name_sub, align='L', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
         self.ln(5)
         self.set_x(MARGIN_L + 10)
         self.set_font(FONT_PRIMARY, 'B', 14)
         self.set_text_color(200)
-        self.cell(0, 10, 'ARCHITEKTUR-SPEZIFIKATION & LEISTUNGSVERZEICHNIS', align='L', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        self.multi_cell(0, 10, p_title, align='L', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        
         self.set_y(-50)
         self.set_font(FONT_PRIMARY, '', 10)
         self.set_text_color(180)
-        self.cell(0, 6, 'AUSGABE MÄRZ 2026', align='R', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
-        self.cell(0, 6, 'VERSION 2.2 (SPECIFICATION)', align='R', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        self.cell(0, 6, p_date, align='R', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        self.cell(0, 6, f'VERSION {p_version} (SPECIFICATION)', align='R', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
     def render_toc(self):
         self.add_page()
@@ -178,8 +207,10 @@ class ArchitectPDF(FPDF):
         # Subtle info text instead of a box
         self.set_font(FONT_PRIMARY, 'I', 9)
         self.set_text_color(100)
-        self.multi_cell(0, 5, "Grundlage für Ausschreibung und Vergabe. Maße nach bestem Wissen; zur Prüfung der Mengen dienen die in Klammern angegebenen Herleitungen.", align='L', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
-        self.ln(15)
+        spec = self.project_data.get('specification', {})
+        spec_text = f"{spec.get('transparency', '')} {spec.get('target_values', '')}"
+        self.multi_cell(0, 5, spec_text, align='L', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        self.ln(10)
 
         def draw_stat(label, value, x_pos, y_pos):
             self.set_xy(x_pos, y_pos)
@@ -195,10 +226,30 @@ class ArchitectPDF(FPDF):
             self.set_font(FONT_PRIMARY, 'B', 15)
             self.set_text_color(*C_SLATE)
             self.cell(63, 10, value)
+        
         start_y = self.get_y()
         draw_stat('GESAMTFLÄCHE NETTO', f'{total_area:.2f} m2', MARGIN_L, start_y)
         draw_stat('KALKULIERTE GESAMTKOSTEN', f'{total_cost:,.2f} EUR'.replace(',', 'X').replace('.', ',').replace('X', '.'), MARGIN_L + 85, start_y)
-        self.set_y(start_y + 40)
+        
+        # Milestones
+        self.set_y(start_y + 45)
+        self.set_font(FONT_PRIMARY, 'B', 14)
+        self.set_text_color(*C_SLATE)
+        self.cell(0, 10, 'MEILENSTEINE & PROJEKTSTATUS', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        self.draw_section_divider(width=30)
+        self.ln(2)
+
+        for ms in self.project_data.get('milestones', []):
+            self.set_x(MARGIN_L + 5)
+            status_box = "[X]" if ms.get('done') else "[ ]"
+            color = C_STATUS_DONE if ms.get('done') else C_TEXT
+            self.set_text_color(*color)
+            self.set_font(FONT_PRIMARY, 'B' if ms.get('done') else '', 10)
+            self.cell(10, 8, status_box)
+            self.cell(0, 8, ms.get('label', ''))
+            self.ln(7)
+
+        self.set_y(self.get_y() + 10)
 
     def render_room(self, index, room):
         self.add_page()

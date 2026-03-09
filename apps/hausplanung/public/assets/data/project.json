@@ -1,0 +1,28 @@
+{
+  "project_name": "Sauerbruch 3",
+  "project_title": "Architektur-Spezifikation & Leistungsverzeichnis",
+  "version": "2.2",
+  "date": "März 2026",
+  "specification": {
+    "transparency": "Die aufgeführten m²-Angaben enthalten zur Nachvollziehbarkeit ihre Herleitungen (z.B. Länge x Breite).",
+    "target_values": "Die Kostenschätzungen dienen der Materialkostenplanung; die finalen Werte ergeben sich aus den Angeboten der Fachbetriebe.",
+    "ist_zustand": "Die fotografische Dokumentation dient der Vorab-Beurteilung der Baustellensituation."
+  },
+  "cost_summary": {
+    "estimated_total": 28620.0,
+    "actual_total": 0.0,
+    "self_performance_material": 0.0,
+    "contractor_labor_material": 0.0
+  },
+  "milestones": [
+    { "label": "Datenaufnahme & Maße (m²)", "done": true },
+    { "label": "Leistungsverzeichnis pro Raum erstellen", "done": true },
+    { "label": "Angebote von Handwerkern einholen", "done": false },
+    { "label": "Materialbestellung", "done": false },
+    { "label": "Start Renovierung (Bad abgerissen)", "done": true },
+    { "label": "PDF-Export für Dokumentation generieren", "done": true }
+  ],
+  "documents": [
+    { "label": "Gesamtgrundriss", "path": "medien/grundriss_gesamt.pdf" }
+  ]
+}

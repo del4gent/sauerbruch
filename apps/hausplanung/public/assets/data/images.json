@@ -74,5 +74,9 @@
     "assets/rooms/keller_buero/medien/inspiration/IMG_0029.png",
     "assets/rooms/keller_buero/medien/inspiration/IMG_0031.png",
     "assets/rooms/keller_buero/medien/plan/grundriss.png"
+  ],
+  "schlafzimmer": [
+    "assets/rooms/schlafzimmer/medien/ist/schlafzimmer_vorher.png",
+    "assets/rooms/schlafzimmer/medien/inspiration/schlafzimmer_nachher.png"
   ]
 }

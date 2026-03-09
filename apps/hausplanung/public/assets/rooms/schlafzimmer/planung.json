@@ -1,0 +1,54 @@
+{
+  "title": "Schlafzimmer",
+  "basisdaten": {
+    "flaeche": "17,70 m²",
+    "herleitung": "3.885m x 4.555m",
+    "status": "Fertig"
+  },
+  "sections": [
+    {
+      "title": "ABLAUFPLAN",
+      "type": "table",
+      "items": {
+        "headers": [
+          "Titel",
+          "Status",
+          "Anfang",
+          "Ende"
+        ],
+        "rows": [
+          [
+            "Entrümpelt",
+            "Fertig",
+            "Oktober",
+            "Oktober"
+          ],
+          [
+            "Tapete ab",
+            "Fertig",
+            "November",
+            "November"
+          ],
+          [
+            "Neu tapeziert",
+            "Fertig",
+            "Dezember",
+            "Januar"
+          ],
+          [
+            "Neue Steckdosen und Lampen",
+            "Fertig",
+            "Februar",
+            "Februar"
+          ],
+          [
+            "Möbilisiert und fertiggestellt",
+            "Fertig",
+            "Februar",
+            "Februar"
+          ]
+        ]
+      }
+    }
+  ]
+}

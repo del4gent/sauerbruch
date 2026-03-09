@@ -16,6 +16,32 @@ interface ImageGroup {
   materials?: Material[];
 }
 
+interface ChecklistItem {
+  label: string;
+  done: boolean;
+}
+
+interface TableData {
+  headers: string[];
+  rows: string[][];
+}
+
+interface RoomSection {
+  title: string;
+  type: 'checklist' | 'table' | 'text';
+  items: ChecklistItem[] | TableData | string;
+}
+
+interface RoomData {
+  title: string;
+  basisdaten: {
+    flaeche: string;
+    herleitung: string;
+    status: string;
+  };
+  sections: RoomSection[];
+}
+
 @Component({
   selector: 'app-room',
   standalone: true,
@@ -26,7 +52,7 @@ interface ImageGroup {
 export class RoomComponent implements OnInit, OnDestroy {
   roomName = signal('');
   roomDetails = signal<Room | null>(null);
-  content = signal<SafeHtml>('');
+  roomSections = signal<RoomSection[]>([]);
   images = signal<string[]>([]);
   heroImage = signal<string | null>(null);
   beforeImage = signal<string | null>(null);
@@ -36,6 +62,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   progress = signal<{ total: number; completed: number; percentage: number }>({ total: 0, completed: 0, percentage: 0 });
   upcomingTasks = signal<string[]>([]);
   selectedMaterial = signal<Material | null>(null);
+  isAblaufExpanded = signal(false);
 
   groupedImages = computed(() => {
     const all = this.images();
@@ -61,6 +88,12 @@ export class RoomComponent implements OnInit, OnDestroy {
         icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
         images: materials.length > 0 ? materials.map(m => m.image) : all.filter(img => img.includes('/material/')),
         materials: materials
+      },
+      { 
+        id: 'ist', 
+        label: 'Bestand', 
+        icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
+        images: all.filter(img => img.includes('/ist/')) 
       }
     ];
     return groups;
@@ -99,35 +132,54 @@ export class RoomComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const mdPath = `assets/${details.path}`;
+    const jsonPath = `assets/${details.path}`;
     
-    this.http.get(mdPath, { responseType: 'text' }).subscribe({
-      next: async (md) => {
-        // Extract upcoming tasks (open items) BEFORE filtering
-        const openTaskLines = md.split('\n')
-          .filter(line => line.includes('- [ ]'))
-          .map(line => line.replace('- [ ]', '').trim())
-          .slice(0, 5); // Show max 5 next steps
-        this.upcomingTasks.set(openTaskLines);
+    this.http.get<RoomData>(jsonPath).subscribe({
+      next: (data) => {
+        // 1. Calculate Progress (from ABLAUFPLAN table or checklists)
+        let total = 0;
+        let completed = 0;
+        const upcoming: string[] = [];
 
-        const tasks = md.match(/- \[[x ]\]/g) || [];
-        const completed = tasks.filter(t => t.includes('[x]')).length;
-        this.progress.set({
-          total: tasks.length,
-          completed,
-          percentage: tasks.length > 0 ? Math.round((completed / tasks.length) * 100) : 0
+        data.sections.forEach(section => {
+          const isAblauf = section.title.toUpperCase() === 'ABLAUFPLAN';
+          
+          if (section.type === 'table' && typeof section.items !== 'string' && 'rows' in section.items) {
+            const table = section.items as TableData;
+            table.rows.forEach(row => {
+              total++;
+              const status = row[1]?.toLowerCase() || '';
+              if (status === 'fertig' || status === 'erledigt' || status === '✅ fertig') {
+                completed++;
+              } else if (upcoming.length < 5) {
+                upcoming.push(row[0]);
+              }
+            });
+          } else if (section.type === 'checklist' && Array.isArray(section.items)) {
+            section.items.forEach(item => {
+              total++;
+              if (item.done) completed++;
+              else if (upcoming.length < 5 && !upcoming.includes(item.label)) upcoming.push(item.label);
+            });
+          }
         });
 
-        // Filter out redundant sections from md
-        let filteredMd = md.replace(/^#\s+.*$/m, ''); // Remove level 1 heading
-        filteredMd = filteredMd.replace(/##\s*(?:📏|)\s*BASISDATEN[\s\S]*?(?=##|$)/i, '').trim();
-        filteredMd = filteredMd.replace(/##\s*(?:📸|)\s*IST-ZUSTAND[\s\S]*?(?=##|$)/i, '').trim();
-        filteredMd = filteredMd.replace(/##\s*(?:🛠️|🛠|)\s*GEPLANTE MASSNAHMEN[\s\S]*?(?=##|$)/i, '').trim();
+        this.progress.set({
+          total,
+          completed,
+          percentage: total > 0 ? Math.round((completed / total) * 100) : 0
+        });
+        this.upcomingTasks.set(upcoming);
 
+        // 2. Filter sections for main content
+        // We show everything EXCEPT "BASISDATEN" and "IST-ZUSTAND"
+        // ABLAUFPLAN stays in main content now as requested
+        this.roomSections.set(data.sections.filter(s => 
+          !['BASISDATEN', 'IST-ZUSTAND'].includes(s.title.toUpperCase())
+        ));
+
+        // 3. Handle Images
         if (isPlatformBrowser(this.platformId)) {
-          const rendered = await marked.parse(filteredMd);
-          this.content.set(this.sanitizer.bypassSecurityTrustHtml(rendered));
-          
           const roomImgs = this.roomService.getRoomImages(roomId);
           this.images.set(roomImgs);
 
@@ -135,16 +187,14 @@ export class RoomComponent implements OnInit, OnDestroy {
           const planImg = roomImgs.find(img => img.includes('/plan/') || img.includes('/inspiration/'));
 
           if (istImg && planImg) {
-            this.beforeImage.set(istImg);
-            this.afterImage.set(planImg);
+            this.beforeImage.set(planImg);
+            this.afterImage.set(istImg);
             this.startAnimation();
           } else {
             this.beforeImage.set(null);
             this.afterImage.set(null);
             this.heroImage.set(roomImgs.length > 0 ? roomImgs[0] : null);
           }
-        } else {
-          this.content.set(md);
         }
       },
       error: (err) => {
@@ -163,7 +213,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     
     this.animationInterval = setInterval(() => {
       const elapsed = Date.now() - startTime;
-      const pos = (Math.sin((elapsed / cycleDuration) * 2 * Math.PI - Math.PI / 2) + 1) / 2 * 100;
+      const pos = (Math.sin((elapsed / cycleDuration) * 2 * Math.PI + Math.PI / 2) + 1) / 2 * 100;
       this.sliderPos.set(pos);
     }, 20); 
   }
@@ -218,6 +268,14 @@ export class RoomComponent implements OnInit, OnDestroy {
     if (s === 'ausgesucht') return 'ausgesucht';
     if (s === 'in auswahl') return 'noch-aussuchen';
     return '';
+  }
+
+  asTable(items: any): TableData {
+    return items as TableData;
+  }
+
+  asChecklist(items: any): ChecklistItem[] {
+    return items as ChecklistItem[];
   }
 
   generatePdf() {

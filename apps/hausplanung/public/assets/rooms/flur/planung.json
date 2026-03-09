@@ -1,0 +1,68 @@
+{
+  "title": "Flur",
+  "basisdaten": {
+    "flaeche": "12,25 m²",
+    "status": "In Planung"
+  },
+  "sections": [
+    {
+      "title": "ELEKTRO-PLANUNG (MATERIALKOSTEN)",
+      "type": "table",
+      "items": {
+        "headers": [
+          "Posten",
+          "Menge",
+          "Einheit",
+          "Einzelpreis",
+          "Gesamtpreis"
+        ],
+        "rows": [
+          [
+            "LED Einbauspots (warmweiß, dimmbar)",
+            "6 (3x Eingang, 3x Flur)",
+            "Stk.",
+            "45,00 €",
+            "270,00 €"
+          ],
+          [
+            "NYM-J 3x1,5 mm² Kabel",
+            "25",
+            "m",
+            "1,20 €",
+            "30,00 €"
+          ],
+          [
+            "Einbaudosen & Klemmen",
+            "1",
+            "Set",
+            "35,00 €",
+            "35,00 €"
+          ]
+        ]
+      }
+    },
+    {
+      "title": "INSPIRATION",
+      "type": "text",
+      "items": "![Regenbogen Fenster-Effekt](medien/inspiration/flur_fenster_regenbogen.png)\n- **Konzept:** Nutzung von schmalen Fensterausschnitten für Lichteffekte (z.B. Regenbogenfolie oder Prismen-Effekt).\n- **Materialität:** Warme Betonoptik an den Wänden kombiniert mit dunklem Steinboden.\n- **Akzente:** Minimalistisches Lichtdesign und offener Treppenaufgang."
+    },
+    {
+      "title": "AUSFÜHRUNG",
+      "type": "checklist",
+      "items": [
+        {
+          "label": "Deckenausschnitt erstellen",
+          "done": false
+        },
+        {
+          "label": "Verkabelung zu den Brennstellen ziehen",
+          "done": false
+        },
+        {
+          "label": "Dimmer im Schalterprogramm integrieren",
+          "done": false
+        }
+      ]
+    }
+  ]
+}

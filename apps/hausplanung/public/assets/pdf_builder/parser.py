@@ -26,53 +26,57 @@ def extract_images(room_path):
         images[category] = sorted(list(set(images[category])))
     return images
 
-def parse_room_markdown(room, md_path):
-    if not os.path.exists(md_path): return room
+def parse_room_json(room, json_path):
+    if not os.path.exists(json_path): return room
     
-    with open(md_path, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
-        room.content = "".join(lines)
+    with open(json_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
         
-    current_section = None
-    for line in lines:
-        line = line.strip()
-        if not line: continue
-        
-        # Sections
-        if line.startswith('##') or line.startswith('###'):
-            title = re.sub(r'[^\w\s\(\)&\-/,]', '', line.lstrip('# ').strip()).upper()
-            current_section = Section(title=title, key=line.lower(), items=[], is_table=False)
-            room.sections.append(current_section)
-            continue
-            
-        if current_section:
-            if '|' in line:
-                # Skip markdown separator lines
-                if re.match(r'^\|?\s?[:\-|\s]+\s?\|?$', line) or line.startswith('| :---'):
-                    continue
-                
-                current_section.is_table = True
-                cols = [p.strip() for p in line.split('|') if p.strip()]
-                
-                # Filter out header lines
-                if not cols or cols[0].lower() == 'posten':
-                    continue
+    # Update room metadata if available in basisdaten
+    if 'basisdaten' in data:
+        bd = data['basisdaten']
+        if 'flaeche' in bd:
+            try:
+                area_str = bd['flaeche'].replace(' m2', '').replace(' m²', '').replace(',', '.')
+                room.area = float(re.search(r'(\d+(?:\.\d+)?)', area_str).group(1))
+            except: pass
+        if 'herleitung' in bd: room.area_derivation = bd['herleitung']
+        if 'status' in bd: room.status = bd['status']
 
-                if len(cols) >= 5:
-                    for idx in [1, 3, 4]: 
-                        if idx < len(cols) and '(' in cols[idx]:
-                            cols[idx] = cols[idx].split('(')[0].strip()
+    for section_data in data.get('sections', []):
+        title = section_data.get('title', '').upper()
+        sec_type = section_data.get('type', 'text')
+        items = section_data.get('items', [])
+        
+        section = Section(title=title, key=title.lower(), items=[], is_table=(sec_type == 'table'))
+        
+        if sec_type == 'table':
+            table_items = items # it's the TableData object or list
+            if isinstance(table_items, dict):
+                headers = table_items.get('headers', [])
+                rows = table_items.get('rows', [])
+                if headers: section.items.append(headers)
+                for row in rows:
+                    section.items.append(row)
                     
-                    try:
-                        cost_str = cols[4].replace('.', '').replace(',', '.')
-                        cost_match = re.search(r'(\d+(?:\.\d+)?)', cost_str)
-                        if cost_match: room.total_cost += float(cost_match.group(1))
-                    except: pass
-                
-                current_section.items.append(cols)
-            else:
-                item = re.sub(r'^[-*]\s*(?:\[[ xX]\]\s*)?|^\d+\.\s*', '', line).strip()
-                if item: current_section.items.append(item)
+                    # Cost calculation logic
+                    if len(row) >= 5:
+                        try:
+                            # Use the last column for price
+                            cost_str = str(row[-1]).replace('.', '').replace(',', '.')
+                            cost_match = re.search(r'(\d+(?:\.\d+)?)', cost_str)
+                            if cost_match: room.total_cost += float(cost_match.group(1))
+                        except: pass
+            elif isinstance(table_items, list):
+                section.items = table_items # Fallback for old list-of-lists format
+        elif sec_type == 'checklist':
+            for item in items:
+                prefix = '[x] ' if item.get('done') else '[ ] '
+                section.items.append(f"{prefix}{item.get('label', '')}")
+        else:
+            section.items = [str(items)]
+            
+        room.sections.append(section)
                 
     room.images = extract_images(room.path)
     return room
@@ -99,7 +103,7 @@ def get_all_rooms():
         room.area_derivation = data.get('area_derivation', '')
         
         if os.path.isfile(room_path):
-            parse_room_markdown(room, room_path)
+            parse_room_json(room, room_path)
         rooms.append(room)
         
     return rooms

@@ -2,100 +2,111 @@
   {
     "id": "bad",
     "name": "Bad",
+    "emoji": "🚿",
     "area": 6.64,
     "area_derivation": "2.01m x 3.305m",
     "status": "In Arbeit",
-    "budget": 7150.00,
-    "path": "rooms/bad/planung.md"
+    "budget": 7150.0,
+    "path": "rooms/bad/planung.json"
   },
   {
     "id": "wc",
     "name": "Gästebad",
+    "emoji": "🚽",
     "area": 2.86,
     "area_derivation": "1.20m x 2.385m",
     "status": "In Planung",
-    "budget": 6650.00,
-    "path": "rooms/wc/planung.md"
+    "budget": 6650.0,
+    "path": "rooms/wc/planung.json"
   },
   {
     "id": "flur",
     "name": "Flur",
+    "emoji": "🚪",
     "area": 20.88,
     "area_derivation": "12.25 (Diele) + 4.79 (Garderobe) + 3.84 (Flur privat)",
     "status": "In Planung",
-    "budget": 5720.00,
-    "path": "rooms/flur/planung.md"
+    "budget": 5720.0,
+    "path": "rooms/flur/planung.json"
   },
   {
     "id": "wohnraum",
     "name": "Wohnzimmer",
+    "emoji": "🛋️",
     "area": 40.23,
     "area_derivation": "20.02 (Wohnraum) + 20.21 (Essraum)",
     "status": "In Planung",
-    "budget": 8400.00,
-    "path": "rooms/wohnraum/planung.md"
+    "budget": 8400.0,
+    "path": "rooms/wohnraum/planung.json"
   },
   {
     "id": "kueche",
     "name": "Küche",
+    "emoji": "🍳",
     "area": 14.47,
     "area_derivation": "3.175m x 4.555m",
     "status": "Pausiert",
     "budget": null,
-    "path": "rooms/kueche/planung.md"
+    "path": "rooms/kueche/planung.json"
   },
   {
     "id": "schlafzimmer",
     "name": "Schlafzimmer",
-    "area": 17.70,
+    "emoji": "🛏️",
+    "area": 17.7,
     "area_derivation": "3.885m x 4.555m",
     "status": "Fertig",
     "budget": null,
-    "path": "rooms/schlafzimmer/planung.md"
+    "path": "rooms/schlafzimmer/planung.json"
   },
   {
     "id": "kinderzimmer",
     "name": "Kinderzimmer",
+    "emoji": "🧸",
     "area": 12.56,
     "area_derivation": "3.885m x 3.232m",
     "status": "Pausiert",
     "budget": null,
-    "path": "rooms/kinderzimmer/planung.md"
+    "path": "rooms/kinderzimmer/planung.json"
   },
   {
     "id": "zimmer",
     "name": "Zimmer (Büro)",
+    "emoji": "💻",
     "area": 10.35,
     "area_derivation": "2.85m x 3.635m",
     "status": "Pausiert",
     "budget": null,
-    "path": "rooms/zimmer/planung.md"
+    "path": "rooms/zimmer/planung.json"
   },
   {
     "id": "garage",
     "name": "Garage",
+    "emoji": "🚗",
     "area": 25.24,
     "area_derivation": "laut Grundriss",
     "status": "Pausiert",
     "budget": null,
-    "path": "rooms/garage/planung.md"
+    "path": "rooms/garage/planung.json"
   },
   {
     "id": "kellerflur",
     "name": "Kellerflur",
+    "emoji": "📦",
     "area": 14.52,
     "area_derivation": "5.2m x 2.8m (netto)",
     "status": "In Planung",
-    "budget": 700.00,
-    "path": "rooms/kellerflur/planung.md"
+    "budget": 700.0,
+    "path": "rooms/kellerflur/planung.json"
   },
   {
     "id": "keller_buero",
     "name": "Keller Büro",
-    "area": 12.60,
+    "emoji": "🖥️",
+    "area": 12.6,
     "area_derivation": "laut Grundriss",
     "status": "Pausiert",
     "budget": null,
-    "path": "rooms/keller_buero/planung.md"
+    "path": "rooms/keller_buero/planung.json"
   }
 ]

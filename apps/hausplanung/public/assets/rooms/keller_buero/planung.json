@@ -1,0 +1,30 @@
+{
+  "title": "Keller Büro",
+  "basisdaten": {
+    "flaeche": "12,60 m²",
+    "herleitung": "laut Grundriss",
+    "status": "Pausiert"
+  },
+  "sections": [
+    {
+      "title": "IST-ZUSTAND",
+      "type": "checklist",
+      "items": [
+        {
+          "label": "Dokumentation des Bestands (siehe ist.HEIC, ist2.png)",
+          "done": true
+        }
+      ]
+    },
+    {
+      "title": "SOLL-ZUSTAND (INSPIRATION)",
+      "type": "checklist",
+      "items": [
+        {
+          "label": "Inspirationsbilder hinterlegt (siehe IMG_0029.png, IMG_0031.png, soll.png)",
+          "done": true
+        }
+      ]
+    }
+  ]
+}

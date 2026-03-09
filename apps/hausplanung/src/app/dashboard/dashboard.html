@@ -35,7 +35,7 @@
     <div class="room-grid">
       <app-room-card *ngFor="let room of roomService.sortedRooms()" 
         [room]="room" 
-        [images]="roomService.getRoomInspirationImages(room.id)" 
+        [images]="roomService.getRoomDisplayImages(room.id)" 
         [currentImageIndex]="currentImageIndices[room.id]">
       </app-room-card>
     </div>

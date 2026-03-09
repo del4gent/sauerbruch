@@ -5,6 +5,7 @@ import { signalStore, withState, withComputed, withMethods, withHooks, patchStat
 import roomsData from '../../../public/assets/data/rooms.json';
 import imagesData from '../../../public/assets/data/images.json';
 import materialsData from '../../../public/assets/data/materials.json';
+import metadataData from '../../../public/assets/data/image_metadata.json';
 
 export interface Material {
   id: string;
@@ -22,6 +23,7 @@ export interface Material {
 export interface Room {
   id: string;
   name: string;
+  emoji: string;
   area: number;
   area_derivation: string;
   status: 'In Planung' | 'In Arbeit' | 'Pausiert' | 'Fertig';
@@ -46,6 +48,7 @@ type RoomState = {
   isOtherRoomsExpanded: boolean;
   breadcrumbTitle: string | null;
   roomImagesMap: Record<string, string[]>;
+  imageMetadataMap: Record<string, string>;
   roomMaterialsMap: Record<string, Material[]>;
 };
 
@@ -56,6 +59,7 @@ const initialState: RoomState = {
   isOtherRoomsExpanded: false,
   breadcrumbTitle: null,
   roomImagesMap: initialImagesMap,
+  imageMetadataMap: metadataData as Record<string, string>,
   roomMaterialsMap: materialsData as Record<string, Material[]>
 };
 
@@ -94,12 +98,23 @@ export const RoomStore = signalStore(
       getRoomImages(id: string): string[] {
         return store.roomImagesMap()[id] || [];
       },
+      getImageDate(url: string): string | null {
+        return store.imageMetadataMap()[url] || null;
+      },
       getRoomMaterials(id: string): Material[] {
         return store.roomMaterialsMap()[id] || [];
       },
       getRoomInspirationImages(id: string): string[] {
         const images = store.roomImagesMap()[id] || [];
         return images.filter(img => img.includes('/inspiration/'));
+      },
+      getRoomDisplayImages(id: string): string[] {
+        const images = store.roomImagesMap()[id] || [];
+        const inspiration = images.filter(img => img.includes('/inspiration/'));
+        if (inspiration.length > 0) {
+          return inspiration;
+        }
+        return images.filter(img => img.includes('/ist/'));
       },
       updateBreadcrumb() {
         let route = activatedRoute.root;
@@ -146,23 +161,8 @@ export const RoomStore = signalStore(
         }
       },
       getRoomEmoji(roomId: string): string {
-        const emojis: Record<string, string> = {
-          'flur': '🚪',
-          'wohnraum': '🛋️',
-          'essraum': '🍽️',
-          'kueche': '🍳',
-          'bad': '🚿',
-          'wc': '🚽',
-          'schlafzimmer': '🛏️',
-          'kinderzimmer': '🧸',
-          'zimmer': '💻',
-          'flur_privat': '🗝️',
-          'garderobe': '🧥',
-          'garage': '🚗',
-          'kellerflur': '📦',
-          'keller_buero': '🖥️'
-        };
-        return emojis[roomId] || '🏠';
+        const room = store.rooms().find(r => r.id === roomId);
+        return room?.emoji || '🏠';
       }
     };
   }),

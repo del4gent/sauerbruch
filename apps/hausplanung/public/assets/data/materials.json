@@ -3,8 +3,8 @@
     {
       "id": "fliesen",
       "name": "Fliesen",
-      "brand": "Wells Cream",
-      "specs": "60x60cm, Matt",
+      "brand": "Hornbach",
+      "specs": "Wells Cream, 60x60cm, Matt",
       "image": "assets/rooms/bad/medien/material/fliesen2.jpg",
       "status": "Ausgesucht",
       "quantity": "15 m²",
@@ -61,11 +61,47 @@
       "link": null
     },
     {
+      "id": "dusche",
+      "name": "Regen-Dusche",
+      "brand": "Hansgrohe",
+      "specs": "Raindance, Deckeneinbau, Chrom",
+      "image": "assets/rooms/bad/medien/material/dusche_placeholder.png",
+      "status": "In Auswahl",
+      "quantity": "1 Stk.",
+      "price": "650,00 €",
+      "shop": "Megabad",
+      "link": null
+    },
+    {
+      "id": "duschrinne",
+      "name": "Duschrinne",
+      "brand": "Viega",
+      "specs": "Advantix Vario, Edelstahl",
+      "image": "assets/rooms/bad/medien/material/duschrinne_placeholder.png",
+      "status": "Gekauft",
+      "quantity": "1 Stk.",
+      "price": "120,00 €",
+      "shop": "Reuter",
+      "link": null
+    },
+    {
+      "id": "badewanne",
+      "name": "Einbau-Badewanne",
+      "brand": "Bette",
+      "specs": "BetteOcean, 170x75cm, Weiß",
+      "image": "assets/rooms/bad/medien/material/badewanne_placeholder.png",
+      "status": "In Auswahl",
+      "quantity": "1 Stk.",
+      "price": "480,00 €",
+      "shop": "Megabad",
+      "link": null
+    },
+    {
       "id": "lampe",
       "name": "Beleuchtung",
       "brand": "Philips Hue",
       "specs": "Tento, White & Color (IP44)",
-      "image": "assets/rooms/bad/medien/material/lampe_placeholder.png",
+      "image": "assets/material/lampe_hue.png",
       "status": "Ausgesucht",
       "quantity": "1 Stk.",
       "price": "149,00 €",
@@ -97,6 +133,30 @@
       "price": "110,00 €",
       "shop": "Megabad",
       "link": null
+    },
+    {
+      "id": "dusche_wc",
+      "name": "Dusch-Set",
+      "brand": "Grohe",
+      "specs": "Euphoria System 260, Brausestange & Kopfbrause",
+      "image": "assets/rooms/wc/medien/material/dusche_placeholder.png",
+      "status": "In Auswahl",
+      "quantity": "1 Stk.",
+      "price": "350,00 €",
+      "shop": "Hornbach",
+      "link": null
+    },
+    {
+      "id": "lampe_wc",
+      "name": "Beleuchtung",
+      "brand": "Philips Hue",
+      "specs": "Tento, White & Color (IP44)",
+      "image": "assets/material/lampe_hue.png",
+      "status": "Ausgesucht",
+      "quantity": "1 Stk.",
+      "price": "149,00 €",
+      "shop": "Hornbach",
+      "link": "https://www.hornbach.de/p/philips-hue-deckenleuchte-23w-3100-lm-2200-6500-k-hxo-3-1x42-1-cm-tento-white-color-ambiance-weiss/12209292/"
     }
   ]
 }

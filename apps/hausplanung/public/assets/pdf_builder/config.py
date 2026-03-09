@@ -6,6 +6,7 @@ RAEUME_DIR = os.path.join(BASE_DIR, 'rooms')
 MASTER_MD_PATH = os.path.join(BASE_DIR, 'PROJEKT_DETAILS.md')
 PDF_PATH = os.path.join(BASE_DIR, 'renovierungsplan.pdf')
 ROOMS_JSON_PATH = os.path.join(BASE_DIR, 'data/rooms.json')
+PROJECT_JSON_PATH = os.path.join(BASE_DIR, 'data/project.json')
 
 # Architektur-Farbpalette
 C_SLATE = (44, 62, 80)

@@ -1,0 +1,21 @@
+{
+  "title": "Bad",
+  "basisdaten": {
+    "flaeche": "6,64 m²",
+    "herleitung": "2.01m x 3.305m",
+    "status": "In Arbeit"
+  },
+  "sections": [
+    {
+      "title": "ABLAUFPLAN",
+      "type": "checklist",
+      "items": [
+        { "label": "Entkernung", "done": true },
+        { "label": "Fenster austauschen", "done": false },
+        { "label": "Rohre verlegen", "done": false },
+        { "label": "Fliesen", "done": false },
+        { "label": "Sanitär-Endmontage", "done": false }
+      ]
+    }
+  ]
+}
