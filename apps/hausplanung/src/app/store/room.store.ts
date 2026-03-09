@@ -4,6 +4,20 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { signalStore, withState, withComputed, withMethods, withHooks, patchState } from '@ngrx/signals';
 import roomsData from '../../../public/assets/data/rooms.json';
 import imagesData from '../../../public/assets/data/images.json';
+import materialsData from '../../../public/assets/data/materials.json';
+
+export interface Material {
+  id: string;
+  name: string;
+  brand: string;
+  specs: string;
+  image: string;
+  status: 'noch am aussuchen' | 'gekauft' | 'ausgesucht, aber muss noch gekauft werden';
+  quantity: string;
+  price: string;
+  shop: string;
+  link: string | null;
+}
 
 export interface Room {
   id: string;
@@ -32,6 +46,7 @@ type RoomState = {
   isOtherRoomsExpanded: boolean;
   breadcrumbTitle: string | null;
   roomImagesMap: Record<string, string[]>;
+  roomMaterialsMap: Record<string, Material[]>;
 };
 
 const initialState: RoomState = {
@@ -40,7 +55,8 @@ const initialState: RoomState = {
   isSidebarCollapsed: true,
   isOtherRoomsExpanded: false,
   breadcrumbTitle: null,
-  roomImagesMap: initialImagesMap
+  roomImagesMap: initialImagesMap,
+  roomMaterialsMap: materialsData as Record<string, Material[]>
 };
 
 export const RoomStore = signalStore(
@@ -77,6 +93,9 @@ export const RoomStore = signalStore(
       },
       getRoomImages(id: string): string[] {
         return store.roomImagesMap()[id] || [];
+      },
+      getRoomMaterials(id: string): Material[] {
+        return store.roomMaterialsMap()[id] || [];
       },
       getRoomInspirationImages(id: string): string[] {
         const images = store.roomImagesMap()[id] || [];

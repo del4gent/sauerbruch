@@ -1,0 +1,76 @@
+{
+  "bad": [
+    {
+      "id": "fliesen",
+      "name": "Fliesen",
+      "brand": "Wells Cream",
+      "specs": "60x60cm, Matt",
+      "image": "assets/rooms/bad/medien/material/fliesen2.jpg",
+      "status": "ausgesucht, aber muss noch gekauft werden",
+      "quantity": "15 m²",
+      "price": "345,00 €",
+      "shop": "Hornbach",
+      "link": "https://www.hornbach.de/p/wand-und-bodenfliese-wells-cream-matt-60x60cm/10599795/"
+    },
+    {
+      "id": "schrank",
+      "name": "Waschtisch",
+      "brand": "Villeroy & Boch",
+      "specs": "Eiche Nachbildung, 100cm",
+      "image": "assets/rooms/bad/medien/material/schrank.JPG",
+      "status": "gekauft",
+      "quantity": "1 Stk.",
+      "price": "450,00 €",
+      "shop": "Reuter",
+      "link": null
+    },
+    {
+      "id": "armatur",
+      "name": "Waschtisch-Armatur",
+      "brand": "Hansgrohe",
+      "specs": "Metropol, Unterputz",
+      "image": "assets/rooms/bad/medien/material/armatur_placeholder.png",
+      "status": "gekauft",
+      "quantity": "1 Stk.",
+      "price": "180,00 €",
+      "shop": "Megabad",
+      "link": null
+    },
+    {
+      "id": "wc",
+      "name": "Wand-WC",
+      "brand": "Geberit",
+      "specs": "AquaClean Tuma",
+      "image": "assets/rooms/bad/medien/material/wc.png",
+      "status": "gekauft",
+      "quantity": "1 Stk.",
+      "price": "1.200,00 €",
+      "shop": "Sanitär-Express",
+      "link": null
+    },
+    {
+      "id": "spiegel",
+      "name": "Spiegel",
+      "brand": "TBD",
+      "specs": "LED-Beleuchtung, Rund, 80cm",
+      "image": "assets/rooms/bad/medien/material/spiegel_placeholder.png",
+      "status": "noch am aussuchen",
+      "quantity": "1 Stk.",
+      "price": "250,00 €",
+      "shop": "TBD",
+      "link": null
+    },
+    {
+      "id": "lampe",
+      "name": "Beleuchtung",
+      "brand": "Philips Hue",
+      "specs": "Tento, White & Color (IP44)",
+      "image": "assets/rooms/bad/medien/material/lampe_placeholder.png",
+      "status": "ausgesucht, aber muss noch gekauft werden",
+      "quantity": "1 Stk.",
+      "price": "149,00 €",
+      "shop": "Hornbach",
+      "link": "https://www.hornbach.de/p/philips-hue-deckenleuchte-23w-3100-lm-2200-6500-k-hxo-3-1x42-1-cm-tento-white-color-ambiance-weiss/12209292/"
+    }
+  ]
+}

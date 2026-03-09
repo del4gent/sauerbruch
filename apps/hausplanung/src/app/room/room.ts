@@ -5,7 +5,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { marked } from 'marked';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { RoomStore, Room } from '../store/room.store';
+import { RoomStore, Room, Material } from '../store/room.store';
 import { StatCardComponent } from '../ui/stat-card/stat-card.component';
 
 interface ImageGroup {
@@ -13,6 +13,7 @@ interface ImageGroup {
   label: string;
   icon: string;
   images: string[];
+  materials?: Material[];
 }
 
 @Component({
@@ -34,9 +35,13 @@ export class RoomComponent implements OnInit, OnDestroy {
   error = signal(false);
   progress = signal<{ total: number; completed: number; percentage: number }>({ total: 0, completed: 0, percentage: 0 });
   upcomingTasks = signal<string[]>([]);
+  selectedMaterial = signal<Material | null>(null);
 
   groupedImages = computed(() => {
     const all = this.images();
+    const roomId = this.roomName();
+    const materials = this.roomService.getRoomMaterials(roomId);
+
     const groups: ImageGroup[] = [
       { 
         id: 'plan', 
@@ -54,7 +59,8 @@ export class RoomComponent implements OnInit, OnDestroy {
         id: 'material', 
         label: 'Material', 
         icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
-        images: all.filter(img => img.includes('/material/')) 
+        images: materials.length > 0 ? materials.map(m => m.image) : all.filter(img => img.includes('/material/')),
+        materials: materials
       }
     ];
     return groups;
@@ -171,6 +177,47 @@ export class RoomComponent implements OnInit, OnDestroy {
 
   openImage(url: string) {
     window.open(url, '_blank');
+  }
+
+  onMaterialClick(group: any, index: number, imageUrl: string) {
+    if (group.id === 'material' && group.materials) {
+      const mat = group.materials[index];
+      if (mat.link) {
+        window.open(mat.link, '_blank');
+      } else {
+        this.openImage(imageUrl);
+      }
+    } else {
+      this.openImage(imageUrl);
+    }
+  }
+
+  onImgError(event: any) {
+    event.target.src = 'assets/plan/house_hero.jpg'; // Fallback placeholder
+    event.target.classList.add('img-placeholder');
+  }
+
+  getProductName(url: string): string {
+    const filename = url.split('/').pop()?.toLowerCase() || '';
+    if (filename.includes('fliesen')) return 'Wand- und Bodenfliesen (Wells Cream)';
+    if (filename.includes('schrank')) return 'Waschtisch-Unterschrank (Eiche)';
+    if (filename.includes('armatur')) return 'Waschtisch-Armatur (Unterputz)';
+    if (filename.includes('dusche')) return 'Regen-Dusche (Deckeneinbau)';
+    if (filename.includes('wc')) return 'Wand-WC (Spülrandlos)';
+    if (filename.includes('badewanne')) return 'Einbau-Badewanne (Acryl)';
+    if (filename.includes('spiegel')) return 'LED-Spiegel (Rund)';
+    if (filename.includes('fenster')) return 'Kunststoff-Fenster (3-fach verglast)';
+    if (filename.includes('lampe')) return 'Philips Hue Tento (IP44, Smart Home)';
+    if (filename.includes('duschrinne')) return 'Duschrinne (Edelstahl)';
+    return filename.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
+  }
+
+  getStatusClass(status: string): string {
+    const s = status.toLowerCase();
+    if (s.includes('gekauft') && !s.includes('noch')) return 'gekauft';
+    if (s.includes('ausgesucht')) return 'ausgesucht';
+    if (s.includes('noch am aussuchen')) return 'noch-aussuchen';
+    return '';
   }
 
   generatePdf() {

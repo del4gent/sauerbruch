@@ -65,12 +65,37 @@
               </div>
 
               <div class="masonry-grid">
-                <div *ngFor="let img of group.images" class="masonry-item" (click)="openImage(img)">
-                  <img [src]="img" [alt]="img" loading="lazy">
+                <div *ngFor="let img of group.images; let i = index" 
+                     class="masonry-item" 
+                     (click)="onMaterialClick(group, i, img)">
+                  
+                  <img [src]="img" [alt]="img" loading="lazy" (error)="onImgError($event)">
+                  
                   <div class="item-overlay">
-                    <div class="item-action">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><line x1="11" x1="8" x2="11" y2="14"/><line x1="8" x1="11" x2="14" y2="11"/></svg>
+                    <div class="item-action-group">
+                      <div class="item-action main-action" *ngIf="group.id === 'material' && group.materials && group.materials[i].link" title="Zum Online Shop">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                      </div>
+                      <div class="item-action main-action" *ngIf="group.id !== 'material' || !(group.materials && group.materials[i].link)" title="Bild vergrößern">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><line x1="11" x1="8" x2="11" y2="14"/><line x1="8" x1="11" x2="14" y2="11"/></svg>
+                      </div>
+                      <div class="item-action info-action" *ngIf="group.id === 'material' && group.materials" (click)="selectedMaterial.set(group.materials[i]); $event.stopPropagation()" title="Details anzeigen">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                      </div>
                     </div>
+                  </div>
+
+                  <!-- INFO OVERLAY FOR TILES -->
+                  <div class="item-caption" *ngIf="group.id === 'material' && group.materials">
+                    <div class="caption-main">
+                      <span class="product-brand">{{ group.materials[i].brand }}</span>
+                      <span class="product-name">{{ group.materials[i].name }}</span>
+                    </div>
+                    <div class="caption-meta">
+                      <span class="status-dot" [class]="getStatusClass(group.materials[i].status)"></span>
+                      <span class="price-tag">{{ group.materials[i].price }}</span>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -115,6 +140,55 @@
           </section>
         </div>
       </aside>
+    </div>
+  </div>
+</div>
+
+<!-- MATERIAL DETAIL POPOVER -->
+<div class="material-popover-overlay" *ngIf="selectedMaterial()" (click)="selectedMaterial.set(null)">
+  <div class="material-popover-card glass-card" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="selectedMaterial.set(null)">×</button>
+    
+    <div class="popover-layout">
+      <div class="popover-image">
+        <img [src]="selectedMaterial()?.image" (error)="onImgError($event)">
+      </div>
+      
+      <div class="popover-content">
+        <div class="popover-header">
+          <span class="popover-brand">{{ selectedMaterial()?.brand }}</span>
+          <h2 class="popover-title">{{ selectedMaterial()?.name }}</h2>
+          <p class="popover-specs">{{ selectedMaterial()?.specs }}</p>
+        </div>
+
+        <div class="popover-grid">
+          <div class="popover-info-item">
+            <span class="info-label">Status</span>
+            <div class="status-pill" [class]="getStatusClass(selectedMaterial()?.status || '')">
+              {{ selectedMaterial()?.status }}
+            </div>
+          </div>
+          <div class="popover-info-item">
+            <span class="info-label">Menge</span>
+            <span class="info-value">{{ selectedMaterial()?.quantity }}</span>
+          </div>
+          <div class="popover-info-item">
+            <span class="info-label">Preis</span>
+            <span class="info-value highlight">{{ selectedMaterial()?.price }}</span>
+          </div>
+          <div class="popover-info-item">
+            <span class="info-label">Händler</span>
+            <span class="info-value">{{ selectedMaterial()?.shop }}</span>
+          </div>
+        </div>
+
+        <div class="popover-actions" *ngIf="selectedMaterial()?.link">
+          <a [href]="selectedMaterial()?.link" target="_blank" class="btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Zum Shop
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
