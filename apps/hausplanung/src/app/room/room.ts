@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { marked } from 'marked';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RoomStore, Room } from '../store/room.store';
+import { StatCardComponent } from '../ui/stat-card/stat-card.component';
 
 interface ImageGroup {
   id: string;
@@ -17,7 +18,7 @@ interface ImageGroup {
 @Component({
   selector: 'app-room',
   standalone: true,
-  imports: [CommonModule, RouterModule, StatusBadgeComponent],
+  imports: [CommonModule, RouterModule, StatusBadgeComponent, StatCardComponent],
   templateUrl: './room.html',
   styleUrl: './room.css',
 })
@@ -27,6 +28,9 @@ export class RoomComponent implements OnInit, OnDestroy {
   content = signal<SafeHtml>('');
   images = signal<string[]>([]);
   heroImage = signal<string | null>(null);
+  beforeImage = signal<string | null>(null);
+  afterImage = signal<string | null>(null);
+  sliderPos = signal(50);
   error = signal(false);
   progress = signal<{ total: number; completed: number; percentage: number }>({ total: 0, completed: 0, percentage: 0 });
   upcomingTasks = signal<string[]>([]);
@@ -51,18 +55,13 @@ export class RoomComponent implements OnInit, OnDestroy {
         label: 'Material', 
         icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
         images: all.filter(img => img.includes('/material/')) 
-      },
-      { 
-        id: 'ist', 
-        label: 'Bestand', 
-        icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
-        images: all.filter(img => img.includes('/ist/')) 
       }
     ];
     return groups;
   });
 
   public roomService = inject(RoomStore);
+  private animationInterval: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -78,11 +77,13 @@ export class RoomComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.stopAnimation();
   }
 
   loadRoomData(roomId: string) {
     this.roomName.set(roomId);
     this.error.set(false);
+    this.stopAnimation();
     
     const details = this.roomService.getRoomById(roomId);
     this.roomDetails.set(details || null);
@@ -96,7 +97,13 @@ export class RoomComponent implements OnInit, OnDestroy {
     
     this.http.get(mdPath, { responseType: 'text' }).subscribe({
       next: async (md) => {
-        // Calculate progress
+        // Extract upcoming tasks (open items) BEFORE filtering
+        const openTaskLines = md.split('\n')
+          .filter(line => line.includes('- [ ]'))
+          .map(line => line.replace('- [ ]', '').trim())
+          .slice(0, 5); // Show max 5 next steps
+        this.upcomingTasks.set(openTaskLines);
+
         const tasks = md.match(/- \[[x ]\]/g) || [];
         const completed = tasks.filter(t => t.includes('[x]')).length;
         this.progress.set({
@@ -105,20 +112,31 @@ export class RoomComponent implements OnInit, OnDestroy {
           percentage: tasks.length > 0 ? Math.round((completed / tasks.length) * 100) : 0
         });
 
-        // Extract upcoming tasks (open items)
-        const openTaskLines = md.split('\n')
-          .filter(line => line.includes('- [ ]'))
-          .map(line => line.replace('- [ ]', '').trim())
-          .slice(0, 3); // Show max 3 next steps
-        this.upcomingTasks.set(openTaskLines);
+        // Filter out redundant sections from md
+        let filteredMd = md.replace(/^#\s+.*$/m, ''); // Remove level 1 heading
+        filteredMd = filteredMd.replace(/##\s*(?:📏|)\s*BASISDATEN[\s\S]*?(?=##|$)/i, '').trim();
+        filteredMd = filteredMd.replace(/##\s*(?:📸|)\s*IST-ZUSTAND[\s\S]*?(?=##|$)/i, '').trim();
+        filteredMd = filteredMd.replace(/##\s*(?:🛠️|🛠|)\s*GEPLANTE MASSNAHMEN[\s\S]*?(?=##|$)/i, '').trim();
 
         if (isPlatformBrowser(this.platformId)) {
-          const rendered = await marked.parse(md);
+          const rendered = await marked.parse(filteredMd);
           this.content.set(this.sanitizer.bypassSecurityTrustHtml(rendered));
           
           const roomImgs = this.roomService.getRoomImages(roomId);
           this.images.set(roomImgs);
-          this.heroImage.set(roomImgs.length > 0 ? roomImgs[0] : null);
+
+          const istImg = roomImgs.find(img => img.includes('/ist/'));
+          const planImg = roomImgs.find(img => img.includes('/plan/') || img.includes('/inspiration/'));
+
+          if (istImg && planImg) {
+            this.beforeImage.set(istImg);
+            this.afterImage.set(planImg);
+            this.startAnimation();
+          } else {
+            this.beforeImage.set(null);
+            this.afterImage.set(null);
+            this.heroImage.set(roomImgs.length > 0 ? roomImgs[0] : null);
+          }
         } else {
           this.content.set(md);
         }
@@ -128,6 +146,27 @@ export class RoomComponent implements OnInit, OnDestroy {
         this.error.set(true);
       }
     });
+  }
+
+  private startAnimation() {
+    this.stopAnimation();
+    if (!isPlatformBrowser(this.platformId)) return;
+    
+    const startTime = Date.now();
+    const cycleDuration = 24000;
+    
+    this.animationInterval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const pos = (Math.sin((elapsed / cycleDuration) * 2 * Math.PI - Math.PI / 2) + 1) / 2 * 100;
+      this.sliderPos.set(pos);
+    }, 20); 
+  }
+
+  private stopAnimation() {
+    if (this.animationInterval) {
+      clearInterval(this.animationInterval);
+      this.animationInterval = null;
+    }
   }
 
   openImage(url: string) {
