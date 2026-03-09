@@ -59,118 +59,39 @@
         <div class="room-sections">
           <section *ngFor="let section of roomSections()" class="content-section">
             <h2 class="section-title">
-              <svg *ngIf="section.title.toUpperCase() === 'ABLAUFPLAN'" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; color: var(--primary-color)"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
               {{ section.title }}
             </h2>
             
-            <!-- PROFESSIONAL TASK BOARD VIEW -->
-            <ng-container *ngIf="section.title.toUpperCase() === 'ABLAUFPLAN'; else standardSection">
-              <div class="task-board">
-                <!-- Board Header: High-Impact Progress -->
-                <div class="board-header">
-                  <div class="board-progress-container">
-                    <div class="progress-info">
-                      <span class="progress-label">Gesamtfortschritt</span>
-                      <span class="progress-value">{{ getSectionProgress(section) }}%</span>
-                    </div>
-                    <div class="progress-track">
-                      <div class="progress-fill" [style.width.%]="getSectionProgress(section)"></div>
-                    </div>
-                  </div>
-                  <div class="board-stats">
-                    <div class="board-stat">
-                      <span class="stat-num">{{ getCompletedCount(section) }}</span>
-                      <span class="stat-label">Erledigt</span>
-                    </div>
-                    <div class="board-stat">
-                      <span class="stat-num">{{ getTotalCount(section) - getCompletedCount(section) }}</span>
-                      <span class="stat-label">Offen</span>
-                    </div>
-                  </div>
-                </div>
+            <ng-container [ngSwitch]="section.type">
+              <!-- Standard Checklist -->
+              <ul *ngSwitchCase="'checklist'" class="room-checklist">
+                <li *ngFor="let item of asChecklist(section.items)" [class.done]="item.done">
+                  <span class="check-box">{{ item.done ? '✓' : '' }}</span>
+                  <span class="check-label">{{ item.label }}</span>
+                </li>
+              </ul>
 
-                <!-- Board Grid -->
-                <div class="board-grid">
-                  <!-- Active Task (The Focus) -->
-                  <div class="task-card active-task" *ngIf="upcomingTasks().length > 0">
-                    <div class="task-badge">Aktueller Fokus</div>
-                    <div class="task-main">
-                      <span class="task-icon-large">{{ getTaskIcon(upcomingTasks()[0]) }}</span>
-                      <div class="task-details">
-                        <h3 class="task-title">{{ upcomingTasks()[0] }}</h3>
-                        <p class="task-subtitle">Dieser Schritt wird aktuell bearbeitet.</p>
-                      </div>
-                    </div>
-                  </div>
+              <!-- Standard Table -->
+              <div *ngSwitchCase="'table'" class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th *ngFor="let header of asTable(section.items).headers">{{ header }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of asTable(section.items).rows">
+                      <td *ngFor="let cell of row">{{ cell }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-                  <!-- Other Tasks in a Grid -->
-                  <div class="sub-tasks-grid">
-                    <ng-container *ngIf="section.type === 'checklist'">
-                      <div *ngFor="let item of asChecklist(section.items); let i = index" 
-                           class="mini-task-card"
-                           [class.done]="item.done"
-                           [class.hidden]="item.label === upcomingTasks()[0]">
-                        <div class="mini-task-status">
-                          <span class="status-dot" [class.done]="item.done"></span>
-                          <span class="status-icon">{{ getTaskIcon(item.label) }}</span>
-                        </div>
-                        <span class="mini-task-label">{{ item.label }}</span>
-                      </div>
-                    </ng-container>
-
-                    <ng-container *ngIf="section.type === 'table'">
-                      <div *ngFor="let row of asTable(section.items).rows; let i = index" 
-                           class="mini-task-card"
-                           [class.done]="isPast(section, i)"
-                           [class.hidden]="row[0] === upcomingTasks()[0]">
-                        <div class="mini-task-status">
-                          <span class="status-dot" [class.done]="isPast(section, i)"></span>
-                          <span class="status-icon">{{ getTaskIcon(row[0]) }}</span>
-                        </div>
-                        <div class="mini-task-content">
-                          <span class="mini-task-label">{{ row[0] }}</span>
-                          <span class="mini-task-date" *ngIf="row[2]">{{ row[2] }}</span>
-                        </div>
-                      </div>
-                    </ng-container>
-                  </div>
-                </div>
+              <!-- Text / Default -->
+              <div *ngSwitchDefault>
+                <p>{{ section.items }}</p>
               </div>
             </ng-container>
-
-            <!-- STANDARD SECTIONS -->
-            <ng-template #standardSection>
-              <ng-container [ngSwitch]="section.type">
-                <!-- Checklist -->
-                <ul *ngSwitchCase="'checklist'" class="room-checklist">
-                  <li *ngFor="let item of asChecklist(section.items)" [class.done]="item.done">
-                    <span class="check-box">{{ item.done ? '✓' : '' }}</span>
-                    <span class="check-label">{{ item.label }}</span>
-                  </li>
-                </ul>
-
-                <!-- Table -->
-                <div *ngSwitchCase="'table'" class="table-responsive">
-                  <table class="data-table">
-                    <thead>
-                      <tr>
-                        <th *ngFor="let header of asTable(section.items).headers">{{ header }}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let row of asTable(section.items).rows">
-                        <td *ngFor="let cell of row">{{ cell }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <!-- Text / Default -->
-                <div *ngSwitchDefault>
-                  <p>{{ section.items }}</p>
-                </div>
-              </ng-container>
-            </ng-template>
           </section>
         </div>
 
@@ -230,7 +151,54 @@
 
       <aside class="secondary-content">
         <div class="sticky-sidebar">
-          <!-- Sidebar content -->
+          <!-- ABLAUFPLAN SIDEBAR CARD -->
+          <div class="sidebar-section" *ngIf="ablaufSection() as section">
+            <div class="sidebar-header-group">
+              <h3 class="sidebar-title">Ablaufplan</h3>
+              <span class="sidebar-progress-badge">{{ getSectionProgress(section) }}%</span>
+            </div>
+            
+            <div class="minimal-roadmap sidebar-timeline">
+              <div class="sequence-container">
+                <div class="sequence-line"></div>
+
+                <!-- Checklist-based -->
+                <ng-container *ngIf="section.type === 'checklist'">
+                  <div *ngFor="let item of asChecklist(section.items); let i = index" 
+                       class="sequence-step"
+                       [class.past]="isPast(section, i)"
+                       [class.current]="isCurrent(section, i)"
+                       [class.future]="isFuture(section, i)">
+                    <div class="sequence-marker"></div>
+                    <div class="sequence-content">
+                      <span class="step-title-small">{{ item.label }}</span>
+                      <span class="step-status-micro" *ngIf="isCurrent(section, i)">In Arbeit</span>
+                    </div>
+                  </div>
+                </ng-container>
+
+                <!-- Table-based -->
+                <ng-container *ngIf="section.type === 'table'">
+                  <div *ngFor="let row of asTable(section.items).rows; let i = index" 
+                       class="sequence-step"
+                       [class.past]="isPast(section, i)"
+                       [class.current]="isCurrent(section, i)"
+                       [class.future]="isFuture(section, i)">
+                    <div class="sequence-marker"></div>
+                    <div class="sequence-content">
+                      <span class="step-title-small">{{ row[0] }}</span>
+                      <div class="step-meta-micro">
+                        <span class="step-date-micro" *ngIf="row[2] || row[3]">
+                          {{ row[2] }}<span *ngIf="row[2] && row[3]"> – </span>{{ row[3] }}
+                        </span>
+                        <span class="step-status-tag-micro" *ngIf="isCurrent(section, i)">{{ row[1] || 'Aktiv' }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
         </div>
       </aside>
     </div>

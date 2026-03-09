@@ -99,6 +99,21 @@ export class RoomComponent implements OnInit, OnDestroy {
     return groups;
   });
 
+  private _allSections = signal<RoomSection[]>([]);
+  
+  ablaufSection = computed(() => {
+    const sections = this._allSections();
+    if (!sections || sections.length === 0) return null;
+    
+    // Robust search for the Ablaufplan section
+    const found = sections.find(s => s.title.trim().toUpperCase() === 'ABLAUFPLAN');
+    if (found) return found;
+
+    // Fallback: If no explicit ABLAUFPLAN section exists, but we have upcoming tasks,
+    // we could create a virtual section, but let's first ensure the explicit one works.
+    return null;
+  });
+
   public roomService = inject(RoomStore);
   private animationInterval: any;
 
@@ -171,12 +186,12 @@ export class RoomComponent implements OnInit, OnDestroy {
           percentage: total > 0 ? Math.round((completed / total) * 100) : 0
         });
         this.upcomingTasks.set(upcoming);
+        this._allSections.set(data.sections);
 
         // 2. Filter sections for main content
-        // We show everything EXCEPT "BASISDATEN" and "IST-ZUSTAND"
-        // ABLAUFPLAN stays in main content now as requested
+        // We show everything EXCEPT "BASISDATEN", "IST-ZUSTAND" AND "ABLAUFPLAN"
         this.roomSections.set(data.sections.filter(s => 
-          !['BASISDATEN', 'IST-ZUSTAND'].includes(s.title.toUpperCase())
+          !['BASISDATEN', 'IST-ZUSTAND', 'ABLAUFPLAN'].includes(s.title.toUpperCase())
         ));
 
         // 3. Handle Images
@@ -316,6 +331,37 @@ export class RoomComponent implements OnInit, OnDestroy {
       }).length;
     }
     return 0;
+  }
+
+  getCurrentIndex(section: RoomSection): number {
+    const items = section.type === 'checklist' ? (section.items as ChecklistItem[]) : (section.items as TableData).rows;
+    for (let i = 0; i < items.length; i++) {
+      if (this.isCurrent(section, i)) return i;
+    }
+    return -1;
+  }
+
+  shouldShowStep(section: RoomSection, index: number): boolean {
+    const currentIndex = this.getCurrentIndex(section);
+    if (currentIndex === -1) {
+      const total = this.getTotalCount(section);
+      if (this.getCompletedCount(section) === total) {
+        return index === total - 1; // Only show the last one if all done
+      }
+      return index === 0; // Show first one if none started
+    }
+    // Only current and the NEXT one
+    return index >= currentIndex && index <= currentIndex + 1;
+  }
+
+  getRemainingStepsCount(section: RoomSection): number {
+    const currentIndex = this.getCurrentIndex(section);
+    const total = this.getTotalCount(section);
+    if (currentIndex === -1) return 0;
+    
+    const lastShownIndex = currentIndex + 1;
+    const remaining = total - 1 - lastShownIndex;
+    return remaining > 0 ? remaining : 0;
   }
 
   getTotalCount(section: RoomSection): number {
