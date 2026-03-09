@@ -35,12 +35,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(public roomService: RoomService) {}
 
   ngOnInit() {
-    this.roomService.getRooms().forEach(room => {
+    this.roomService.sortedRooms().forEach(room => {
       this.currentImageIndices[room.id] = 0;
     });
 
     this.intervalId = setInterval(() => {
-      this.roomService.getRooms().forEach(room => {
+      this.roomService.sortedRooms().forEach(room => {
         const imgs = this.roomService.getRoomInspirationImages(room.id);
         if (imgs.length > 1) {
           this.currentImageIndices[room.id] = (this.currentImageIndices[room.id] + 1) % imgs.length;

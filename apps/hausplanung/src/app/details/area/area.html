@@ -21,7 +21,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let room of roomService.getRooms()" class="clickable-row" (click)="onRoomSelected(room.id)">
+        <tr *ngFor="let room of roomService.sortedRooms()" class="clickable-row" (click)="onRoomSelected(room.id)">
           <td data-label="Raum">{{ room.name }}</td>
           <td data-label="Fläche" class="text-right font-mono">{{ room.area | number:'1.2-2':'de-DE' }} m²</td>
           <td data-label="Quelle" class="opacity-60 italic">{{ room.area_derivation }}</td>

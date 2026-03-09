@@ -31,6 +31,8 @@ export class RoomComponent implements OnInit, OnDestroy {
   afterImage = signal<string | null>(null);
   sliderPos = signal(50);
   error = signal(false);
+  progress = signal<{ total: number; completed: number; percentage: number }>({ total: 0, completed: 0, percentage: 0 });
+  upcomingTasks = signal<string[]>([]);
 
   groupedImages = computed(() => {
     const all = this.images();
@@ -100,6 +102,22 @@ export class RoomComponent implements OnInit, OnDestroy {
     
     this.http.get(mdPath, { responseType: 'text' }).subscribe({
       next: async (md) => {
+        // Calculate progress
+        const tasks = md.match(/- \[[x ]\]/g) || [];
+        const completed = tasks.filter(t => t.includes('[x]')).length;
+        this.progress.set({
+          total: tasks.length,
+          completed,
+          percentage: tasks.length > 0 ? Math.round((completed / tasks.length) * 100) : 0
+        });
+
+        // Extract upcoming tasks (open items)
+        const openTaskLines = md.split('\n')
+          .filter(line => line.includes('- [ ]'))
+          .map(line => line.replace('- [ ]', '').trim())
+          .slice(0, 3); // Show max 3 next steps
+        this.upcomingTasks.set(openTaskLines);
+
         if (isPlatformBrowser(this.platformId)) {
           const rendered = await marked.parse(md);
           this.content.set(this.sanitizer.bypassSecurityTrustHtml(rendered));

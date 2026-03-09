@@ -62,6 +62,9 @@
     "lint": {
       "executor": "@nx/eslint:lint"
     },
+    "cmd": {
+      "command": "code ."
+    },
     "generate-pdf": {
       "command": "python3 generator.py",
       "options": {

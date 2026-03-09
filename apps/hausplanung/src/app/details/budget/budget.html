@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let room of roomService.getRooms()">
+        <tr *ngFor="let room of roomService.sortedRooms()">
           <td data-label="Raum">{{ room.name }}</td>
           <td data-label="Status">
             <app-status-badge [status]="room.status" [showDot]="false"></app-status-badge>

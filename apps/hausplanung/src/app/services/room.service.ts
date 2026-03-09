@@ -45,6 +45,10 @@ export class RoomService {
       .sort((a, b) => (this.statusOrder[a.status] || 99) - (this.statusOrder[b.status] || 99))
   );
 
+  sortedRooms = computed(() => 
+    [...this.rooms()].sort((a, b) => (this.statusOrder[a.status] || 99) - (this.statusOrder[b.status] || 99))
+  );
+
   totalArea = computed(() => this.rooms().reduce((acc, r) => acc + r.area, 0));
   totalBudget = computed(() => this.rooms().reduce((acc, r) => acc + (r.budget || 0), 0));
 
@@ -70,7 +74,7 @@ export class RoomService {
   }
 
   getRooms(): Room[] {
-    return this.rooms();
+    return this.sortedRooms();
   }
 
   getRoomById(id: string): Room | undefined {
