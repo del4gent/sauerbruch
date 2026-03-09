@@ -88,7 +88,8 @@
     "assets/rooms/zimmer2/medien/inspiration/zimmer2_inspiration.png"
   ],
   "garage": [
-    "assets/rooms/garage/medien/inspiration/icon.svg"
+    "assets/rooms/garage/medien/inspiration/icon.svg",
+    "assets/rooms/garage/medien/inspiration/garage_inspiration.png"
   ],
   "zimmer": [
     "assets/rooms/zimmer/medien/inspiration/icon.svg",
