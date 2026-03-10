@@ -24,7 +24,7 @@
   --status-paused-border: rgba(148, 163, 184, 0.2);
 
   --status-finished-color: #64748b; /* Medium gray text for readable contrast on white */
-  --status-finished-bg: rgba(255, 255, 255, 0.7); /* White bg */
+  --status-finished-bg: #ffffff; /* Solid White bg */
   --status-finished-border: rgba(226, 232, 240, 0.9); /* Subtle border */
 }
 
