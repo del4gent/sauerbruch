@@ -43,9 +43,16 @@
             link="/details/area">
           </app-stat-card>
 
-          <div class="next-step-card" *ngIf="upcomingTasks().length > 0">
-            <span class="next-label">Nächster Schritt</span>
-            <span class="next-value">{{ upcomingTasks()[0] }}</span>
+          <div class="step-group-card" *ngIf="upcomingTasks().length > 0">
+            <div class="next-step-item">
+              <span class="next-label">Aktueller Schritt</span>
+              <span class="next-value">{{ upcomingTasks()[0] }}</span>
+            </div>
+            
+            <div class="next-step-item" *ngIf="upcomingTasks().length > 1">
+              <span class="next-label">Nächster Schritt</span>
+              <span class="next-value">{{ upcomingTasks()[1] }}</span>
+            </div>
           </div>
         </div>
       </div>
