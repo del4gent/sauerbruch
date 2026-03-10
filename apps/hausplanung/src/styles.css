@@ -23,9 +23,9 @@
   --status-paused-bg: rgba(148, 163, 184, 0.1);
   --status-paused-border: rgba(148, 163, 184, 0.2);
 
-  --status-finished-color: #94a3b8; /* A darker gray for contrast on light bg */
-  --status-finished-bg: rgba(226, 232, 240, 0.4); /* Very light gray bg */
-  --status-finished-border: rgba(226, 232, 240, 0.8); /* Light gray border */
+  --status-finished-color: #64748b; /* Medium gray text for readable contrast on white */
+  --status-finished-bg: rgba(255, 255, 255, 0.7); /* White bg */
+  --status-finished-border: rgba(226, 232, 240, 0.9); /* Subtle border */
 }
 
 [data-theme='dark'] {
@@ -38,9 +38,9 @@
   --sidebar-text: #f1f5f9;
 
   /* Global Status Colors (Dark Mode Adjustments) */
-  --status-finished-color: #cbd5e1; /* Lighter gray for dark mode readability */
-  --status-finished-bg: rgba(226, 232, 240, 0.05); /* Very subtle light gray bg */
-  --status-finished-border: rgba(226, 232, 240, 0.2);
+  --status-finished-color: #94a3b8; /* Medium gray for dark mode readability */
+  --status-finished-bg: rgba(255, 255, 255, 0.05); /* Very subtle white bg */
+  --status-finished-border: rgba(255, 255, 255, 0.1); /* Subtle white border */
 }
 
 * {
