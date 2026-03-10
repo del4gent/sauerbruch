@@ -62,12 +62,13 @@
 /* "Fertig" */
 .status-finished { 
   background: var(--status-finished-bg);
-  color: var(--status-finished-color); 
+  color: var(--white); 
   border: 1px solid var(--status-finished-border);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5); /* Needed for readability on photos because bg is transparent */
 }
 .status-finished .checkmark { 
-  color: var(--status-finished-color);
-  filter: drop-shadow(0 0 5px var(--status-finished-border));
+  color: var(--white);
+  filter: drop-shadow(0 0 5px rgba(255,255,255,0.6));
 }
 
 /* Generic variants for Progress/Budget */
