@@ -408,28 +408,44 @@ app-stat-card {
 
 .item-overlay { 
   position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
-  background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 40%);
+  background: rgba(15, 23, 42, 0.05); /* very light overlay */
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   display: flex; align-items: center; justify-content: center;
-  opacity: 0; transition: all 0.4s;
+  opacity: 0; transition: all 0.4s ease;
 }
 .masonry-item:hover .item-overlay { opacity: 1; }
 
 .item-action-group {
   display: flex;
   gap: 1rem;
-  transform: translateY(10px);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(15px) scale(0.95);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.masonry-item:hover .item-action-group { transform: translateY(0); }
+.masonry-item:hover .item-action-group { 
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
 
 .item-action { 
-  color: white; background: var(--primary-color); width: 48px; height: 48px; 
+  color: #1e293b; /* dark slate color for icon */
+  background: rgba(226, 232, 240, 0.75); /* silver transparent */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  width: 56px; height: 56px; 
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  transition: all 0.2s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
-.item-action:hover { transform: scale(1.1); filter: brightness(1.1); }
-.item-action.info-action { background: white; color: var(--text-color); }
+.item-action:hover { 
+  transform: scale(1.08); 
+}
+.item-action.info-action { 
+  background: rgba(226, 232, 240, 0.75); 
+  color: #1e293b; 
+}
 
 /* SIDEBAR (REMOVED) */
 .info-card { padding: 2rem; border: none; }
