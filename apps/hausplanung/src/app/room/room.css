@@ -334,9 +334,9 @@ app-stat-card {
   align-items: flex-end;
 }
 
-.caption-main { display: flex; flex-direction: column; gap: 2px; }
-.product-brand { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; }
-.product-name { font-size: 1rem; font-weight: 700; }
+.caption-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.product-brand { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.product-name { font-size: 1rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 .date-caption {
   padding: 0.75rem 1rem;
@@ -353,13 +353,13 @@ app-stat-card {
   letter-spacing: 0.02em;
 }
 
-.caption-meta { display: flex; align-items: center; gap: 0.75rem; }
+.caption-meta { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; margin-left: 1rem; }
 .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #94a3b8; flex-shrink: 0; }
 .status-dot.gekauft { background: #10b981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
 .status-dot.ausgesucht { background: #f59e0b; }
 .status-dot.noch-aussuchen { background: #94a3b8; }
 
-.price-tag { font-size: 0.85rem; font-weight: 700; opacity: 0.9; }
+.price-tag { font-size: 0.85rem; font-weight: 700; opacity: 0.9; white-space: nowrap; flex-shrink: 0; }
 
 /* POPOVER STYLES */
 .material-popover-overlay {
