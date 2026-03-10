@@ -1,32 +1,36 @@
-# Projekt Sauerbruch 3 - Hausplanung Renovierungs-Tool
+# 📊 Hausplanung - Daten & Assets
 
-Dieses Projekt dient der Planung und Kostenüberwachung einer Hausrenovierung. Es nutzt Markdown-Dateien für die Dateneingabe und Python für die Auswertung und PDF-Generierung.
+Dieser Ordner enthält alle Datenquellen und Medien für den Renovierungs-Planer.
 
-## Projektstruktur
-- `raeume/`: Enthält Unterordner für jeden Raum.
-    - `[raum]/planung.md`: Die zentrale Planungsdatei für diesen Raum.
-- `uebersicht.md`: Dashboard mit Links zu allen Räumen und Gesamtzusammenfassung.
-- `generator.py`: Python-Skript zum Auslesen der Daten und Generieren der PDF.
-- `medien/`: Ordner für Bilder, Pläne und das finale PDF.
+## 📂 Struktur
+- **`data/`**: Zentrale JSON-Konfigurationen (`rooms.json`, `materials.json`, `project.json`).
+- **`rooms/`**: Detail-Planung pro Raum.
+    - `[raum]/planung.json`: Strukturierte Daten für den Raum (Flächen, Kosten-Details, Ablauf).
+    - `[raum]/medien/`: Bilder kategorisiert in `ist/`, `inspiration/`, `plan/` und `material/`.
+- **`material/`**: Übergreifende Materialbilder.
 
-## Markdown-Konventionen (WICHTIG für das Skript)
-Damit der `generator.py` die Daten korrekt extrahieren kann, müssen folgende Formate eingehalten werden:
+## 📏 Herleitungspflicht (JSON-Format)
+Gemäß `GEMINI.md` müssen alle Zahlenwerte in der `planung.json` Herleitungen enthalten.
 
-### 1. Fläche (Wichtig: Herleitungspflicht)
-Muss unter `## Basisdaten` stehen und zwingend eine Herleitung oder Quelle in Klammern enthalten (gemäß `GEMINI.md`):
-`- Fläche: 15 m² (Quelle: laut Grundriss)` oder `- Fläche: 2,56 m² (Derivation: 1,60 m x 1,60 m)`
-
-## 🚀 PDF-Generierung
-Um den aktuellen Renovierungsplan als PDF zu regenerieren, führen Sie folgenden Befehl im Hauptverzeichnis aus:
-
-```bash
-python3 generator.py
+Beispiel `planung.json`:
+```json
+{
+  "basisdaten": {
+    "flaeche": "6,64 m²",
+    "herleitung": "2.01m x 3.305m"
+  }
+}
 ```
 
-Das Skript:
-1. Validiert und liest alle `planung.md` Dateien in `raeume/`.
-2. Extrahiert Flächen, Kosten und Bilder.
-3. Erzeugt die Datei `renovierungsplan.pdf`.
-4. Aktualisiert automatisch das Master-Dokument `PROJEKT_DETAILS.md`.
+Beispiel Materialkosten:
+```json
+{
+  "Posten": "Fliesen",
+  "Gesamtpreis": "345,00 € (Herleitung: 15m² x 23€)"
+}
+```
 
-**Wichtige Regel:** Führen Sie das Skript nach jeder Änderung an den Raum-Daten aus, um die Konsistenz zwischen Markdown-Dateien und PDF zu gewährleisten.
+## ⚠️ Veraltete Komponenten (Legacy)
+Die folgenden Dateien und Ordner sind veraltet und werden durch die Angular-Web-App ersetzt:
+- `generator.py` & `pdf_builder/`: (Veralteter PDF-Export)
+- `PROJEKT_DETAILS.md`: (Veraltetes Master-Dokument)

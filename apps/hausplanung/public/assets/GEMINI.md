@@ -4,7 +4,7 @@
 **Jede berechnete Zahl muss zwingend eine Herleitung enthalten.**
 - **Flächen:** Jede m²-Angabe muss die Formel (z.B. Länge x Breite) oder die Quelle (z.B. "laut Grundriss") in Klammern direkt dahinter stehen haben.
 - **Kosten:** Summenbildungen müssen transparent sein (z.B. "Material x Menge"). Es dürfen **NUR Materialkosten** aufgeführt werden, keine Arbeitskosten oder Montageleistungen.
-- **Konsistenz:** Dieses Format muss sowohl in den Markdown-Dateien als auch im generierten PDF beibehalten werden.
+- **Konsistenz:** Dieses Format muss zwingend in allen Datenquellen (JSON/Markdown) beibehalten werden. Das generierte PDF dient lediglich als optionaler Export.
 
 ## 📁 Struktur-Regeln
 - Räume werden immer in `rooms/[raumname]/planung.json` gepflegt.

@@ -86,15 +86,15 @@
     },
     {
       "id": "badewanne",
-      "name": "Einbau-Badewanne",
-      "brand": "Bette",
-      "specs": "BetteOcean, 170x75cm, Weiß",
-      "image": "assets/rooms/bad/medien/material/badewanne_placeholder.png",
-      "status": "In Auswahl",
+      "name": "HOESCH ISENSI Monolith Eckbadewanne",
+      "brand": "Hoesch",
+      "specs": "Monolith, 170x75x60cm, Rechte Ausführung, Weiß",
+      "image": "assets/rooms/bad/medien/material/badewanne_isensi.png",
+      "status": "Ausgesucht",
       "quantity": "1 Stk.",
-      "price": "480,00 €",
+      "price": "1.329,00 €",
       "shop": "Megabad",
-      "link": null
+      "link": "https://www.megabad.com/hoesch-badewannen-und-whirlpools-eckbadewannen-isensi-a-1926311.htm"
     },
     {
       "id": "lampe",
