@@ -107,12 +107,12 @@
 }
 
 .room.status-working rect {
-  fill: rgba(219, 39, 119, 0.1);
-  stroke: #db2777;
+  fill: rgba(16, 185, 129, 0.1);
+  stroke: #10b981;
 }
 
 .room.status-working:hover rect {
-  fill: rgba(219, 39, 119, 0.2);
+  fill: rgba(16, 185, 129, 0.2);
 }
 
 .room.status-paused rect {
@@ -139,8 +139,8 @@
 }
 
 .room.active.status-working rect {
-  fill: #db2777;
-  stroke: #be185d;
+  fill: #10b981;
+  stroke: #059669;
 }
 
 .room.active.status-paused rect {
@@ -196,7 +196,7 @@
 
 .room.status-working .room-area, 
 .room.status-working .room-area-tiny {
-  fill: #be185d;
+  fill: #059669;
 }
 
 .room.status-paused .room-area, 
