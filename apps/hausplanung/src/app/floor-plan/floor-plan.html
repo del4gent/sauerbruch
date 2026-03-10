@@ -11,11 +11,15 @@
   </div>
   
   <!-- ERDGESCHOSS VIEW -->
-  <svg *ngIf="currentView === 'eg'" viewBox="0 0 1100 850" xmlns="http://www.w3.org/2000/svg" class="floor-plan-svg">
+  @if (currentView === 'eg') {
+  <svg viewBox="0 0 1100 850" xmlns="http://www.w3.org/2000/svg" class="floor-plan-svg">
     <defs>
       <filter id="roomShadow" x="-2%" y="-2%" width="104%" height="104%">
         <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.1"/>
       </filter>
+      <pattern id="diagonalHatch" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="8" stroke="var(--status-paused-color)" stroke-opacity="0.2" stroke-width="2" />
+      </pattern>
     </defs>
 
     <!-- Garage -->
@@ -127,9 +131,16 @@
       <text x="800" y="515" class="room-area-tiny">{{ roomService.getRoomById('zimmer2')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
   </svg>
+  }
 
   <!-- KELLER VIEW -->
-  <svg *ngIf="currentView === 'keller'" viewBox="0 0 1100 850" xmlns="http://www.w3.org/2000/svg" class="floor-plan-svg">
+  @if (currentView === 'keller') {
+  <svg viewBox="0 0 1100 850" xmlns="http://www.w3.org/2000/svg" class="floor-plan-svg">
+    <defs>
+      <pattern id="diagonalHatch" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="8" stroke="var(--status-paused-color)" stroke-opacity="0.2" stroke-width="2" />
+      </pattern>
+    </defs>
     <!-- KELLERRAUM 2 -->
     <g class="room secondary" (click)="onRoomClick('kellerflur')">
       <rect x="230" y="40" width="190" height="120" rx="2" />
@@ -192,4 +203,5 @@
       <text x="800" y="605" class="room-detail-tiny">28,88 m²</text>
     </g>
   </svg>
+  }
 </div>

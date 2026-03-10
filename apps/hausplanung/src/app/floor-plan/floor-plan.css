@@ -116,12 +116,13 @@
 }
 
 .room.status-paused rect {
-  fill: var(--status-paused-bg) !important;
+  fill: url(#diagonalHatch) !important;
   stroke: var(--status-paused-color) !important;
 }
 
 .room.status-paused:hover rect {
-  fill: var(--status-paused-bg) !important;
+  stroke-width: 2 !important;
+  fill: url(#diagonalHatch) !important;
 }
 
 .room.status-planned rect {
