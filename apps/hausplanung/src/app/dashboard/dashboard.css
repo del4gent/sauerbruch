@@ -21,7 +21,7 @@
   margin-right: -50vw;
   
   display: flex;
-  background: #000;
+  background: var(--black);
 }
 
 .hero-image { 
@@ -84,7 +84,7 @@
   line-height: 0.9; 
   font-weight: 900;
   letter-spacing: -0.06em;
-  color: #ffffff;
+  color: var(--white);
 }
 
 .stats-grid {

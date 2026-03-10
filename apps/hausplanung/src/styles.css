@@ -6,9 +6,15 @@
   --card-bg: rgba(255, 255, 255, 0.7);
   --border-color: rgba(226, 232, 240, 0.8);
   --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
   --sidebar-bg: #1e293b;
   --sidebar-text: #f8fafc;
+  --text-secondary: #64748b;
+  --bg-secondary: #f1f5f9;
+  --shadow-color: rgba(0, 0, 0, 0.1);
   --glass-blur: blur(12px);
+  --white: #ffffff;
+  --black: #000000;
 
   /* Global Status Colors */
   --status-active-color: #10b981;
@@ -24,7 +30,7 @@
   --status-paused-border: rgba(148, 163, 184, 0.2);
 
   --status-finished-color: #64748b; /* Medium gray text for readable contrast on white */
-  --status-finished-bg: #ffffff; /* Solid White bg */
+  --status-finished-bg: rgba(255, 255, 255, 0.4); /* Transparent White bg */
   --status-finished-border: rgba(226, 232, 240, 0.9); /* Subtle border */
 }
 
@@ -34,8 +40,12 @@
   --card-bg: rgba(30, 41, 59, 0.5);
   --border-color: rgba(51, 65, 85, 0.5);
   --primary-color: #60a5fa;
+  --primary-hover: #3b82f6;
   --sidebar-bg: #020617;
   --sidebar-text: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --bg-secondary: #0f172a;
+  --shadow-color: rgba(0, 0, 0, 0.3);
 
   /* Global Status Colors (Dark Mode Adjustments) */
   --status-finished-color: #94a3b8; /* Medium gray for dark mode readability */

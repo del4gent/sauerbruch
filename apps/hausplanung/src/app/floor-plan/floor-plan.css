@@ -1,10 +1,10 @@
 .floor-plan-container {
   width: 100%;
-  background: #ffffff;
+  background: var(--card-bg);
   padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
-  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 20px 50px var(--shadow-color);
+  border: 1px solid var(--border-color);
 }
 
 @media (max-width: 768px) {
@@ -34,22 +34,22 @@
 
 .floor-plan-header h3 {
   margin: 0;
-  color: #2c3e50;
+  color: var(--text-color);
   font-size: 1.5rem;
 }
 
 .subtitle {
-  color: #7f8c8d;
+  color: var(--text-secondary);
   margin: 0.25rem 0 0 0;
   font-size: 0.9rem;
 }
 
 .view-toggle {
   display: flex;
-  background: #f8f9fa;
+  background: var(--bg-secondary);
   padding: 4px;
   border-radius: 8px;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--border-color);
 }
 
 .view-toggle button {
@@ -59,14 +59,14 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  color: #7f8c8d;
+  color: var(--text-secondary);
   transition: all 0.3s ease;
 }
 
 .view-toggle button.active {
-  background: #ffffff;
-  color: #3498db;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background: var(--card-bg);
+  color: var(--primary-color);
+  box-shadow: 0 2px 8px var(--shadow-color);
 }
 
 .floor-plan-svg {
@@ -81,19 +81,19 @@
 }
 
 .room rect {
-  fill: #fdfdfd;
-  stroke: #bdc3c7;
+  fill: var(--card-bg);
+  stroke: var(--border-color);
   stroke-width: 1.5;
 }
 
 .room:hover rect {
-  fill: #f0f7ff;
-  stroke: #3498db;
+  fill: var(--bg-secondary);
+  stroke: var(--primary-color);
 }
 
 .room.active rect {
-  fill: #3498db;
-  stroke: #2980b9;
+  fill: var(--primary-color);
+  stroke: var(--primary-hover);
   stroke-width: 3;
 }
 
@@ -155,13 +155,13 @@
 }
 
 .room.secondary rect {
-  fill: #fcfcfc;
-  stroke: #e0e0e0;
+  fill: var(--card-bg);
+  stroke: var(--border-color);
   stroke-dasharray: 2;
 }
 
 .room-label, .room-label-small, .room-label-tiny {
-  fill: #2c3e50;
+  fill: var(--text-color);
   font-weight: 700;
   text-anchor: middle;
   pointer-events: none;
@@ -172,7 +172,7 @@
 .room-label-tiny { font-size: 9px; }
 
 .room-detail, .room-detail-tiny {
-  fill: #7f8c8d;
+  fill: var(--text-secondary);
   text-anchor: middle;
   pointer-events: none;
 }
@@ -181,7 +181,7 @@
 .room-detail-tiny { font-size: 9px; }
 
 .room-area, .room-area-tiny {
-  fill: #3498db;
+  fill: var(--primary-color);
   font-weight: 700;
   text-anchor: middle;
   pointer-events: none;
@@ -210,10 +210,10 @@
   fill: var(--status-planned-color);
 }
 
-.room.active text { fill: #ffffff !important; }
+.room.active text { fill: var(--bg-color) !important; }
 .room.active.status-finished text { fill: var(--status-finished-color) !important; }
 
-.room.garage rect { fill: #f8f9fa; stroke-dasharray: 4; }
+.room.garage rect { fill: var(--bg-secondary); stroke-dasharray: 4; }
 
 .opacity-40 { opacity: 0.4; }
 .opacity-60 { opacity: 0.6; }
