@@ -4,6 +4,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { marked } from 'marked';
 import { RoomStore, Room, Material } from '../store/room.store';
 import { StatCardComponent } from '../ui/stat-card/stat-card.component';
 
@@ -29,6 +30,7 @@ interface RoomSection {
   title: string;
   type: 'checklist' | 'table' | 'text';
   items: ChecklistItem[] | TableData | string;
+  html?: SafeHtml;
 }
 
 interface RoomData {
@@ -165,6 +167,18 @@ export class RoomComponent implements OnInit, OnDestroy {
           const isAblauf = sectionTitle.includes('ABLAUFPLAN') || 
                            sectionTitle.includes('RENOVIERUNGS-ABLAUF') || 
                            sectionTitle.includes('RENOVIERUNGSABLAUF');
+
+          if (section.type === 'text' && typeof section.items === 'string') {
+            try {
+              let markdown = section.items;
+              // Fix image references: medien/... -> assets/rooms/{roomId}/medien/...
+              markdown = markdown.replace(/\]\((medien\/[^)]+)\)/g, `](assets/rooms/${roomId}/$1)`);
+              const parsed = marked.parse(markdown);
+              section.html = this.sanitizer.bypassSecurityTrustHtml(parsed as string);
+            } catch (e) {
+              console.error('Markdown parse error', e);
+            }
+          }
           
           if (section.type === 'table' && typeof section.items !== 'string' && 'rows' in section.items) {
             const table = section.items as TableData;

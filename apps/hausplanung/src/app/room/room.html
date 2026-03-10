@@ -96,8 +96,11 @@
               </div>
 
               <!-- Text / Default -->
-              <div *ngSwitchDefault>
-                <p>{{ section.items }}</p>
+              <div *ngSwitchDefault class="text-content" [class.markdown-content]="section.html">
+                <div *ngIf="section.html; else plainTextTpl" [innerHTML]="section.html"></div>
+                <ng-template #plainTextTpl>
+                  <p>{{ section.items }}</p>
+                </ng-template>
               </div>
             </ng-container>
           </section>

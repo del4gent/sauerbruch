@@ -23,15 +23,15 @@
     </defs>
 
     <!-- Garage -->
-    <g class="room garage" (click)="onRoomClick('garage')" 
+    <g class="room" (click)="onRoomClick('garage')" 
        [class.active]="activeRoomId === 'garage'"
        [class.status-finished]="getRoomStatus('garage') === 'Fertig'"
        [class.status-working]="getRoomStatus('garage') === 'In Arbeit'"
        [class.status-paused]="getRoomStatus('garage') === 'Pausiert'"
        [class.status-planned]="getRoomStatus('garage') === 'In Planung'">
-      <rect x="20" y="40" width="180" height="505" rx="4" fill="none" stroke="#dfe4e8" stroke-dasharray="4" />
+      <rect x="20" y="40" width="180" height="505" rx="2" />
       <text x="110" y="280" class="room-label opacity-60">Garage</text>
-      <text x="110" y="300" class="room-detail opacity-60">{{ roomService.getRoomById('garage')?.area | number:'1.2-2':'de-DE' }} m²</text>
+      <text x="110" y="300" class="room-area opacity-60">{{ roomService.getRoomById('garage')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
 
     <!-- Wohnzimmer -->
@@ -55,7 +55,6 @@
        [class.status-planned]="getRoomStatus('kueche') === 'In Planung'">
       <rect x="230" y="258" width="190" height="180" rx="2" />
       <text x="325" y="325" class="room-label">Küche</text>
-      <text x="325" y="345" class="room-detail">{{ roomService.getRoomById('kueche')?.area_derivation }}</text>
       <text x="325" y="360" class="room-area">{{ roomService.getRoomById('kueche')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
 
@@ -126,7 +125,7 @@
        [class.status-working]="getRoomStatus('zimmer2') === 'In Arbeit'"
        [class.status-paused]="getRoomStatus('zimmer2') === 'Pausiert'"
        [class.status-planned]="getRoomStatus('zimmer2') === 'In Planung'">
-      <rect x="684" y="438" width="233" height="117" class="room-rect"/>
+      <rect x="684" y="438" width="233" height="117" rx="2" />
       <text x="800" y="495" class="room-label-small">Zimmer 2</text>
       <text x="800" y="515" class="room-area-tiny">{{ roomService.getRoomById('zimmer2')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
@@ -142,21 +141,39 @@
       </pattern>
     </defs>
     <!-- KELLERRAUM 2 -->
-    <g class="room secondary" (click)="onRoomClick('kellerflur')">
+    <g class="room" (click)="onRoomClick('kellerflur')"
+       [class.active]="activeRoomId === 'kellerflur'"
+       [class.status-finished]="getRoomStatus('kellerflur') === 'Fertig'"
+       [class.status-working]="getRoomStatus('kellerflur') === 'In Arbeit'"
+       [class.status-paused]="getRoomStatus('kellerflur') === 'Pausiert'"
+       [class.status-planned]="getRoomStatus('kellerflur') === 'In Planung'">
       <rect x="230" y="40" width="190" height="120" rx="2" />
       <text x="325" y="105" class="room-label-small">Keller 2</text>
+      <text x="325" y="125" class="room-area-tiny">{{ '' }}</text>
     </g>
 
     <!-- KELLERRAUM 1 -->
-    <g class="room secondary" (click)="onRoomClick('kellerflur')">
+    <g class="room" (click)="onRoomClick('kellerflur')"
+       [class.active]="activeRoomId === 'kellerflur'"
+       [class.status-finished]="getRoomStatus('kellerflur') === 'Fertig'"
+       [class.status-working]="getRoomStatus('kellerflur') === 'In Arbeit'"
+       [class.status-paused]="getRoomStatus('kellerflur') === 'Pausiert'"
+       [class.status-planned]="getRoomStatus('kellerflur') === 'In Planung'">
       <rect x="230" y="160" width="190" height="120" rx="2" />
       <text x="325" y="225" class="room-label-small">Keller 1</text>
+      <text x="325" y="245" class="room-area-tiny">{{ '' }}</text>
     </g>
 
     <!-- HEIZRAUM -->
-    <g class="room secondary" (click)="onRoomClick('kellerflur')">
+    <g class="room" (click)="onRoomClick('kellerflur')"
+       [class.active]="activeRoomId === 'kellerflur'"
+       [class.status-finished]="getRoomStatus('kellerflur') === 'Fertig'"
+       [class.status-working]="getRoomStatus('kellerflur') === 'In Arbeit'"
+       [class.status-paused]="getRoomStatus('kellerflur') === 'Pausiert'"
+       [class.status-planned]="getRoomStatus('kellerflur') === 'In Planung'">
       <rect x="230" y="280" width="190" height="250" rx="2" />
       <text x="325" y="405" class="room-label-small">Heizraum</text>
+      <text x="325" y="425" class="room-area-tiny">{{ '' }}</text>
     </g>
 
     <!-- KELLERFLUR -->
@@ -167,8 +184,7 @@
        [class.status-paused]="getRoomStatus('kellerflur') === 'Pausiert'"
        [class.status-planned]="getRoomStatus('kellerflur') === 'In Planung'">
       <rect x="420" y="280" width="264" height="250" rx="2" />
-      <text x="552" y="390" class="room-label-small">Kellerflur</text>
-      <text x="552" y="410" class="room-label-tiny opacity-40">Spielbereich</text>
+      <text x="552" y="410" class="room-label-small">Kellerflur</text>
       <text x="552" y="435" class="room-area-tiny">{{ roomService.getRoomById('kellerflur')?.area | number:'1.2-2':'de-DE' }} m²</text>
     </g>
 
@@ -185,22 +201,39 @@
     </g>
 
     <!-- ANSCHLUSSKELLER -->
-    <g class="room secondary" (click)="onRoomClick('kellerflur')">
+    <g class="room" (click)="onRoomClick('kellerflur')"
+       [class.active]="activeRoomId === 'kellerflur'"
+       [class.status-finished]="getRoomStatus('kellerflur') === 'Fertig'"
+       [class.status-working]="getRoomStatus('kellerflur') === 'In Arbeit'"
+       [class.status-paused]="getRoomStatus('kellerflur') === 'Pausiert'"
+       [class.status-planned]="getRoomStatus('kellerflur') === 'In Planung'">
       <rect x="420" y="530" width="132" height="120" rx="2" />
       <text x="486" y="585" class="room-label-tiny">Anschluss</text>
+      <text x="486" y="605" class="room-area-tiny">{{ '' }}</text>
     </g>
 
     <!-- WASCHRAUM -->
-    <g class="room secondary" (click)="onRoomClick('kellerflur')">
+    <g class="room" (click)="onRoomClick('kellerflur')"
+       [class.active]="activeRoomId === 'kellerflur'"
+       [class.status-finished]="getRoomStatus('kellerflur') === 'Fertig'"
+       [class.status-working]="getRoomStatus('kellerflur') === 'In Arbeit'"
+       [class.status-paused]="getRoomStatus('kellerflur') === 'Pausiert'"
+       [class.status-planned]="getRoomStatus('kellerflur') === 'In Planung'">
       <rect x="552" y="530" width="132" height="120" rx="2" />
       <text x="618" y="585" class="room-label-tiny">Waschraum</text>
+      <text x="618" y="605" class="room-area-tiny">{{ '' }}</text>
     </g>
 
     <!-- TROCKENRAUM -->
-    <g class="room secondary" (click)="onRoomClick('kellerflur')">
+    <g class="room" (click)="onRoomClick('kellerflur')"
+       [class.active]="activeRoomId === 'kellerflur'"
+       [class.status-finished]="getRoomStatus('kellerflur') === 'Fertig'"
+       [class.status-working]="getRoomStatus('kellerflur') === 'In Arbeit'"
+       [class.status-paused]="getRoomStatus('kellerflur') === 'Pausiert'"
+       [class.status-planned]="getRoomStatus('kellerflur') === 'In Planung'">
       <rect x="684" y="530" width="233" height="120" rx="2" />
       <text x="800" y="585" class="room-label-tiny">Trockenraum</text>
-      <text x="800" y="605" class="room-detail-tiny">28,88 m²</text>
+      <text x="800" y="605" class="room-area-tiny">28,88 m²</text>
     </g>
   </svg>
   }

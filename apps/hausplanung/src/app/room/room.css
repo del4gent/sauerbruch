@@ -138,6 +138,36 @@ app-stat-card {
 .main-doc { padding: 4rem; margin-bottom: 4rem; }
 
 /* SECTION BASED CONTENT (JSON) */
+.markdown-content {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+.markdown-content p {
+  margin-bottom: 1rem;
+}
+.markdown-content p:last-child {
+  margin-bottom: 0;
+}
+.markdown-content img {
+  max-width: 100%;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+.markdown-content ul {
+  padding-left: 1.5rem;
+  margin-top: 1rem;
+}
+.markdown-content li {
+  margin-bottom: 0.5rem;
+  opacity: 0.8;
+}
+.markdown-content strong {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
 .room-sections {
   display: flex;
   flex-direction: column;

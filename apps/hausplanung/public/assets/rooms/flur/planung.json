@@ -91,54 +91,6 @@
           ]
         ]
       }
-    },
-    {
-      "title": "ELEKTRO-PLANUNG (MATERIALKOSTEN)",
-      "type": "table",
-      "items": {
-        "headers": [
-          "Posten",
-          "Menge",
-          "Einheit",
-          "Einzelpreis",
-          "Gesamtpreis"
-        ],
-        "rows": [
-          [
-            "LED Einbauspots (warmweiß, dimmbar)",
-            "12 (Berechnet auf 20.88 m²)",
-            "Stk.",
-            "45,00 €",
-            "540,00 €"
-          ],
-          [
-            "NYM-J 3x1,5 mm² Kabel",
-            "40",
-            "m",
-            "1,20 €",
-            "48,00 €"
-          ],
-          [
-            "Einbaudosen & Klemmen",
-            "1",
-            "Set",
-            "35,00 €",
-            "35,00 €"
-          ],
-          [
-            "Bewegungsmelder (Unterputz)",
-            "1",
-            "Stk.",
-            "85,00 €",
-            "85,00 €"
-          ]
-        ]
-      }
-    },
-    {
-      "title": "INSPIRATION",
-      "type": "text",
-      "items": "![Regenbogen Fenster-Effekt](medien/inspiration/flur_fenster_regenbogen.png)\n- **Konzept:** Nutzung von schmalen Fensterausschnitten für Lichteffekte (z.B. Regenbogenfolie oder Prismen-Effekt).\n- **Materialität:** Warme Betonoptik an den Wänden kombiniert mit dunkhem Steinboden.\n- **Akzente:** Minimalistisches Lichtdesign und offener Treppenaufgang."
     }
   ]
 }
