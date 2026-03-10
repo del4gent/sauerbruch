@@ -98,59 +98,59 @@
 }
 
 .room.status-finished rect {
-  fill: rgba(34, 197, 94, 0.1);
-  stroke: #22c55e;
+  fill: var(--status-finished-bg) !important;
+  stroke: var(--status-finished-color) !important;
 }
 
 .room.status-finished:hover rect {
-  fill: rgba(34, 197, 94, 0.2);
+  fill: var(--status-finished-bg) !important;
 }
 
 .room.status-working rect {
-  fill: rgba(16, 185, 129, 0.1);
-  stroke: #10b981;
+  fill: var(--status-active-bg) !important;
+  stroke: var(--status-active-color) !important;
 }
 
 .room.status-working:hover rect {
-  fill: rgba(16, 185, 129, 0.2);
+  fill: var(--status-active-bg) !important;
 }
 
 .room.status-paused rect {
-  fill: rgba(148, 163, 184, 0.05);
-  stroke: #94a3b8;
+  fill: var(--status-paused-bg) !important;
+  stroke: var(--status-paused-color) !important;
 }
 
 .room.status-paused:hover rect {
-  fill: rgba(148, 163, 184, 0.1);
+  fill: var(--status-paused-bg) !important;
 }
 
 .room.status-planned rect {
-  fill: rgba(245, 158, 11, 0.1);
-  stroke: #f59e0b;
+  fill: var(--status-planned-bg) !important;
+  stroke: var(--status-planned-color) !important;
 }
 
 .room.status-planned:hover rect {
-  fill: rgba(245, 158, 11, 0.2);
+  fill: var(--status-planned-bg) !important;
 }
 
 .room.active.status-finished rect {
-  fill: #22c55e;
-  stroke: #16a34a;
+  fill: var(--status-finished-color) !important;
+  stroke: var(--status-finished-border) !important;
 }
 
 .room.active.status-working rect {
-  fill: #10b981;
-  stroke: #059669;
+  fill: var(--status-active-color) !important;
+  stroke: var(--status-active-border) !important;
 }
 
 .room.active.status-paused rect {
-  fill: #94a3b8;
-  stroke: #64748b;
+  fill: var(--status-paused-color) !important;
+  stroke: var(--status-paused-border) !important;
 }
 
 .room.active.status-planned rect {
-  fill: #f59e0b;
-  stroke: #d97706;
+  fill: var(--status-planned-color) !important;
+  stroke: var(--status-planned-border) !important;
 }
 
 .room.secondary rect {
@@ -191,22 +191,22 @@
 
 .room.status-finished .room-area, 
 .room.status-finished .room-area-tiny {
-  fill: #16a34a;
+  fill: var(--status-finished-color);
 }
 
 .room.status-working .room-area, 
 .room.status-working .room-area-tiny {
-  fill: #059669;
+  fill: var(--status-active-color);
 }
 
 .room.status-paused .room-area, 
 .room.status-paused .room-area-tiny {
-  fill: #64748b;
+  fill: var(--status-paused-color);
 }
 
 .room.status-planned .room-area, 
 .room.status-planned .room-area-tiny {
-  fill: #d97706;
+  fill: var(--status-planned-color);
 }
 
 .room.active text { fill: #ffffff !important; }
