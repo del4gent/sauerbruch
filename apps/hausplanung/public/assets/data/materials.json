@@ -157,6 +157,18 @@
       "price": "149,00 €",
       "shop": "Hornbach",
       "link": "https://www.hornbach.de/p/philips-hue-deckenleuchte-23w-3100-lm-2200-6500-k-hxo-3-1x42-1-cm-tento-white-color-ambiance-weiss/12209292/"
+    },
+    {
+      "id": "spiegelschrank_wc",
+      "name": "Spiegelschrank",
+      "brand": "",
+      "specs": "Für Gästebad",
+      "image": "assets/rooms/wc/medien/material/spiegelschrank_placeholder.png",
+      "status": "In Auswahl",
+      "quantity": "1 Stk.",
+      "price": "500,00 €",
+      "shop": "",
+      "link": null
     }
   ]
 }
