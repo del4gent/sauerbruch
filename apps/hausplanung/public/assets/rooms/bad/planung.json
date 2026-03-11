@@ -67,28 +67,6 @@
           ]
         ]
       }
-    },
-    {
-      "title": "MATERIALKOSTEN (BERECHNET)",
-      "type": "table",
-      "items": {
-        "headers": [
-          "Posten",
-          "Menge",
-          "Einheit",
-          "Einzelpreis",
-          "Gesamtpreis"
-        ],
-        "rows": [
-          [
-            "HOESCH ISENSI Monolith Eckbadewanne (170 x 75 cm)",
-            "1",
-            "Stk.",
-            "1.329,00 €",
-            "1.329,00 € (Herleitung: 1 Stk. x 1.329,00 €)"
-          ]
-        ]
-      }
     }
   ]
 }
