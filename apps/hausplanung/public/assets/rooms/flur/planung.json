@@ -54,53 +54,60 @@
             "2026-03-22"
           ],
           [
-            "Fenster im Flur austauschen",
+            "Maueröffnung für Kaminrohr Richtung Küche herstellen",
             "Handwerker",
             "Ausstehend",
             "2026-03-23",
-            "2026-03-24"
+            "2026-03-23"
+          ],
+          [
+            "Fenster im Flur austauschen",
+            "Handwerker",
+            "Ausstehend",
+            "2026-03-24",
+            "2026-03-25"
           ],
           [
             "Elektro: Lichtschalter verstecken & Bewegungsmelder",
             "Handwerker",
             "Ausstehend",
-            "2026-03-25",
-            "2026-03-26"
+            "2026-03-26",
+            "2026-03-27"
           ],
           [
             "Fußbodenheizung verlegen (noch unsicher)",
             "Handwerker",
             "Ausstehend",
-            "2026-03-27",
-            "2026-03-30"
+            "2026-03-28",
+            "2026-03-31"
           ],
           [
             "Wände verputzen & Trocknung",
             "Handwerker",
             "Ausstehend",
-            "2026-04-01",
-            "2026-04-12"
+            "2026-04-02",
+            "2026-04-13"
           ],
           [
             "Decke abhängen & LED Spots (12 Stk. berechnet)",
             "Handwerker",
             "Ausstehend",
-            "2026-04-13",
-            "2026-04-16"
+            "2026-04-14",
+            "2026-04-17"
           ],
           [
             "Fliesen verlegen",
             "Handwerker",
             "Ausstehend",
-            "2026-04-17",
-            "2026-04-22"
+            "2026-04-18",
+            "2026-04-23"
           ],
           [
             "Fußleisten montieren",
-            "Handwerker",
+            "Eigenleistung",
             "Ausstehend",
-            "2026-04-23",
-            "2026-04-24"
+            "2026-04-24",
+            "2026-04-25"
           ]
         ]
       }

@@ -68,7 +68,7 @@
             "2026-03-26"
           ],
           [
-            "Fußbodenheizung verlegen",
+            "Fußbodenheizung verlegen (noch unklar)",
             "Handwerker",
             "Ausstehend",
             "2026-03-27",
@@ -82,13 +82,6 @@
             "2026-04-12"
           ],
           [
-            "Decke abhängen & LED Spots (12 Stk. berechnet)",
-            "Handwerker",
-            "Ausstehend",
-            "2026-04-13",
-            "2026-04-16"
-          ],
-          [
             "Fliesen verlegen",
             "Handwerker",
             "Ausstehend",
@@ -97,7 +90,7 @@
           ],
           [
             "Fußleisten montieren",
-            "Handwerker",
+            "Eigenleistung",
             "Ausstehend",
             "2026-04-23",
             "2026-04-24"
@@ -117,13 +110,6 @@
           "Gesamtpreis"
         ],
         "rows": [
-          [
-            "LED Einbauspots (warmweiß, dimmbar)",
-            "12 (Berechnet auf 20.88 m²)",
-            "Stk.",
-            "45,00 €",
-            "540,00 €"
-          ],
           [
             "NYM-J 3x1,5 mm² Kabel",
             "40",

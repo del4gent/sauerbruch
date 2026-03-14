@@ -19,9 +19,10 @@
         ],
         "rows": [
           ["Demontage & Entkernung (Sanitär/Fliesen)", "Eigenleistung", "Geplant", "2026-03-16", "2026-03-18"],
-          ["Wand abbauen und vergrößern", "Eigenleistung", "Geplant", "2026-03-19", "2026-03-21"],
+          ["Bad vergrößern (Abriss)", "Eigenleistung", "Geplant", "2026-03-19", "2026-03-20"],
+          ["Bad vergrößern (Neuaufbau)", "Eigenleistung oder Handwerker (noch offen)", "Geplant", "2026-03-20", "2026-03-21"],
           ["Fenster erneuern", "Handwerker", "Geplant", "2026-03-23", "2026-03-24"],
-          ["Rohinstallation Wasser/Abwasser/Elektro", "Handwerker", "Geplant", "2026-03-25", "2026-03-28"],
+          ["Installation sanitärer Anlagen", "Handwerker", "Geplant", "2026-03-25", "2026-03-28"],
           ["Fußbodenheizung verlegen (noch unsicher)", "Handwerker", "Geplant", "2026-03-30", "2026-03-31"],
           ["Estrich / Bodenausgleich & Trocknung", "Handwerker", "Geplant", "2026-04-01", "2026-04-07"],
           ["Abdichtung Nassbereich (Dusche)", "Handwerker", "Geplant", "2026-04-08", "2026-04-09"],

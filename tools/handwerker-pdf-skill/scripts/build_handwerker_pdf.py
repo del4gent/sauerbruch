@@ -20,7 +20,7 @@ from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.pdfgen import canvas
 
 
-VERSION = "0.2.0"
+VERSION = "0.4.0"
 PROJECT_URL = "https://del4gent.github.io/sauerbruch/"
 PAGE_WIDTH = 1654
 PAGE_HEIGHT = 2339
@@ -577,7 +577,7 @@ def default_title(rooms: list[Room], document_type: str) -> str:
     if document_type == "angebot":
         names = [room.name for room in rooms]
         if names == ["Bad", "Gästebad", "Flur"]:
-            return "Unterlagen zur Angebotserstellung Bad, Gästebad und Flur"
+            return "Unterlagen zur Angebotserstellung"
         if len(names) == 1:
             return f"Unterlagen zur Angebotserstellung {names[0]}"
         if len(names) == 2:
@@ -730,16 +730,178 @@ def get_image_orientation(path: Path) -> str:
     return "square"
 
 
+def offer_inspiration_frame(orientation: str) -> tuple[float, float]:
+    if orientation == "portrait":
+        return 290.0, 360.0
+    if orientation == "square":
+        return 330.0, 330.0
+    return 400.0, 250.0
+
+
+def render_offer_section_page(title: str, room_names: list[str], note: str | None = None) -> Image.Image:
+    page = Image.new("RGB", (PAGE_WIDTH, PAGE_HEIGHT), BG)
+    draw = ImageDraw.Draw(page)
+
+    kicker_font = find_font(28)
+    title_font = find_font(92)
+    body_font = find_font(34)
+
+    draw_card(draw, (MARGIN, MARGIN, PAGE_WIDTH - MARGIN, PAGE_HEIGHT - MARGIN))
+    draw.rounded_rectangle((MARGIN + 90, MARGIN + 120, PAGE_WIDTH - MARGIN - 90, MARGIN + 240), radius=28, fill="#f5efe5")
+    draw.text((MARGIN + 120, MARGIN + 162), "Zusatzbereich", font=kicker_font, fill="#7d6952")
+
+    title_y = MARGIN + 360
+    for line in textwrap.wrap(title, width=20) or [title]:
+        draw.text((MARGIN + 90, title_y), line, font=title_font, fill=TEXT)
+        title_y += title_font.getbbox(line)[3] + 20
+
+    draw.line((MARGIN + 90, title_y + 30, PAGE_WIDTH - MARGIN - 90, title_y + 30), fill=LINE, width=3)
+    draw.text((MARGIN + 90, title_y + 110), "Enthaltene Räume", font=body_font, fill=TEXT)
+    draw_wrapped_lines(draw, room_names, body_font, TEXT, MARGIN + 90, title_y + 180, 640, line_spacing=10, bullet=True)
+
+    if note:
+        note_box = (MARGIN + 90, title_y + 420, PAGE_WIDTH - MARGIN - 90, title_y + 620)
+        draw.rounded_rectangle(note_box, radius=26, fill="#faf7f1", outline=LINE, width=2)
+        draw.text((note_box[0] + 30, note_box[1] + 28), "Hinweis", font=body_font, fill=TEXT)
+        draw_wrapped_lines(draw, [note], find_font(28), MUTED, note_box[0] + 30, note_box[1] + 92, note_box[2] - note_box[0] - 60, line_spacing=8, bullet=False)
+
+    draw.text((MARGIN + 90, PAGE_HEIGHT - MARGIN - 70), "Sauerbruch 3", font=kicker_font, fill=MUTED)
+    return page
+
+
+def render_offer_payload_page(pdf: canvas.Canvas, title: str, date_text: str, payload: dict, page_number: int) -> None:
+    room = payload["room"]
+    tasks = payload["tasks"]
+    plan_images = payload["plan_images"]
+    bestand_images = payload["bestand_images"]
+    inspiration_images = payload["inspiration_images"]
+
+    draw_pdf_text(pdf, title, MARGIN + 70, MARGIN + 62, 26, color=MUTED)
+    draw_pdf_text(pdf, room.status, PAGE_WIDTH - MARGIN - 160, MARGIN + 62, 26, color=ACCENT)
+    draw_pdf_text(pdf, date_text, PAGE_WIDTH - MARGIN - 260, MARGIN + 100, 22, color=MUTED)
+    draw_pdf_link(pdf, room_url(room), MARGIN + 70, MARGIN + 100, 20, room_url(room))
+    draw_pdf_text(pdf, room.name, MARGIN + 70, MARGIN + 140, 74)
+    draw_pdf_text(pdf, f"Fläche: {format_area(room.area)} m²", MARGIN + 72, MARGIN + 246, 30)
+    if room.area_derivation:
+        draw_pdf_text(pdf, f"Herleitung: {room.area_derivation}", MARGIN + 72, MARGIN + 298, 30, color=MUTED)
+
+    content_top = MARGIN + 370
+    left_x1 = MARGIN + 70
+    left_x2 = MARGIN + 560
+    right_x1 = left_x2 + GAP
+    right_x2 = PAGE_WIDTH - MARGIN - 70
+    left_col_width = left_x2 - left_x1
+    right_col_width = right_x2 - right_x1
+
+    task_width = left_col_width - 60
+    task_text_height = measure_pdf_wrapped_lines(tasks, task_width, 26, bullet=True)
+    task_card_height = min(max(250, 88 + task_text_height + 34), 520)
+
+    draw_pdf_card(pdf, left_x1, content_top, left_col_width, task_card_height)
+    draw_pdf_text(pdf, "Geplanter Leistungsumfang", left_x1 + 28, content_top + 24, 30)
+    draw_pdf_wrapped_lines(pdf, tasks, left_x1 + 34, content_top + 88, task_width, 26, bullet=True)
+
+    plan_card_height = 350
+    plan_image_height = 220
+    draw_pdf_card(pdf, right_x1, content_top, right_col_width, plan_card_height)
+    draw_pdf_text(pdf, "Grundriss", right_x1 + 28, content_top + 24, 30)
+    if plan_images:
+        image_y = content_top + 84
+        usable_width = right_col_width - 56
+        plan_width = (usable_width - GAP) / max(len(plan_images[:2]), 1)
+        for idx, path in enumerate(plan_images[:2]):
+            x = right_x1 + 28 + idx * (plan_width + GAP)
+            draw_pdf_image_contain(pdf, path, x, image_y, plan_width, plan_image_height, bg_color="#fbfbfb")
+
+    bestand_top = content_top + plan_card_height + GAP
+    if bestand_images:
+        visible_bestand = bestand_images[:3] if inspiration_images else bestand_images[:4]
+        if room.id == "wc" and len(visible_bestand) == 2:
+            bestand_height = 420
+        elif len(visible_bestand) == 1:
+            bestand_height = 520
+        elif len(visible_bestand) == 2 and all(get_image_orientation(path) == "portrait" for path in visible_bestand):
+            bestand_height = 470
+        elif len(visible_bestand) == 2 and get_image_orientation(visible_bestand[1]) == "portrait":
+            bestand_height = 560
+        else:
+            bestand_height = 520 if inspiration_images else 600
+
+        draw_pdf_card(pdf, right_x1, bestand_top, right_col_width, bestand_height)
+        draw_pdf_text(pdf, "Bestandsfotos", right_x1 + 28, bestand_top + 24, 30)
+        usable_width = right_col_width - 56
+        start_y = bestand_top + 84
+
+        if room.id == "wc" and len(visible_bestand) == 2:
+            tile_width = 220
+            tile_height = 280
+            total_width = tile_width * 2 + GAP
+            start_x = right_x1 + 28 + (usable_width - total_width) / 2
+            for idx, path in enumerate(visible_bestand):
+                x = start_x + idx * (tile_width + GAP)
+                draw_pdf_image_contain(pdf, path, x, start_y, tile_width, tile_height, bg_color="#fbfbfb")
+        elif len(visible_bestand) == 1:
+            draw_pdf_image(pdf, visible_bestand[0], right_x1 + 28, start_y, usable_width, 430)
+        elif len(visible_bestand) == 2 and all(get_image_orientation(path) == "portrait" for path in visible_bestand):
+            tile_width = (usable_width - GAP) / 2
+            tile_height = 320 if inspiration_images else 420
+            for idx, path in enumerate(visible_bestand):
+                x = right_x1 + 28 + idx * (tile_width + GAP)
+                draw_pdf_image_contain(pdf, path, x, start_y, tile_width, tile_height, bg_color="#fbfbfb")
+        elif len(visible_bestand) == 2 and get_image_orientation(visible_bestand[1]) == "portrait":
+            hero_height = 250 if inspiration_images else 300
+            draw_pdf_image(pdf, visible_bestand[0], right_x1 + 28, start_y, usable_width, hero_height)
+            portrait_width = min(usable_width, 240)
+            portrait_x = right_x1 + 28 + (usable_width - portrait_width) / 2
+            portrait_y = start_y + hero_height + GAP
+            portrait_height = 230 if inspiration_images else 300
+            draw_pdf_image_contain(pdf, visible_bestand[1], portrait_x, portrait_y, portrait_width, portrait_height, bg_color="#fbfbfb")
+        else:
+            hero_height = 250 if inspiration_images else 300
+            draw_pdf_image(pdf, visible_bestand[0], right_x1 + 28, start_y, usable_width, hero_height)
+            thumb_y = start_y + hero_height + GAP
+            thumb_images = visible_bestand[1:]
+            if thumb_images:
+                cols = min(len(thumb_images), 2)
+                tile_width = (usable_width - GAP * (cols - 1)) / cols
+                tile_height = 170 if inspiration_images else 210
+                for idx, path in enumerate(thumb_images[:2]):
+                    x = right_x1 + 28 + idx * (tile_width + GAP)
+                    draw_pdf_image(pdf, path, x, thumb_y, tile_width, tile_height)
+
+    if inspiration_images:
+        inspiration_top = content_top + task_card_height + GAP
+        inspiration_width = left_col_width
+        visible_images = inspiration_images[:1]
+        orientation = get_image_orientation(visible_images[0]) if visible_images else "landscape"
+        frame_width, frame_height = offer_inspiration_frame(orientation)
+        inspiration_height = frame_height + 140
+        draw_pdf_card(pdf, left_x1, inspiration_top, inspiration_width, inspiration_height)
+        draw_pdf_text(pdf, "Inspirationsbilder", left_x1 + 28, inspiration_top + 24, 30)
+        start_y = inspiration_top + 84
+        frame_x = left_x1 + (inspiration_width - frame_width) / 2
+        draw_pdf_image_contain(pdf, visible_images[0], frame_x, start_y, frame_width, frame_height, bg_color="#fbfbfb")
+
+    pdf.setStrokeColor(HexColor(LINE))
+    pdf.line(left_x1, pdf_y(PAGE_HEIGHT - MARGIN - 70), right_x2, pdf_y(PAGE_HEIGHT - MARGIN - 70))
+    draw_pdf_text(pdf, f"Unterlagen zur Angebotserstellung | Seite {page_number}", left_x1, PAGE_HEIGHT - MARGIN - 52, 23, color=MUTED)
+    pdf.showPage()
+
+
 def build_offer_pdf(
     output_path: Path,
     title: str,
     selected_rooms: list[Room],
     room_payloads: list[dict],
+    optional_rooms: list[Room] | None = None,
+    optional_payloads: list[dict] | None = None,
 ) -> None:
     pdf = canvas.Canvas(str(output_path), pagesize=(PAGE_WIDTH, PAGE_HEIGHT))
     pdf.setTitle(title)
     pdf.setAuthor("Codex")
     pdf.setSubject("Angebotsunterlagen")
+    optional_rooms = optional_rooms or []
+    optional_payloads = optional_payloads or []
 
     date_text = f"Stand: {today_label()}"
 
@@ -754,24 +916,42 @@ def build_offer_pdf(
         title_y += 102
     pdf.setStrokeColor(HexColor(LINE))
     pdf.line(MARGIN + 90, pdf_y(title_y + 40), PAGE_WIDTH - MARGIN - 90, pdf_y(title_y + 40))
-    draw_pdf_text(pdf, "Enthaltene Räume", MARGIN + 90, title_y + 120, 40)
-    draw_pdf_wrapped_lines(pdf, [room.name for room in selected_rooms], MARGIN + 90, title_y + 210, 520, 40, bullet=True)
 
-    note_box_x = MARGIN + 790
-    note_box_y = title_y + 105
-    note_box_w = PAGE_WIDTH - MARGIN - 90 - note_box_x
-    note_box_h = 495
+    note_box_x = MARGIN + 90
+    note_box_y = title_y + 72
+    note_box_w = PAGE_WIDTH - 2 * MARGIN - 180
+    note_box_h = 220
     draw_pdf_card(pdf, note_box_x, note_box_y, note_box_w, note_box_h, radius=26, fill="#ffffff", stroke="#e9e3d8")
-    draw_pdf_text(pdf, "Hinweis", note_box_x + 30, note_box_y + 28, 40)
+    draw_pdf_text(pdf, "Hinweis", note_box_x + 30, note_box_y + 28, 38)
     note_lines = [
         "Grundlage für die Angebotserstellung.",
         "Fokus auf Maße, Bestand, Planunterlagen und gewünschte Leistungen.",
-        "Platzhalterbilder und nicht belastbare Zusatzannahmen wurden ausgeschlossen.",
     ]
     draw_pdf_wrapped_lines(pdf, note_lines, note_box_x + 30, note_box_y + 110, note_box_w - 60, 26, color=MUTED, bullet=True)
 
-    footer_y = PAGE_HEIGHT - MARGIN - 350
-    draw_pdf_card(pdf, MARGIN + 90, footer_y, PAGE_WIDTH - 2 * MARGIN - 180, 180, radius=26, fill="#ffffff", stroke="#e9e3d8")
+    grid_top = note_box_y + note_box_h + 28
+    grid_gap = 40
+    grid_col_w = (PAGE_WIDTH - 2 * MARGIN - 180 - grid_gap) / 2
+
+    room_name_lines = [room.name for room in selected_rooms]
+    rooms_box_x = MARGIN + 90
+    rooms_box_y = grid_top
+    rooms_box_h = max(210, 86 + measure_pdf_wrapped_lines(room_name_lines, grid_col_w - 60, 34, bullet=True) + 24)
+    draw_pdf_card(pdf, rooms_box_x, rooms_box_y, grid_col_w, rooms_box_h, radius=26, fill="#ffffff", stroke="#e9e3d8")
+    draw_pdf_text(pdf, "Enthaltene Räume", rooms_box_x + 30, rooms_box_y + 28, 34)
+    draw_pdf_wrapped_lines(pdf, room_name_lines, rooms_box_x + 30, rooms_box_y + 86, grid_col_w - 60, 34, bullet=True)
+
+    optional_box_x = rooms_box_x + grid_col_w + grid_gap
+    optional_box_y = grid_top
+    optional_lines = [room.name for room in optional_rooms] if optional_rooms else ["Keine optionalen Räume"]
+    optional_box_h = max(210, 86 + measure_pdf_wrapped_lines(optional_lines, grid_col_w - 60, 34, bullet=True) + 24)
+    draw_pdf_card(pdf, optional_box_x, optional_box_y, grid_col_w, optional_box_h, radius=26, fill="#ffffff", stroke="#e9e3d8")
+    draw_pdf_text(pdf, "Optionale Räume", optional_box_x + 30, optional_box_y + 28, 34)
+    draw_pdf_wrapped_lines(pdf, optional_lines, optional_box_x + 30, optional_box_y + 86, grid_col_w - 60, 34, color=MUTED, bullet=True)
+
+    footer_y = max(rooms_box_y + rooms_box_h, optional_box_y + optional_box_h) + 28
+
+    draw_pdf_card(pdf, MARGIN + 90, footer_y, PAGE_WIDTH - 2 * MARGIN - 180, 205, radius=26, fill="#ffffff", stroke="#e9e3d8")
     draw_pdf_text(pdf, "Verwendungszweck", MARGIN + 120, footer_y + 32, 40)
     footer_lines = [
         "Projektinformationen für die Angebotseinholung.",
@@ -781,104 +961,27 @@ def build_offer_pdf(
     draw_pdf_text(pdf, "Sauerbruch 3", MARGIN + 90, PAGE_HEIGHT - MARGIN - 70, 26, color=MUTED)
     pdf.showPage()
 
-    for page_number, payload in enumerate(room_payloads, start=2):
-        room = payload["room"]
-        tasks = payload["tasks"]
-        plan_images = payload["plan_images"]
-        bestand_images = payload["bestand_images"]
-        inspiration_images = payload["inspiration_images"]
+    current_page_number = 2
+    for payload in room_payloads:
+        render_offer_payload_page(pdf, title, date_text, payload, current_page_number)
+        current_page_number += 1
 
-        draw_pdf_text(pdf, title, MARGIN + 70, MARGIN + 62, 26, color=MUTED)
-        draw_pdf_text(pdf, room.status, PAGE_WIDTH - MARGIN - 160, MARGIN + 62, 26, color=ACCENT)
-        draw_pdf_text(pdf, date_text, PAGE_WIDTH - MARGIN - 260, MARGIN + 100, 22, color=MUTED)
-        draw_pdf_link(pdf, room_url(room), MARGIN + 70, MARGIN + 100, 20, room_url(room))
-        draw_pdf_text(pdf, room.name, MARGIN + 70, MARGIN + 140, 74)
-        draw_pdf_text(pdf, f"Fläche: {format_area(room.area)} m²", MARGIN + 72, MARGIN + 246, 30)
-        if room.area_derivation:
-            draw_pdf_text(pdf, f"Herleitung: {room.area_derivation}", MARGIN + 72, MARGIN + 298, 30, color=MUTED)
-
-        content_top = MARGIN + 370
-        left_x1 = MARGIN + 70
-        left_x2 = MARGIN + 560
-        right_x1 = left_x2 + GAP
-        right_x2 = PAGE_WIDTH - MARGIN - 70
-
-        task_width = left_x2 - left_x1 - 60
-        task_text_height = measure_pdf_wrapped_lines(tasks, task_width, 26, bullet=True)
-        task_card_height = min(max(250, 88 + task_text_height + 34), 520)
-
-        draw_pdf_card(pdf, left_x1, content_top, left_x2 - left_x1, task_card_height)
-        draw_pdf_text(pdf, "Geplanter Leistungsumfang", left_x1 + 28, content_top + 24, 30)
-        draw_pdf_wrapped_lines(pdf, tasks, left_x1 + 34, content_top + 88, task_width, 26, bullet=True)
-
-        plan_card_height = 350
-        plan_image_height = 220
-        draw_pdf_card(pdf, right_x1, content_top, right_x2 - right_x1, plan_card_height)
-        draw_pdf_text(pdf, "Grundriss / Planausschnitt", right_x1 + 28, content_top + 24, 30)
-        if plan_images:
-            image_y = content_top + 84
-            usable_width = right_x2 - right_x1 - 56
-            plan_width = (usable_width - GAP) / max(len(plan_images[:2]), 1)
-            for idx, path in enumerate(plan_images[:2]):
-                x = right_x1 + 28 + idx * (plan_width + GAP)
-                draw_pdf_image_contain(pdf, path, x, image_y, plan_width, plan_image_height, bg_color="#fbfbfb")
-
-        if bestand_images:
-            bestand_top = content_top + plan_card_height + GAP
-            bestand_height = 620 if inspiration_images else 820
-            draw_pdf_card(pdf, right_x1, bestand_top, right_x2 - right_x1, bestand_height)
-            draw_pdf_text(pdf, "Bestandsfotos", right_x1 + 28, bestand_top + 24, 30)
-            usable_width = right_x2 - right_x1 - 56
-            start_y = bestand_top + 84
-            visible_bestand = bestand_images[:3] if inspiration_images else bestand_images[:4]
-
-            if len(visible_bestand) == 1:
-                draw_pdf_image(pdf, visible_bestand[0], right_x1 + 28, start_y, usable_width, 430)
-            else:
-                hero_height = 250 if inspiration_images else 300
-                draw_pdf_image(pdf, visible_bestand[0], right_x1 + 28, start_y, usable_width, hero_height)
-                thumb_y = start_y + hero_height + GAP
-                thumb_images = visible_bestand[1:]
-                if thumb_images:
-                    cols = min(len(thumb_images), 2)
-                    tile_width = (usable_width - GAP * (cols - 1)) / cols
-                    tile_height = 170 if inspiration_images else 210
-                    for idx, path in enumerate(thumb_images[:2]):
-                        x = right_x1 + 28 + idx * (tile_width + GAP)
-                        draw_pdf_image(pdf, path, x, thumb_y, tile_width, tile_height)
-
-        if inspiration_images:
-            inspiration_top = max(content_top + task_card_height + GAP, bestand_top + bestand_height + 24)
-            inspiration_height = 500
-            inspiration_x1 = left_x1
-            inspiration_width = right_x2 - left_x1
-            draw_pdf_card(pdf, inspiration_x1, inspiration_top, inspiration_width, inspiration_height)
-            draw_pdf_text(pdf, "Inspirationsbilder", inspiration_x1 + 28, inspiration_top + 24, 30)
-            visible_images = inspiration_images[:1]
-            start_y = inspiration_top + 84
-            if visible_images:
-                image_path = visible_images[0]
-                orientation = get_image_orientation(image_path)
-                if orientation == "portrait":
-                    frame_width = 430
-                    frame_height = 330
-                    frame_x = inspiration_x1 + (inspiration_width - frame_width) / 2
-                    draw_pdf_image_contain(pdf, image_path, frame_x, start_y, frame_width, frame_height, bg_color="#fbfbfb")
-                elif orientation == "square":
-                    frame_width = 520
-                    frame_height = 330
-                    frame_x = inspiration_x1 + (inspiration_width - frame_width) / 2
-                    draw_pdf_image_contain(pdf, image_path, frame_x, start_y, frame_width, frame_height, bg_color="#fbfbfb")
-                else:
-                    frame_width = min(inspiration_width - 56, 900)
-                    frame_height = 300
-                    frame_x = inspiration_x1 + (inspiration_width - frame_width) / 2
-                    draw_pdf_image_contain(pdf, image_path, frame_x, start_y, frame_width, frame_height, bg_color="#fbfbfb")
-
-        pdf.setStrokeColor(HexColor(LINE))
-        pdf.line(left_x1, pdf_y(PAGE_HEIGHT - MARGIN - 70), right_x2, pdf_y(PAGE_HEIGHT - MARGIN - 70))
-        draw_pdf_text(pdf, f"Unterlagen zur Angebotserstellung | Seite {page_number}", left_x1, PAGE_HEIGHT - MARGIN - 52, 23, color=MUTED)
+    if optional_payloads:
+        section_page = render_offer_section_page(
+            "Optionale Räume",
+            [room.name for room in optional_rooms],
+            note="Diese Räume sind als optionale Erweiterung der Planung gedacht und stehen gesammelt am Ende der Unterlagen.",
+        )
+        buffer = io.BytesIO()
+        section_page.save(buffer, format="PNG")
+        buffer.seek(0)
+        pdf.drawImage(ImageReader(buffer), 0, 0, width=PAGE_WIDTH, height=PAGE_HEIGHT)
         pdf.showPage()
+        current_page_number += 1
+
+        for payload in optional_payloads:
+            render_offer_payload_page(pdf, title, date_text, payload, current_page_number)
+            current_page_number += 1
 
     pdf.save()
 
@@ -888,6 +991,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--project-root", required=True, help="Root of the Sauerbruch repository.")
     parser.add_argument("--output", required=True, help="Target PDF path.")
     parser.add_argument("--rooms", help="Comma-separated room ids to include.")
+    parser.add_argument("--optional-rooms", help="Comma-separated optional room ids to append in a separate section.")
     parser.add_argument("--title", default=None)
     parser.add_argument("--subtitle", default=None)
     parser.add_argument("--include-finished", action="store_true")
@@ -901,12 +1005,14 @@ def main() -> int:
     project_root = Path(args.project_root).expanduser().resolve()
     output_path = Path(args.output).expanduser().resolve()
     room_filter = [item.strip() for item in args.rooms.split(",") if item.strip()] if args.rooms else None
+    optional_room_filter = [item.strip() for item in args.optional_rooms.split(",") if item.strip()] if args.optional_rooms else None
 
     data_root = project_root / "apps/hausplanung/public/assets/data"
     rooms_raw = load_json(data_root / "rooms.json")
     images_map = load_json(data_root / "images.json")
     rooms = [room_from_dict(item) for item in rooms_raw]
     selected_rooms = pick_rooms(rooms, room_filter, args.include_finished)
+    optional_rooms = pick_rooms(rooms, optional_room_filter, args.include_finished) if optional_room_filter else []
 
     if not selected_rooms:
         raise SystemExit("No rooms selected for export.")
@@ -914,8 +1020,12 @@ def main() -> int:
     title = args.title or default_title(selected_rooms, args.document_type)
     pages: list[Image.Image] = []
     offer_payloads: list[dict] = []
+    optional_offer_payloads: list[dict] = []
 
-    for index, room in enumerate(selected_rooms, start=1):
+    all_offer_rooms = selected_rooms + optional_rooms
+    optional_room_ids = {room.id for room in optional_rooms}
+
+    for index, room in enumerate(all_offer_rooms, start=1):
         planung = load_json(project_root / "apps/hausplanung/public/assets" / room.path)
         image_paths = images_map.get(room.id, [])
         before_path, after_path = resolve_images(image_paths, room.id, project_root)
@@ -928,22 +1038,24 @@ def main() -> int:
             plan_images = select_plan_images(project_root, image_paths, max_items=2)
             bestand_images = select_bestand_images(project_root, image_paths, max_items=4)
             inspiration_images = select_inspiration_images(project_root, image_paths, max_items=2)
-            offer_payloads.append(
-                {
-                    "room": room,
-                    "tasks": tasks,
-                    "plan_images": plan_images,
-                    "bestand_images": bestand_images,
-                    "inspiration_images": inspiration_images,
-                }
-            )
+            payload = {
+                "room": room,
+                "tasks": tasks,
+                "plan_images": plan_images,
+                "bestand_images": bestand_images,
+                "inspiration_images": inspiration_images,
+            }
+            if room.id in optional_room_ids:
+                optional_offer_payloads.append(payload)
+            else:
+                offer_payloads.append(payload)
         else:
             tasks = extract_offer_work_items(planung)
             page = render_briefing_page(title, args.subtitle, room, before_path, after_path, tasks, page_number=index)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     if args.document_type == "angebot":
-        build_offer_pdf(output_path, title, selected_rooms, offer_payloads)
+        build_offer_pdf(output_path, title, selected_rooms, offer_payloads, optional_rooms, optional_offer_payloads)
     else:
         first, rest = pages[0], pages[1:]
         first.save(output_path, "PDF", resolution=150.0, save_all=True, append_images=rest)
