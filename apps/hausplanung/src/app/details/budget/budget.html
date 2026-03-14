@@ -14,20 +14,21 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let room of roomService.sortedRooms()">
-          <td data-label="Raum">{{ room.name }}</td>
-          <td data-label="Status">
-            <app-status-badge [status]="room.status" [showDot]="false"></app-status-badge>
-          </td>
-          <td data-label="Budget" class="text-right font-mono">
-            <ng-container *ngIf="room.budget !== null; else noBudget">
-              {{ room.budget | number:'1.2-2':'de-DE' }} €
-            </ng-container>
-            <ng-template #noBudget>
-              <span class="opacity-50 italic text-sm">Nicht definiert</span>
-            </ng-template>
-          </td>
-        </tr>
+        @for (room of roomService.sortedRooms(); track room.id) {
+          <tr>
+            <td data-label="Raum">{{ room.name }}</td>
+            <td data-label="Status">
+              <app-status-badge [status]="room.status" [showDot]="false"></app-status-badge>
+            </td>
+            <td data-label="Budget" class="text-right font-mono">
+              @if (room.budget !== null) {
+                {{ room.budget | number:'1.2-2':'de-DE' }} €
+              } @else {
+                <span class="opacity-50 italic text-sm">Nicht definiert</span>
+              }
+            </td>
+          </tr>
+        }
       </tbody>
       <tfoot>
         <tr class="total-row">

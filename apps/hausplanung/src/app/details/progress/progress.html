@@ -13,16 +13,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let m of milestones">
-          <td data-label="Meilenstein">{{ m.name }}</td>
-          <td data-label="Status" class="text-right">
-            <app-status-badge 
-              [label]="m.done ? 'Erledigt' : 'Offen'" 
-              [variant]="m.done ? 'done' : 'pending'"
-              [showDot]="false">
-            </app-status-badge>
-          </td>
-        </tr>
+        @for (m of milestones; track m.name) {
+          <tr>
+            <td data-label="Meilenstein">{{ m.name }}</td>
+            <td data-label="Status" class="text-right">
+              <app-status-badge
+                [label]="m.done ? 'Erledigt' : 'Offen'"
+                [variant]="m.done ? 'done' : 'pending'"
+                [showDot]="false">
+              </app-status-badge>
+            </td>
+          </tr>
+        }
       </tbody>
       <tfoot>
         <tr class="total-row">

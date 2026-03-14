@@ -1,7 +1,9 @@
 <div class="stat-minimal" [routerLink]="link">
   <span class="stat-label">{{ label }}</span>
   <span class="stat-value">{{ value }}</span>
-  <div class="mini-progress" *ngIf="progress !== undefined">
-    <div class="mini-bar" [style.width.%]="progress"></div>
-  </div>
+  @if (progress !== undefined) {
+    <div class="mini-progress">
+      <div class="mini-bar" [style.width.%]="progress"></div>
+    </div>
+  }
 </div>

@@ -21,11 +21,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let room of roomService.sortedRooms()" class="clickable-row" (click)="onRoomSelected(room.id)">
-          <td data-label="Raum">{{ room.name }}</td>
-          <td data-label="Fläche" class="text-right font-mono">{{ room.area | number:'1.2-2':'de-DE' }} m²</td>
-          <td data-label="Quelle" class="opacity-60 italic">{{ room.area_derivation }}</td>
-        </tr>
+        @for (room of roomService.sortedRooms(); track room.id) {
+          <tr
+            class="clickable-row"
+            role="button"
+            tabindex="0"
+            (click)="onRoomSelected(room.id)"
+            (keydown.enter)="onRoomSelected(room.id)"
+            (keydown.space)="onRoomSelected(room.id); $event.preventDefault()">
+            <td data-label="Raum">{{ room.name }}</td>
+            <td data-label="Fläche" class="text-right font-mono">{{ room.area | number:'1.2-2':'de-DE' }} m²</td>
+            <td data-label="Quelle" class="opacity-60 italic">{{ room.area_derivation }}</td>
+          </tr>
+        }
       </tbody>
       <tfoot>
         <tr class="total-row">

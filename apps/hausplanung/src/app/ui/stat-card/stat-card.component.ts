@@ -10,8 +10,8 @@ import { RouterModule } from '@angular/router';
   styleUrl: './stat-card.component.css'
 })
 export class StatCardComponent {
-  @Input() label: string = '';
-  @Input() value: string = '';
+  @Input() label = '';
+  @Input() value = '';
   @Input() progress?: number;
-  @Input() link: string = '';
+  @Input() link = '';
 }

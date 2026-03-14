@@ -1,45 +1,21 @@
 import { computed, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
-import { signalStore, withState, withComputed, withMethods, withHooks, patchState } from '@ngrx/signals';
-import roomsData from '../../../public/assets/data/rooms.json';
-import imagesData from '../../../public/assets/data/images.json';
-import materialsData from '../../../public/assets/data/materials.json';
-import metadataData from '../../../public/assets/data/image_metadata.json';
+import { Router } from '@angular/router';
+import { signalStore, withState, withComputed, withMethods, patchState } from '@ngrx/signals';
 
-export interface Material {
-  id: string;
-  name: string;
-  brand: string;
-  specs: string;
-  image: string;
-  status: 'In Auswahl' | 'Gekauft' | 'Ausgesucht';
-  quantity: string;
-  price: string;
-  shop: string;
-  link: string | null;
-}
-
-export interface Room {
-  id: string;
-  name: string;
-  emoji: string;
-  area: number;
-  area_derivation: string;
-  status: 'In Planung' | 'In Arbeit' | 'Pausiert' | 'Fertig';
-  budget: number | null;
-  path: string;
-}
-
-const statusOrder: Record<string, number> = {
-  'In Arbeit': 1,
-  'In Planung': 2,
-  'Pausiert': 3,
-  'Fertig': 4
-};
-
-const initialRooms = roomsData as Room[];
-const initialImagesMap = imagesData as Record<string, string[]>;
+import {
+  getActiveRooms,
+  getOtherRooms,
+  resolveBreadcrumbTitle,
+  sortRoomsByStatus,
+} from '../shared/hausplanung.constants';
+import { Material, Room } from '../shared/hausplanung.models';
+import {
+  INITIAL_IMAGE_METADATA_MAP,
+  INITIAL_ROOM_IMAGES_MAP,
+  INITIAL_ROOM_MATERIALS_MAP,
+  INITIAL_ROOMS,
+} from '../shared/static-room-data';
 
 type RoomState = {
   rooms: Room[];
@@ -53,41 +29,32 @@ type RoomState = {
 };
 
 const initialState: RoomState = {
-  rooms: initialRooms,
+  rooms: INITIAL_ROOMS,
   isAuthorized: true,
   isSidebarCollapsed: true,
   isOtherRoomsExpanded: false,
   breadcrumbTitle: null,
-  roomImagesMap: initialImagesMap,
-  imageMetadataMap: metadataData as Record<string, string>,
-  roomMaterialsMap: materialsData as Record<string, Material[]>
+  roomImagesMap: INITIAL_ROOM_IMAGES_MAP,
+  imageMetadataMap: INITIAL_IMAGE_METADATA_MAP,
+  roomMaterialsMap: INITIAL_ROOM_MATERIALS_MAP,
 };
 
 export const RoomStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
   withComputed(({ rooms }) => ({
-    sortedRooms: computed(() => 
-      [...rooms()].sort((a, b) => (statusOrder[a.status] || 99) - (statusOrder[b.status] || 99))
+    sortedRooms: computed(() => sortRoomsByStatus(rooms())),
+    activeRooms: computed(() => getActiveRooms(rooms())),
+    otherRooms: computed(() => getOtherRooms(rooms())),
+    totalArea: computed(() =>
+      rooms()
+        .filter((room) => room.id !== 'dach')
+        .reduce((acc, room) => acc + room.area, 0)
     ),
-    activeRooms: computed(() => 
-      [...rooms()]
-        .filter(r => r.status === 'In Planung' || r.status === 'In Arbeit')
-        .sort((a, b) => (statusOrder[a.status] || 99) - (statusOrder[b.status] || 99))
-    ),
-    otherRooms: computed(() => 
-      [...rooms()]
-        .filter(r => r.status !== 'In Planung' && r.status !== 'In Arbeit')
-        .sort((a, b) => (statusOrder[a.status] || 99) - (statusOrder[b.status] || 99))
-    ),
-    totalArea: computed(() => rooms()
-      .filter(r => r.id !== 'dach')
-      .reduce((acc, r) => acc + r.area, 0)),
-    totalBudget: computed(() => rooms().reduce((acc, r) => acc + (r.budget || 0), 0)),
+    totalBudget: computed(() => rooms().reduce((acc, room) => acc + (room.budget || 0), 0)),
   })),
   withMethods((store) => {
     const router = inject(Router);
-    const activatedRoute = inject(ActivatedRoute);
     const platformId = inject(PLATFORM_ID);
 
     return {
@@ -112,37 +79,16 @@ export const RoomStore = signalStore(
       },
       getRoomDisplayImages(id: string): string[] {
         const images = store.roomImagesMap()[id] || [];
-        const inspiration = images.filter(img => img.includes('/inspiration/'));
+        const inspiration = images.filter((img) => img.includes('/inspiration/'));
         if (inspiration.length > 0) {
           return inspiration;
         }
-        return images.filter(img => img.includes('/ist/'));
+        return images.filter((img) => img.includes('/ist/'));
       },
       updateBreadcrumb() {
-        let route = activatedRoute.root;
-        while (route.firstChild) {
-          route = route.firstChild;
-        }
-        const path = router.url;
-        
-        if (path === '/' || path === '/dashboard') {
-          patchState(store, { breadcrumbTitle: null });
-          return;
-        }
-
-        if (path.includes('/room/')) {
-          const roomId = path.split('/').pop();
-          const room = store.rooms().find(r => r.id === roomId);
-          patchState(store, { breadcrumbTitle: room ? room.name : 'Raum' });
-        } else if (path.includes('/details/area')) {
-          patchState(store, { breadcrumbTitle: 'Flächen' });
-        } else if (path.includes('/details/budget')) {
-          patchState(store, { breadcrumbTitle: 'Materialkosten' });
-        } else if (path.includes('/details/progress')) {
-          patchState(store, { breadcrumbTitle: 'Status' });
-        } else {
-          patchState(store, { breadcrumbTitle: 'Planung' });
-        }
+        patchState(store, {
+          breadcrumbTitle: resolveBreadcrumbTitle(router.url, store.rooms()),
+        });
       },
       checkPassword(input: string) {
         const value = input.trim().toLowerCase();
@@ -163,14 +109,9 @@ export const RoomStore = signalStore(
         }
       },
       getRoomEmoji(roomId: string): string {
-        const room = store.rooms().find(r => r.id === roomId);
+        const room = store.rooms().find((item) => item.id === roomId);
         return room?.emoji || '🏠';
-      }
+      },
     };
-  }),
-  withHooks({
-    onInit(store) {
-      patchState(store, { isAuthorized: true });
-    }
   })
 );

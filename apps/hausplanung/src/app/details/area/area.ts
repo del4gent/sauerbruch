@@ -13,8 +13,7 @@ import { RoomStore } from '../../store/room.store';
 })
 export class AreaComponent {
   public roomService = inject(RoomStore);
-
-  constructor(private router: Router) {}
+  private readonly router = inject(Router);
 
   onRoomSelected(roomId: string) {
     this.router.navigate(['/room', roomId]);

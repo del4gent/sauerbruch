@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { getStatusBadgeClass } from '../../shared/hausplanung.constants';
 
 @Component({
   selector: 'app-status-badge',
@@ -9,22 +10,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './status-badge.component.css'
 })
 export class StatusBadgeComponent {
-  @Input() status: string = '';
-  @Input() label: string = '';
-  @Input() showDot: boolean = true;
+  @Input() status = '';
+  @Input() label = '';
+  @Input() showDot = true;
   @Input() variant: 'auto' | 'done' | 'pending' = 'auto';
 
   get statusClass(): string {
-    if (this.variant === 'done') return 'status-done';
-    if (this.variant === 'pending') return 'status-pending';
-
-    switch (this.status) {
-      case 'In Arbeit':
-      case 'Angefangen': return 'status-active';
-      case 'In Planung': return 'status-planned';
-      case 'Fertig': return 'status-finished';
-      case 'Pausiert': return 'status-paused';
-      default: return 'status-planned';
-    }
+    return getStatusBadgeClass(this.status, this.variant);
   }
 }

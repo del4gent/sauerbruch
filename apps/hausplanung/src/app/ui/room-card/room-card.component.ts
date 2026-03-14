@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { StatusBadgeComponent } from '../status-badge/status-badge.component';
+import { Room } from '../../shared/hausplanung.models';
 
 @Component({
   selector: 'app-room-card',
@@ -11,7 +12,7 @@ import { StatusBadgeComponent } from '../status-badge/status-badge.component';
   styleUrl: './room-card.component.css'
 })
 export class RoomCardComponent {
-  @Input() room: any;
+  @Input({ required: true }) room!: Room;
   @Input() images: string[] = [];
-  @Input() currentImageIndex: number = 0;
+  @Input() currentImageIndex = 0;
 }

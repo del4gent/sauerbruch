@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { RoomCardComponent } from '../ui/room-card/room-card.component';
 import { StatCardComponent } from '../ui/stat-card/stat-card.component';
 import { RoomStore } from '../store/room.store';
+import { calculateMilestoneProgress, ROOM_MILESTONES } from '../shared/hausplanung.constants';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,36 +14,21 @@ import { RoomStore } from '../store/room.store';
   styleUrl: './dashboard.css'
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  private milestones = [
-    { name: 'Datenaufnahme & Maße (m²)', done: true },
-    { name: 'Erstellung Leistungsverzeichnis', done: true },
-    { name: 'Angebote Handwerker einholen', done: false },
-    { name: 'Austausch der Fenster', done: false },
-    { name: 'Bestellung Material', done: false },
-    { name: 'Entkernung Bad', done: false },
-    { name: 'Installation Elektro', done: false },
-    { name: 'Installation Sanitär', done: false },
-    { name: 'Fliesenarbeiten', done: false },
-    { name: 'Montage Endgeräte', done: false },
-    { name: 'Finale Abnahme', done: false }
-  ];
-
-  totalProgress = Math.round((this.milestones.filter(m => m.done).length / this.milestones.length) * 100);
+  readonly milestones = ROOM_MILESTONES;
+  readonly totalProgress = calculateMilestoneProgress(this.milestones);
 
   currentImageIndices: Record<string, number> = {};
-  private intervalId: any;
+  private intervalId: ReturnType<typeof setInterval> | null = null;
 
   public roomService = inject(RoomStore);
 
-  constructor() {}
-
   ngOnInit() {
-    this.roomService.sortedRooms().forEach(room => {
+    this.roomService.sortedRooms().forEach((room) => {
       this.currentImageIndices[room.id] = 0;
     });
 
     this.intervalId = setInterval(() => {
-      this.roomService.sortedRooms().forEach(room => {
+      this.roomService.sortedRooms().forEach((room) => {
         const imgs = this.roomService.getRoomDisplayImages(room.id);
         if (imgs.length > 1) {
           this.currentImageIndices[room.id] = (this.currentImageIndices[room.id] + 1) % imgs.length;
@@ -54,6 +40,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.intervalId) {
       clearInterval(this.intervalId);
+      this.intervalId = null;
     }
   }
 }

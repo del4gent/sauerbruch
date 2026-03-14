@@ -1,18 +1,26 @@
 <div class="glass-card room-card" [routerLink]="['/room', room.id]">
   <div class="room-preview-container">
-    <div *ngFor="let img of images; let i = index" 
-         class="room-preview" 
-         [class.active]="i === currentImageIndex"
-         [style.backgroundImage]="'url(' + img + ')'">
-    </div>
-    <div class="no-preview" *ngIf="images.length === 0">
-    </div>
+    @for (img of images; track img; let i = $index) {
+      <div
+        class="room-preview"
+        [class.active]="i === currentImageIndex"
+        [style.backgroundImage]="'url(' + img + ')'">
+      </div>
+    }
+    @if (images.length === 0) {
+      <div class="no-preview"></div>
+    }
   </div>
   <div class="room-overlay"></div>
   <div class="room-content-wrapper">
     <div class="room-info">
       <h3 [class.is-finished]="room.status === 'Fertig'">{{ room.name }}</h3>
-      <p>{{ room.area }} m² <span class="derivation-hint" *ngIf="room.area_derivation">({{ room.area_derivation }})</span></p>
+      <p>
+        {{ room.area }} m²
+        @if (room.area_derivation) {
+          <span class="derivation-hint">({{ room.area_derivation }})</span>
+        }
+      </p>
       <app-status-badge [status]="room.status"></app-status-badge>
     </div>
   </div>

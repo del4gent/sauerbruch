@@ -1,11 +1,14 @@
 <div class="app-container">
-  <div class="welcome-popover" *ngIf="isWelcomePopoverVisible()">
+  @if (isWelcomePopoverVisible()) {
+    <div class="welcome-popover">
     <div class="welcome-popover__backdrop"></div>
     <div class="welcome-popover__card" role="dialog" aria-modal="true" aria-labelledby="welcome-popover-title">
       <p class="welcome-popover__eyebrow">Persönliche Freigabe</p>
       <h2 id="welcome-popover-title">
         Hallo {{ guestName() || 'und schön, dass du hier bist' }}
-        <ng-container *ngIf="guestName()">, schön, dass du hier bist</ng-container>
+        @if (guestName()) {
+          <ng-container>, schön, dass du hier bist</ng-container>
+        }
         <span class="welcome-popover__emoji" aria-hidden="true">👋</span>
       </h2>
       <p>
@@ -21,9 +24,11 @@
         Verstanden
       </button>
     </div>
-  </div>
+    </div>
+  }
 
-  <header class="top-nav" *ngIf="roomService.breadcrumbTitle()">
+  @if (roomService.breadcrumbTitle()) {
+    <header class="top-nav">
     <div class="nav-container">
       <div class="nav-brand" routerLink="/">
         <nav class="header-breadcrumb">
@@ -35,7 +40,8 @@
         </nav>
       </div>
     </div>
-  </header>
+    </header>
+  }
 
   <main class="main-content">
     <router-outlet></router-outlet>
