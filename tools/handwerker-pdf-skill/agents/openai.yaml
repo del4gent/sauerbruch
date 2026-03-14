@@ -1,0 +1,4 @@
+interface:
+  display_name: "Handwerker PDF"
+  short_description: "Erstellt klare PDFs fuer Gewerke"
+  default_prompt: "Use $handwerker-pdf to create a clean contractor-ready PDF from room planning data."
