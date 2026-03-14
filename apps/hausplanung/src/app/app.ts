@@ -20,8 +20,10 @@ export class App implements OnInit {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   private readonly welcomeStorageKey = 'welcome-popover-seen';
+  private lastScrollY = 0;
   readonly guestName = signal('');
   readonly isWelcomePopoverVisible = signal(false);
+  readonly isBreadcrumbVisible = signal(true);
 
   ngOnInit() {
     this.router.events
@@ -33,6 +35,7 @@ export class App implements OnInit {
       .subscribe(() => {
         this.roomService.updateBreadcrumb();
         this.updateGuestName();
+        this.isBreadcrumbVisible.set(true);
       });
 
     this.route.queryParamMap
@@ -46,6 +49,8 @@ export class App implements OnInit {
       ? localStorage.getItem(this.welcomeStorageKey) === 'true'
       : false;
     this.isWelcomePopoverVisible.set(!hasSeenWelcome);
+
+    this.bindScrollBehavior();
   }
 
   private updateGuestName() {
@@ -102,4 +107,35 @@ export class App implements OnInit {
     }
     this.isWelcomePopoverVisible.set(false);
   }
+
+  private bindScrollBehavior() {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    this.lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', this.handleWindowScroll, { passive: true });
+    this.destroyRef.onDestroy(() => {
+      window.removeEventListener('scroll', this.handleWindowScroll);
+    });
+  }
+
+  private readonly handleWindowScroll = () => {
+    const currentScrollY = window.scrollY;
+    const delta = currentScrollY - this.lastScrollY;
+
+    if (currentScrollY <= 24) {
+      this.isBreadcrumbVisible.set(true);
+      this.lastScrollY = currentScrollY;
+      return;
+    }
+
+    if (Math.abs(delta) < 8) {
+      return;
+    }
+
+    this.isBreadcrumbVisible.set(delta < 0);
+    this.lastScrollY = currentScrollY;
+  };
 }

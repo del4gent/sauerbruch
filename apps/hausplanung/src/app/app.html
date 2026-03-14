@@ -28,7 +28,7 @@
   }
 
   @if (roomService.breadcrumbTitle()) {
-    <header class="top-nav">
+    <header class="top-nav" [class.top-nav--hidden]="!isBreadcrumbVisible()">
     <div class="nav-container">
       <div class="nav-brand">
         <nav class="header-breadcrumb">

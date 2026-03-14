@@ -763,17 +763,20 @@ app-stat-card {
 }
 
 @media (max-width: 768px) {
-  .minimal-title { font-size: 3rem; line-height: 1; margin-bottom: 1rem; }
+  .minimal-title { font-size: 2.85rem; line-height: 0.96; margin-bottom: 0.9rem; }
   .hero-content-wrapper { 
-    padding-top: 60px; 
+    padding-top: 92px; 
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-    padding-bottom: 30px;
+    padding-bottom: 28px;
   }
   .room-hero {
     height: auto;
     min-height: 60vh;
-    margin-top: -1.25rem;
+    margin-top: 0;
+  }
+  .meta-badges {
+    gap: 1rem;
   }
   .content-container { padding: 0 1.5rem 4rem 1.5rem; }
   .main-doc { padding: 2.5rem 1.5rem; }
