@@ -12,6 +12,7 @@
       "items": {
         "headers": [
           "Titel",
+          "Ausführung",
           "Status",
           "Anfang",
           "Ende"
@@ -19,30 +20,35 @@
         "rows": [
           [
             "Entrümpelt",
+            "Eigenleistung",
             "Fertig",
             "2025-10-01",
             "2025-10-31"
           ],
           [
             "Tapete ab",
+            "Eigenleistung",
             "Fertig",
             "2025-11-01",
             "2025-11-30"
           ],
           [
             "Neu tapeziert",
+            "Handwerker",
             "Fertig",
             "2025-12-01",
             "2026-01-31"
           ],
           [
             "Neue Steckdosen und Lampen",
+            "Handwerker",
             "Fertig",
             "2026-02-01",
             "2026-02-28"
           ],
           [
             "Möbilisiert und fertiggestellt",
+            "Handwerker",
             "Fertig",
             "2026-02-01",
             "2026-02-28"

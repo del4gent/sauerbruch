@@ -12,22 +12,23 @@
       "items": {
         "headers": [
           "Gewerk / Schritt",
+          "Ausführung",
           "Status",
           "Start",
           "Ende"
         ],
         "rows": [
-          ["Demontage & Entkernung (Sanitär/Fliesen)", "Geplant", "2026-03-16", "2026-03-18"],
-          ["Wand abbauen und vergrößern", "Geplant", "2026-03-19", "2026-03-21"],
-          ["Fenster erneuern", "Geplant", "2026-03-23", "2026-03-24"],
-          ["Rohinstallation Wasser/Abwasser/Elektro", "Geplant", "2026-03-25", "2026-03-28"],
-          ["Fußbodenheizung verlegen", "Geplant", "2026-03-30", "2026-03-31"],
-          ["Estrich / Bodenausgleich & Trocknung", "Geplant", "2026-04-01", "2026-04-07"],
-          ["Abdichtung Nassbereich (Dusche)", "Geplant", "2026-04-08", "2026-04-09"],
-          ["Fliesenlegen (Wand & Boden)", "Geplant", "2026-04-10", "2026-04-15"],
-          ["Verfugung & Silikonarbeiten", "Geplant", "2026-04-16", "2026-04-17"],
-          ["Endmontage (WC, Dusche, Waschbecken)", "Geplant", "2026-04-20", "2026-04-22"],
-          ["Elektro-Endmontage & Abschluss", "Geplant", "2026-04-23", "2026-04-24"]
+          ["Demontage & Entkernung (Sanitär/Fliesen)", "Eigenleistung", "Geplant", "2026-03-16", "2026-03-18"],
+          ["Wand abbauen und vergrößern", "Eigenleistung", "Geplant", "2026-03-19", "2026-03-21"],
+          ["Fenster erneuern", "Handwerker", "Geplant", "2026-03-23", "2026-03-24"],
+          ["Rohinstallation Wasser/Abwasser/Elektro", "Handwerker", "Geplant", "2026-03-25", "2026-03-28"],
+          ["Fußbodenheizung verlegen", "Handwerker", "Geplant", "2026-03-30", "2026-03-31"],
+          ["Estrich / Bodenausgleich & Trocknung", "Handwerker", "Geplant", "2026-04-01", "2026-04-07"],
+          ["Abdichtung Nassbereich (Dusche)", "Handwerker", "Geplant", "2026-04-08", "2026-04-09"],
+          ["Fliesenlegen (Wand & Boden)", "Handwerker", "Geplant", "2026-04-10", "2026-04-15"],
+          ["Verfugung & Silikonarbeiten", "Handwerker", "Geplant", "2026-04-16", "2026-04-17"],
+          ["Endmontage (WC, Dusche, Waschbecken)", "Handwerker", "Geplant", "2026-04-20", "2026-04-22"],
+          ["Elektro-Endmontage & Abschluss", "Handwerker", "Geplant", "2026-04-23", "2026-04-24"]
         ]
       }
     }

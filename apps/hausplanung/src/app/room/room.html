@@ -206,6 +206,11 @@
                           <p class="step-description" *ngIf="getRowDescription(asTable(section.items), row)">
                             {{ getRowDescription(asTable(section.items), row) }}
                           </p>
+                          <div class="step-submeta" *ngIf="getRowExecutionType(asTable(section.items), row)">
+                            <span class="execution-text" [class]="getExecutionTypeClass(getRowExecutionType(asTable(section.items), row))">
+                              {{ getRowExecutionType(asTable(section.items), row) }}
+                            </span>
+                          </div>
                         </div>
                         <div class="step-meta">
                           <span class="step-date" *ngIf="getRowStart(asTable(section.items), row) || getRowEnd(asTable(section.items), row)">

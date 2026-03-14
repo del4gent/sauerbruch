@@ -88,6 +88,14 @@
   letter-spacing: -0.02em; 
 }
 
+.room-info h3.is-finished {
+  text-decoration: line-through;
+  text-decoration-thickness: 0.08em;
+  text-decoration-color: rgba(255, 255, 255, 0.68);
+  text-decoration-skip-ink: none;
+  opacity: 0.92;
+}
+
 .room-info p { 
   margin: 0.4rem 0 1rem 0; 
   opacity: 0.5; 

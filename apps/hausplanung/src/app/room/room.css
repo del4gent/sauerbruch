@@ -570,6 +570,13 @@ app-stat-card {
   flex: 1;
 }
 
+.step-submeta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.1rem;
+}
+
 .step-title {
   font-size: 1.15rem;
   font-weight: 600;
@@ -608,8 +615,32 @@ app-stat-card {
   border-radius: 4px;
 }
 
+.execution-text {
+  font-size: 0.86rem;
+  color: #64748b;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.execution-text.eigenleistung,
+.execution-text.handwerker {
+  color: #475569;
+}
+
 .sequence-step.future {
   opacity: 0.6;
+}
+
+@media (max-width: 900px) {
+  .step-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .step-meta {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
 }
 
 .remaining-steps {

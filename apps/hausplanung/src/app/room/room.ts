@@ -365,6 +365,26 @@ export class RoomComponent implements OnInit, OnDestroy {
     return idx !== -1 ? row[idx] : '';
   }
 
+  getRowExecutionType(table: TableData, row: string[]): string {
+    const idx = table.headers.findIndex(h => {
+      const header = h.toUpperCase();
+      return (
+        header.includes('AUSFÜHRUNG') ||
+        header.includes('AUSFUHRUNG') ||
+        header.includes('VERANTWORTUNG') ||
+        header.includes('TYP')
+      );
+    });
+    return idx !== -1 ? row[idx] : '';
+  }
+
+  getExecutionTypeClass(type: string): string {
+    const normalized = type.trim().toLowerCase();
+    if (normalized === 'eigenleistung') return 'eigenleistung';
+    if (normalized === 'handwerker') return 'handwerker';
+    return '';
+  }
+
   getRowStart(table: TableData, row: string[]): string {
     const idx = table.headers.findIndex(h => {
       const t = h.toUpperCase();

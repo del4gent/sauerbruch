@@ -2,20 +2,21 @@
   <div class="welcome-popover" *ngIf="isWelcomePopoverVisible()">
     <div class="welcome-popover__backdrop"></div>
     <div class="welcome-popover__card" role="dialog" aria-modal="true" aria-labelledby="welcome-popover-title">
-      <p class="welcome-popover__eyebrow">Persoenliche Freigabe</p>
+      <p class="welcome-popover__eyebrow">Persönliche Freigabe</p>
       <h2 id="welcome-popover-title">
+        Hallo {{ guestName() || 'und schön, dass du hier bist' }}
+        <ng-container *ngIf="guestName()">, schön, dass du hier bist</ng-container>
         <span class="welcome-popover__emoji" aria-hidden="true">👋</span>
-        Hallo {{ guestName() || 'und schoen, dass du hier bist' }}
-        <ng-container *ngIf="guestName()">, schoen, dass du hier bist</ng-container>.
       </h2>
       <p>
         Diese Webseite wurde auf Vertrauensbasis mit dir geteilt. Bitte verwende die
-        enthaltenen Informationen ausschliesslich fuer die Planung und Angebotserstellung.
+        enthaltenen Informationen ausschließlich für die Planung und Angebotserstellung.
       </p>
       <p>
         Hier findest du die wichtigsten Unterlagen zum Projekt, insbesondere Grundrisse,
         Fotos, Materialideen und den aktuellen Stand.
       </p>
+      <p class="welcome-popover__signoff">Viele Grüße, Alex</p>
       <button type="button" class="btn-primary welcome-popover__action" (click)="closeWelcomePopover()">
         Verstanden
       </button>

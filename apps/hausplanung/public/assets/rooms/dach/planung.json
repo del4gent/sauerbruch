@@ -12,20 +12,21 @@
       "items": {
         "headers": [
           "Schritt",
+          "Ausführung",
           "Status",
           "Start",
           "Ende"
         ],
         "rows": [
-          ["Vor-Ort-Termin Energieberater", "Geplant", "2026-03-12", "2026-03-12"],
-          ["Erstellung Sanierungsfahrplan & Angebote", "Geplant", "2026-03-13", "2026-03-26"],
-          ["Baustelleneinrichtung & Gerüstbau", "Geplant", "2026-03-30", "2026-03-31"],
-          ["Abriss & Entsorgung (Alteindeckung/Dämmung)", "Geplant", "2026-04-01", "2026-04-03"],
-          ["Aufbringen der neuen Dämmschicht (Dampfbremse/Zwischensparren)", "Geplant", "2026-04-06", "2026-04-10"],
-          ["Unterdeckbahn & Lattung", "Geplant", "2026-04-13", "2026-04-15"],
-          ["Dacheindeckung (Ziegel/Metall)", "Geplant", "2026-04-16", "2026-04-24"],
-          ["Klempnerarbeiten (Rinnen/Fallrohre)", "Geplant", "2026-04-27", "2026-04-29"],
-          ["Gerüstabbau & Projektabschluss", "Geplant", "2026-04-30", "2026-04-30"]
+          ["Vor-Ort-Termin Energieberater", "Handwerker", "Geplant", "2026-03-12", "2026-03-12"],
+          ["Erstellung Sanierungsfahrplan & Angebote", "Handwerker", "Geplant", "2026-03-13", "2026-03-26"],
+          ["Baustelleneinrichtung & Gerüstbau", "Handwerker", "Geplant", "2026-03-30", "2026-03-31"],
+          ["Abriss & Entsorgung (Alteindeckung/Dämmung)", "Handwerker", "Geplant", "2026-04-01", "2026-04-03"],
+          ["Aufbringen der neuen Dämmschicht (Dampfbremse/Zwischensparren)", "Handwerker", "Geplant", "2026-04-06", "2026-04-10"],
+          ["Unterdeckbahn & Lattung", "Handwerker", "Geplant", "2026-04-13", "2026-04-15"],
+          ["Dacheindeckung (Ziegel/Metall)", "Handwerker", "Geplant", "2026-04-16", "2026-04-24"],
+          ["Klempnerarbeiten (Rinnen/Fallrohre)", "Handwerker", "Geplant", "2026-04-27", "2026-04-29"],
+          ["Gerüstabbau & Projektabschluss", "Handwerker", "Geplant", "2026-04-30", "2026-04-30"]
         ]
       }
     },

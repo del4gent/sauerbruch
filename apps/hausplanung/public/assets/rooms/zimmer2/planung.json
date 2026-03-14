@@ -12,6 +12,7 @@
       "items": {
         "headers": [
           "Titel",
+          "Ausführung",
           "Status",
           "Anfang",
           "Ende"
@@ -19,6 +20,7 @@
         "rows": [
           [
             "Planung & Vorbereitung",
+            "Handwerker",
             "In Arbeit",
             "2026-03-09",
             null

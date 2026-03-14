@@ -11,7 +11,7 @@
   <div class="room-overlay"></div>
   <div class="room-content-wrapper">
     <div class="room-info">
-      <h3>{{ room.name }}</h3>
+      <h3 [class.is-finished]="room.status === 'Fertig'">{{ room.name }}</h3>
       <p>{{ room.area }} m² <span class="derivation-hint" *ngIf="room.area_derivation">({{ room.area_derivation }})</span></p>
       <app-status-badge [status]="room.status"></app-status-badge>
     </div>
