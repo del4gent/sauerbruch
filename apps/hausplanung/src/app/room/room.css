@@ -54,18 +54,6 @@
   color: white;
 }
 
-.minimal-breadcrumb {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: white;
-  opacity: 0.5;
-  margin-bottom: 0.75rem;
-  letter-spacing: 0.02em;
-}
-.minimal-breadcrumb a { pointer-events: auto; color: inherit; text-decoration: none; }
-.minimal-breadcrumb a:hover { opacity: 1; }
-.current-page { opacity: 1; font-weight: 600; }
-
 .minimal-title {
   font-size: 6rem;
   font-weight: 900;

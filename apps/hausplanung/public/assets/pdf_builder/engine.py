@@ -195,12 +195,12 @@ class ArchitectPDF(FPDF):
             self.cell(140 - indent, 10, title, border='B', align='L', link=entry['link'])
             self.cell(20, 10, str(entry['page']), border='B', align='R', new_x=XPos.LMARGIN, new_y=YPos.NEXT, link=entry['link'])
 
-    def render_summary(self, total_area, total_cost):
+    def render_summary(self, total_area):
         self.add_page()
-        self.add_toc_entry('PROJEKT-ÜBERSICHT & BUDGET')
+        self.add_toc_entry('PROJEKT-ÜBERSICHT')
         self.set_font(FONT_PRIMARY, 'B', 28)
         self.set_text_color(*C_SLATE)
-        self.cell(0, 20, 'PROJEKT-ÜBERSICHT & BUDGET', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        self.cell(0, 20, 'PROJEKT-ÜBERSICHT', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
         self.draw_section_divider(width=50)
         self.ln(5)
 
@@ -229,7 +229,20 @@ class ArchitectPDF(FPDF):
         
         start_y = self.get_y()
         draw_stat('GESAMTFLÄCHE NETTO', f'{total_area:.2f} m2', MARGIN_L, start_y)
-        draw_stat('KALKULIERTE GESAMTKOSTEN', f'{total_cost:,.2f} EUR'.replace(',', 'X').replace('.', ',').replace('X', '.'), MARGIN_L + 85, start_y)
+
+        self.set_xy(MARGIN_L + 85, start_y)
+        self.set_fill_color(*C_GRAY_LIGHT)
+        self.rect(MARGIN_L + 85, start_y, 75, 28, 'F')
+        self.set_xy(MARGIN_L + 91, start_y + 6)
+        self.set_font(FONT_PRIMARY, '', 9)
+        self.set_text_color(100)
+        self.cell(63, 5, 'MATERIALIEN', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        self.set_x(MARGIN_L + 91)
+        self.ln(2)
+        self.set_x(MARGIN_L + 91)
+        self.set_font(FONT_PRIMARY, 'B', 11)
+        self.set_text_color(*C_SLATE)
+        self.multi_cell(63, 5, 'Werden bauseits gestellt', align='L', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
         
         # Milestones
         self.set_y(start_y + 45)
@@ -325,6 +338,12 @@ class ArchitectPDF(FPDF):
         tw = self.get_string_width(status_text) + 6
         self.cell(tw, 6, status_text, fill=True, align='C')
         self.ln(30)
+
+        self.set_x(MARGIN_L)
+        self.set_font(FONT_PRIMARY, '', 9)
+        self.set_text_color(110)
+        self.multi_cell(0, 5, 'Hinweis: Materialien wie WC, Fliesen, Armaturen und sichtbare Ausstattung werden bauseits gestellt und sind nicht Bestandteil der Leistungsdarstellung im PDF.', new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        self.ln(4)
         
         for section in room.sections:
             if not section.items: continue
@@ -476,8 +495,6 @@ class ArchitectPDF(FPDF):
                 if col_count >= 5 and i >= 1: 
                     if '(' in c_v and i != 1: 
                         c_v = c_v.split('(')[0].strip()
-                    if i >= col_count - 2 and c_v.replace('.', '').replace(',', '').isdigit():
-                        if "EUR" not in c_v: c_v += " EUR"
                 clean_row.append(c_v)
             for i, val in enumerate(clean_row):
                 if i in row_images:
@@ -505,7 +522,7 @@ class ArchitectPDF(FPDF):
             self.set_y(y_start + max_h)
 
     def render_images(self, room):
-        labels = {'plan': 'PLÄNE & GRUNDRISSE', 'ist': 'IST-ZUSTAND / BESTAND', 'inspiration': 'INSPIRATION & REFERENZEN', 'material': 'MATERIALAUSWAHL'}
+        labels = {'plan': 'PLÄNE & GRUNDRISSE', 'ist': 'IST-ZUSTAND / BESTAND', 'inspiration': 'INSPIRATION & REFERENZEN'}
         for cat, label in labels.items():
             imgs = room.images.get(cat, [])
             if not imgs: continue

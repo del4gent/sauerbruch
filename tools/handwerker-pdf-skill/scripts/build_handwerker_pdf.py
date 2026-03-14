@@ -81,12 +81,6 @@ class Room:
     path: str
 
 
-@dataclass
-class MaterialRef:
-    label: str
-    details: str
-
-
 def room_from_dict(data: dict) -> Room:
     return Room(
         id=data["id"],
@@ -255,23 +249,22 @@ def select_bestand_images(project_root: Path, image_paths: list[str], max_items:
     return [path for _, _, path in scored[:max_items]]
 
 
-def collect_material_refs(project_root: Path, materials_map: dict, room_id: str, max_items: int = 4) -> list[MaterialRef]:
-    refs: list[MaterialRef] = []
-    for item in materials_map.get(room_id, []):
-        image_path = item.get("image")
-        if not image_path or is_placeholder(image_path):
+def select_inspiration_images(project_root: Path, image_paths: list[str], max_items: int = 2) -> list[Path]:
+    scored: list[tuple[int, int, Path]] = []
+    for index, rel_path in enumerate(image_paths):
+        if "/inspiration/" not in rel_path or is_placeholder(rel_path):
             continue
-        if resolve_rel_path(project_root, image_path) is None:
+        path = resolve_rel_path(project_root, rel_path)
+        if path is None:
             continue
-
-        parts = [item.get("brand", "").strip(), item.get("name", "").strip()]
-        label = " ".join(part for part in parts if part).strip()
-        specs = item.get("specs", "").strip()
-        details_parts = [segment for segment in [specs, item.get("price", "").strip(), item.get("shop", "").strip()] if segment]
-        refs.append(MaterialRef(label=label or item.get("name", "Produkt"), details=" | ".join(details_parts)))
-        if len(refs) >= max_items:
-            break
-    return refs
+        score = score_image(
+            rel_path,
+            preferred_tokens=["titel", "nachher", "soll", "inspiration"],
+            discouraged_tokens=["detail"],
+        )
+        scored.append((score, -index, path))
+    scored.sort(reverse=True)
+    return [path for _, _, path in scored[:max_items]]
 
 
 def clean_text(text: str) -> str:
@@ -513,7 +506,6 @@ def render_offer_room_page(
     tasks: list[str],
     plan_images: list[Path],
     bestand_images: list[Path],
-    materials: list[MaterialRef],
     page_number: int,
 ) -> Image.Image:
     page = Image.new("RGB", (PAGE_WIDTH, PAGE_HEIGHT), BG)
@@ -544,13 +536,6 @@ def render_offer_room_page(
     draw_card(draw, work_box)
     draw.text((work_box[0] + 28, work_box[1] + 24), "Geplanter Leistungsumfang", font=section_font, fill=TEXT)
     draw_wrapped_lines(draw, tasks, body_font, TEXT, work_box[0] + 34, work_box[1] + 88, work_box[2] - work_box[0] - 60, line_spacing=8, bullet=True)
-
-    if materials:
-        material_box = (left_x1, work_box[3] + GAP, left_x2, work_box[3] + GAP + 410)
-        draw_card(draw, material_box)
-        draw.text((material_box[0] + 28, material_box[1] + 24), "Material- / Produktreferenzen", font=section_font, fill=TEXT)
-        lines = [f"{item.label}: {item.details}" if item.details else item.label for item in materials]
-        draw_wrapped_lines(draw, lines, small_font, TEXT, material_box[0] + 34, material_box[1] + 82, material_box[2] - material_box[0] - 60, line_spacing=6, bullet=True)
 
     plan_box = (right_x1, content_top, right_x2, content_top + 305)
     draw_card(draw, plan_box)
@@ -603,6 +588,10 @@ def default_title(rooms: list[Room], document_type: str) -> str:
 
 def today_label() -> str:
     return date.today().strftime("%d.%m.%Y")
+
+
+def room_url(room: Room) -> str:
+    return f"{PROJECT_URL}room/{room.id}"
 
 
 def pdf_y(y_from_top: float) -> float:
@@ -698,6 +687,20 @@ def draw_pdf_image(pdf: canvas.Canvas, path: Path, x: float, y_top: float, width
         pdf.drawImage(ImageReader(buffer), x, pdf_y(y_top + height), width=width, height=height, preserveAspectRatio=False, mask="auto")
 
 
+def draw_pdf_image_contain(pdf: canvas.Canvas, path: Path, x: float, y_top: float, width: float, height: float, bg_color: str = "#ffffff") -> None:
+    with Image.open(path) as raw:
+        image = ImageOps.exif_transpose(raw).convert("RGB")
+        image.thumbnail((max(1, int(width)), max(1, int(height))), Image.Resampling.LANCZOS)
+        canvas_img = Image.new("RGB", (max(1, int(width)), max(1, int(height))), bg_color)
+        offset_x = (canvas_img.width - image.width) // 2
+        offset_y = (canvas_img.height - image.height) // 2
+        canvas_img.paste(image, (offset_x, offset_y))
+        buffer = io.BytesIO()
+        canvas_img.save(buffer, format="JPEG", quality=86, optimize=True)
+        buffer.seek(0)
+        pdf.drawImage(ImageReader(buffer), x, pdf_y(y_top + height), width=width, height=height, preserveAspectRatio=False, mask="auto")
+
+
 def build_offer_pdf(
     output_path: Path,
     title: str,
@@ -754,12 +757,12 @@ def build_offer_pdf(
         tasks = payload["tasks"]
         plan_images = payload["plan_images"]
         bestand_images = payload["bestand_images"]
-        materials = payload["materials"]
+        inspiration_images = payload["inspiration_images"]
 
         draw_pdf_text(pdf, title, MARGIN + 70, MARGIN + 62, 26, color=MUTED)
         draw_pdf_text(pdf, room.status, PAGE_WIDTH - MARGIN - 160, MARGIN + 62, 26, color=ACCENT)
         draw_pdf_text(pdf, date_text, PAGE_WIDTH - MARGIN - 260, MARGIN + 100, 22, color=MUTED)
-        draw_pdf_link(pdf, PROJECT_URL, MARGIN + 70, MARGIN + 100, 20, PROJECT_URL)
+        draw_pdf_link(pdf, room_url(room), MARGIN + 70, MARGIN + 100, 20, room_url(room))
         draw_pdf_text(pdf, room.name, MARGIN + 70, MARGIN + 140, 74)
         draw_pdf_text(pdf, f"Fläche: {format_area(room.area)} m²", MARGIN + 72, MARGIN + 246, 30)
         if room.area_derivation:
@@ -775,13 +778,6 @@ def build_offer_pdf(
         draw_pdf_text(pdf, "Geplanter Leistungsumfang", left_x1 + 28, content_top + 24, 30)
         draw_pdf_wrapped_lines(pdf, tasks, left_x1 + 34, content_top + 88, left_x2 - left_x1 - 60, 26, bullet=True)
 
-        if materials:
-            material_top = content_top + 520 + GAP
-            draw_pdf_card(pdf, left_x1, material_top, left_x2 - left_x1, 410)
-            draw_pdf_text(pdf, "Material- / Produktreferenzen", left_x1 + 28, material_top + 24, 30)
-            material_lines = [f"{item.label}: {item.details}" if item.details else item.label for item in materials]
-            draw_pdf_wrapped_lines(pdf, material_lines, left_x1 + 34, material_top + 82, left_x2 - left_x1 - 60, 23, bullet=True)
-
         draw_pdf_card(pdf, right_x1, content_top, right_x2 - right_x1, 305)
         draw_pdf_text(pdf, "Grundriss / Planausschnitt", right_x1 + 28, content_top + 24, 30)
         if plan_images:
@@ -794,10 +790,11 @@ def build_offer_pdf(
 
         if bestand_images:
             bestand_top = content_top + 305 + GAP
-            draw_pdf_card(pdf, right_x1, bestand_top, right_x2 - right_x1, 640)
+            bestand_height = 500 if inspiration_images else 640
+            draw_pdf_card(pdf, right_x1, bestand_top, right_x2 - right_x1, bestand_height)
             draw_pdf_text(pdf, "Bestandsfotos", right_x1 + 28, bestand_top + 24, 30)
             cols = 1 if len(bestand_images) == 1 else 2
-            photo_height = 220
+            photo_height = 160 if inspiration_images else 220
             usable_width = right_x2 - right_x1 - 56
             tile_width = (usable_width - GAP * (cols - 1)) / cols
             start_y = bestand_top + 84
@@ -807,6 +804,19 @@ def build_offer_pdf(
                 x = right_x1 + 28 + col * (tile_width + GAP)
                 y_top = start_y + row * (photo_height + GAP)
                 draw_pdf_image(pdf, path, x, y_top, tile_width, photo_height)
+
+        if inspiration_images:
+            inspiration_top = content_top + 305 + GAP + 500 + GAP
+            draw_pdf_card(pdf, right_x1, inspiration_top, right_x2 - right_x1, 250)
+            draw_pdf_text(pdf, "Inspirationsbilder", right_x1 + 28, inspiration_top + 24, 30)
+            visible_images = inspiration_images[:2]
+            usable_width = right_x2 - right_x1 - 56
+            tile_width = (usable_width - GAP) / max(len(visible_images), 1)
+            start_y = inspiration_top + 84
+            tile_height = 150 if len(visible_images) == 1 else 130
+            for idx, path in enumerate(visible_images):
+                x = right_x1 + 28 + idx * (tile_width + GAP)
+                draw_pdf_image_contain(pdf, path, x, start_y, tile_width, tile_height, bg_color="#fbfbfb")
 
         pdf.setStrokeColor(HexColor(LINE))
         pdf.line(left_x1, pdf_y(PAGE_HEIGHT - MARGIN - 70), right_x2, pdf_y(PAGE_HEIGHT - MARGIN - 70))
@@ -838,7 +848,6 @@ def main() -> int:
     data_root = project_root / "apps/hausplanung/public/assets/data"
     rooms_raw = load_json(data_root / "rooms.json")
     images_map = load_json(data_root / "images.json")
-    materials_map = load_json(data_root / "materials.json")
     rooms = [room_from_dict(item) for item in rooms_raw]
     selected_rooms = pick_rooms(rooms, room_filter, args.include_finished)
 
@@ -861,14 +870,14 @@ def main() -> int:
             tasks = extract_offer_work_items(planung)
             plan_images = select_plan_images(project_root, image_paths, max_items=2)
             bestand_images = select_bestand_images(project_root, image_paths, max_items=4)
-            materials = collect_material_refs(project_root, materials_map, room.id, max_items=4)
+            inspiration_images = select_inspiration_images(project_root, image_paths, max_items=2)
             offer_payloads.append(
                 {
                     "room": room,
                     "tasks": tasks,
                     "plan_images": plan_images,
                     "bestand_images": bestand_images,
-                    "materials": materials,
+                    "inspiration_images": inspiration_images,
                 }
             )
         else:

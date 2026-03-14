@@ -19,8 +19,7 @@ def build_pdf():
     pdf.render_toc()
     
     total_area = sum(r.area for r in rooms)
-    total_cost = sum(r.total_cost for r in rooms)
-    pdf.render_summary(total_area, total_cost)
+    pdf.render_summary(total_area)
     
     for i, room in enumerate(rooms):
         print(f"Verarbeite Raum: {room.name}")
@@ -41,7 +40,7 @@ def update_master_markdown(rooms):
     with open(MASTER_MD_PATH, 'w', encoding='utf-8') as f:
         f.write("# 🏠 SAUERBRUCH 3 - GESAMTPLANUNG\n\n")
         f.write(f"**Gesamtfläche:** {sum(r.area for r in rooms):.2f} m²  \n")
-        f.write(f"**Gesamtkosten:** {sum(r.total_cost for r in rooms):,.2f} EUR\n\n".replace(',', '.'))
+        f.write("**Materialien:** Werden bauseits gestellt und sind nicht Teil dieser PDF.\n\n")
         f.write("---\n\n")
         
         for room in rooms:

@@ -48,7 +48,11 @@ def parse_room_json(room, json_path):
         sec_type = section_data.get('type', 'text')
         items = section_data.get('items', [])
         
-        section = Section(title=title, key=title.lower(), items=[], is_table=(sec_type == 'table'))
+        section_key = title.lower()
+        if 'material' in section_key or 'kosten' in section_key:
+            continue
+
+        section = Section(title=title, key=section_key, items=[], is_table=(sec_type == 'table'))
         
         if sec_type == 'table':
             table_items = items # it's the TableData object or list
@@ -58,15 +62,6 @@ def parse_room_json(room, json_path):
                 if headers: section.items.append(headers)
                 for row in rows:
                     section.items.append(row)
-                    
-                    # Cost calculation logic
-                    if len(row) >= 5:
-                        try:
-                            # Use the last column for price
-                            cost_str = str(row[-1]).replace('.', '').replace(',', '.')
-                            cost_match = re.search(r'(\d+(?:\.\d+)?)', cost_str)
-                            if cost_match: room.total_cost += float(cost_match.group(1))
-                        except: pass
             elif isinstance(table_items, list):
                 section.items = table_items # Fallback for old list-of-lists format
         elif sec_type == 'checklist':

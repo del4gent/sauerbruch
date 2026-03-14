@@ -4,8 +4,6 @@
 dist
 tmp
 out-tsc
-out/*
-!out/unterlagen-zur-angebotserstellung-bad-gaestebad-und-flur.pdf
 
 # dependencies
 node_modules
