@@ -591,7 +591,7 @@ def today_label() -> str:
 
 
 def room_url(room: Room) -> str:
-    return f"{PROJECT_URL}room/{room.id}"
+    return f"{PROJECT_URL}?room={room.id}"
 
 
 def pdf_y(y_from_top: float) -> float:
@@ -633,6 +633,23 @@ def wrap_pdf_text(text: str, font: str, size: float, width: float) -> list[str]:
             current = word
     lines.append(current)
     return lines
+
+
+def measure_pdf_wrapped_lines(
+    lines: list[str],
+    width: float,
+    size: float,
+    font: str = "Helvetica",
+    leading: float = 1.25,
+    bullet: bool = False,
+) -> float:
+    total_height = 0.0
+    line_height = size * leading
+    for line in lines:
+        wrapped = wrap_pdf_text(line, font, size, width - (18 if bullet else 0))
+        total_height += max(len(wrapped), 1) * line_height
+        total_height += size * 0.35
+    return total_height
 
 
 def draw_pdf_wrapped_lines(
@@ -699,6 +716,18 @@ def draw_pdf_image_contain(pdf: canvas.Canvas, path: Path, x: float, y_top: floa
         canvas_img.save(buffer, format="JPEG", quality=86, optimize=True)
         buffer.seek(0)
         pdf.drawImage(ImageReader(buffer), x, pdf_y(y_top + height), width=width, height=height, preserveAspectRatio=False, mask="auto")
+
+
+def get_image_orientation(path: Path) -> str:
+    with Image.open(path) as raw:
+        image = ImageOps.exif_transpose(raw)
+        width, height = image.size
+    ratio = width / max(height, 1)
+    if ratio < 0.9:
+        return "portrait"
+    if ratio > 1.1:
+        return "landscape"
+    return "square"
 
 
 def build_offer_pdf(
@@ -770,15 +799,21 @@ def build_offer_pdf(
 
         content_top = MARGIN + 370
         left_x1 = MARGIN + 70
-        left_x2 = MARGIN + 610
+        left_x2 = MARGIN + 560
         right_x1 = left_x2 + GAP
         right_x2 = PAGE_WIDTH - MARGIN - 70
 
-        draw_pdf_card(pdf, left_x1, content_top, left_x2 - left_x1, 520)
-        draw_pdf_text(pdf, "Geplanter Leistungsumfang", left_x1 + 28, content_top + 24, 30)
-        draw_pdf_wrapped_lines(pdf, tasks, left_x1 + 34, content_top + 88, left_x2 - left_x1 - 60, 26, bullet=True)
+        task_width = left_x2 - left_x1 - 60
+        task_text_height = measure_pdf_wrapped_lines(tasks, task_width, 26, bullet=True)
+        task_card_height = min(max(250, 88 + task_text_height + 34), 520)
 
-        draw_pdf_card(pdf, right_x1, content_top, right_x2 - right_x1, 305)
+        draw_pdf_card(pdf, left_x1, content_top, left_x2 - left_x1, task_card_height)
+        draw_pdf_text(pdf, "Geplanter Leistungsumfang", left_x1 + 28, content_top + 24, 30)
+        draw_pdf_wrapped_lines(pdf, tasks, left_x1 + 34, content_top + 88, task_width, 26, bullet=True)
+
+        plan_card_height = 350
+        plan_image_height = 220
+        draw_pdf_card(pdf, right_x1, content_top, right_x2 - right_x1, plan_card_height)
         draw_pdf_text(pdf, "Grundriss / Planausschnitt", right_x1 + 28, content_top + 24, 30)
         if plan_images:
             image_y = content_top + 84
@@ -786,37 +821,59 @@ def build_offer_pdf(
             plan_width = (usable_width - GAP) / max(len(plan_images[:2]), 1)
             for idx, path in enumerate(plan_images[:2]):
                 x = right_x1 + 28 + idx * (plan_width + GAP)
-                draw_pdf_image(pdf, path, x, image_y, plan_width, 185)
+                draw_pdf_image_contain(pdf, path, x, image_y, plan_width, plan_image_height, bg_color="#fbfbfb")
 
         if bestand_images:
-            bestand_top = content_top + 305 + GAP
-            bestand_height = 500 if inspiration_images else 640
+            bestand_top = content_top + plan_card_height + GAP
+            bestand_height = 620 if inspiration_images else 820
             draw_pdf_card(pdf, right_x1, bestand_top, right_x2 - right_x1, bestand_height)
             draw_pdf_text(pdf, "Bestandsfotos", right_x1 + 28, bestand_top + 24, 30)
-            cols = 1 if len(bestand_images) == 1 else 2
-            photo_height = 160 if inspiration_images else 220
             usable_width = right_x2 - right_x1 - 56
-            tile_width = (usable_width - GAP * (cols - 1)) / cols
             start_y = bestand_top + 84
-            for idx, path in enumerate(bestand_images[:4]):
-                row = idx // cols
-                col = idx % cols
-                x = right_x1 + 28 + col * (tile_width + GAP)
-                y_top = start_y + row * (photo_height + GAP)
-                draw_pdf_image(pdf, path, x, y_top, tile_width, photo_height)
+            visible_bestand = bestand_images[:3] if inspiration_images else bestand_images[:4]
+
+            if len(visible_bestand) == 1:
+                draw_pdf_image(pdf, visible_bestand[0], right_x1 + 28, start_y, usable_width, 430)
+            else:
+                hero_height = 250 if inspiration_images else 300
+                draw_pdf_image(pdf, visible_bestand[0], right_x1 + 28, start_y, usable_width, hero_height)
+                thumb_y = start_y + hero_height + GAP
+                thumb_images = visible_bestand[1:]
+                if thumb_images:
+                    cols = min(len(thumb_images), 2)
+                    tile_width = (usable_width - GAP * (cols - 1)) / cols
+                    tile_height = 170 if inspiration_images else 210
+                    for idx, path in enumerate(thumb_images[:2]):
+                        x = right_x1 + 28 + idx * (tile_width + GAP)
+                        draw_pdf_image(pdf, path, x, thumb_y, tile_width, tile_height)
 
         if inspiration_images:
-            inspiration_top = content_top + 305 + GAP + 500 + GAP
-            draw_pdf_card(pdf, right_x1, inspiration_top, right_x2 - right_x1, 250)
-            draw_pdf_text(pdf, "Inspirationsbilder", right_x1 + 28, inspiration_top + 24, 30)
-            visible_images = inspiration_images[:2]
-            usable_width = right_x2 - right_x1 - 56
-            tile_width = (usable_width - GAP) / max(len(visible_images), 1)
+            inspiration_top = max(content_top + task_card_height + GAP, bestand_top + bestand_height + 24)
+            inspiration_height = 500
+            inspiration_x1 = left_x1
+            inspiration_width = right_x2 - left_x1
+            draw_pdf_card(pdf, inspiration_x1, inspiration_top, inspiration_width, inspiration_height)
+            draw_pdf_text(pdf, "Inspirationsbilder", inspiration_x1 + 28, inspiration_top + 24, 30)
+            visible_images = inspiration_images[:1]
             start_y = inspiration_top + 84
-            tile_height = 150 if len(visible_images) == 1 else 130
-            for idx, path in enumerate(visible_images):
-                x = right_x1 + 28 + idx * (tile_width + GAP)
-                draw_pdf_image_contain(pdf, path, x, start_y, tile_width, tile_height, bg_color="#fbfbfb")
+            if visible_images:
+                image_path = visible_images[0]
+                orientation = get_image_orientation(image_path)
+                if orientation == "portrait":
+                    frame_width = 430
+                    frame_height = 330
+                    frame_x = inspiration_x1 + (inspiration_width - frame_width) / 2
+                    draw_pdf_image_contain(pdf, image_path, frame_x, start_y, frame_width, frame_height, bg_color="#fbfbfb")
+                elif orientation == "square":
+                    frame_width = 520
+                    frame_height = 330
+                    frame_x = inspiration_x1 + (inspiration_width - frame_width) / 2
+                    draw_pdf_image_contain(pdf, image_path, frame_x, start_y, frame_width, frame_height, bg_color="#fbfbfb")
+                else:
+                    frame_width = min(inspiration_width - 56, 900)
+                    frame_height = 300
+                    frame_x = inspiration_x1 + (inspiration_width - frame_width) / 2
+                    draw_pdf_image_contain(pdf, image_path, frame_x, start_y, frame_width, frame_height, bg_color="#fbfbfb")
 
         pdf.setStrokeColor(HexColor(LINE))
         pdf.line(left_x1, pdf_y(PAGE_HEIGHT - MARGIN - 70), right_x2, pdf_y(PAGE_HEIGHT - MARGIN - 70))

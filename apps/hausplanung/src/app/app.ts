@@ -37,7 +37,10 @@ export class App implements OnInit {
 
     this.route.queryParamMap
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.updateGuestName());
+      .subscribe(() => {
+        this.updateGuestName();
+        this.handleRoomDeepLink();
+      });
 
     const hasSeenWelcome = typeof localStorage !== 'undefined'
       ? localStorage.getItem(this.welcomeStorageKey) === 'true'
@@ -51,6 +54,30 @@ export class App implements OnInit {
     const browserName = this.getBrowserQueryParam('name');
 
     this.guestName.set(routeName || rootRouteName || browserName || '');
+  }
+
+  private handleRoomDeepLink() {
+    const requestedRoom =
+      this.route.snapshot.queryParamMap.get('room')?.trim() ||
+      this.router.routerState.snapshot.root.queryParamMap.get('room')?.trim() ||
+      this.getBrowserQueryParam('room');
+
+    if (!requestedRoom) {
+      return;
+    }
+
+    const currentPath = this.router.url.split('?')[0];
+    if (currentPath === `/room/${requestedRoom}`) {
+      return;
+    }
+
+    const queryParams = { ...this.router.routerState.snapshot.root.queryParams };
+    delete queryParams['room'];
+
+    void this.router.navigate(['/room', requestedRoom], {
+      replaceUrl: true,
+      queryParams: Object.keys(queryParams).length > 0 ? queryParams : undefined,
+    });
   }
 
   private getBrowserQueryParam(key: string): string {
