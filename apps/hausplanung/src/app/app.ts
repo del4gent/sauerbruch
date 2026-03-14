@@ -1,6 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { RoomStore } from './store/room.store';
 
@@ -13,11 +13,21 @@ import { RoomStore } from './store/room.store';
 })
 export class App implements OnInit {
   public roomService = inject(RoomStore);
+  private readonly route = inject(ActivatedRoute);
+  private readonly welcomeStorageKey = 'welcome-popover-seen';
+  readonly guestName = signal('');
+  readonly isWelcomePopoverVisible = signal(false);
 
   constructor() {}
 
   ngOnInit() {
     this.roomService.updateBreadcrumb();
+    const name = this.route.snapshot.queryParamMap.get('name')?.trim() ?? '';
+    this.guestName.set(name);
+    const hasSeenWelcome = typeof localStorage !== 'undefined'
+      ? localStorage.getItem(this.welcomeStorageKey) === 'true'
+      : false;
+    this.isWelcomePopoverVisible.set(!hasSeenWelcome);
   }
 
   checkPassword(eventOrValue: Event | string) {
@@ -26,5 +36,12 @@ export class App implements OnInit {
       : (eventOrValue.target as HTMLInputElement).value;
     
     this.roomService.checkPassword(value);
+  }
+
+  closeWelcomePopover() {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(this.welcomeStorageKey, 'true');
+    }
+    this.isWelcomePopoverVisible.set(false);
   }
 }

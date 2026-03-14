@@ -54,7 +54,7 @@ type RoomState = {
 
 const initialState: RoomState = {
   rooms: initialRooms,
-  isAuthorized: false,
+  isAuthorized: true,
   isSidebarCollapsed: true,
   isOtherRoomsExpanded: false,
   breadcrumbTitle: null,
@@ -170,13 +170,7 @@ export const RoomStore = signalStore(
   }),
   withHooks({
     onInit(store) {
-      const platformId = inject(PLATFORM_ID);
-      if (isPlatformBrowser(platformId)) {
-        const auth = localStorage.getItem('auth');
-        if (auth === 'bubu') {
-          patchState(store, { isAuthorized: true });
-        }
-      }
+      patchState(store, { isAuthorized: true });
     }
   })
 );

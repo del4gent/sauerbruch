@@ -1,4 +1,27 @@
-<div class="app-container" *ngIf="roomService.isAuthorized(); else loginTpl">
+<div class="app-container">
+  <div class="welcome-popover" *ngIf="isWelcomePopoverVisible()">
+    <div class="welcome-popover__backdrop"></div>
+    <div class="welcome-popover__card" role="dialog" aria-modal="true" aria-labelledby="welcome-popover-title">
+      <p class="welcome-popover__eyebrow">Persoenliche Freigabe</p>
+      <h2 id="welcome-popover-title">
+        <span class="welcome-popover__emoji" aria-hidden="true">👋</span>
+        Hallo {{ guestName() || 'und schoen, dass du hier bist' }}
+        <ng-container *ngIf="guestName()">, schoen, dass du hier bist</ng-container>.
+      </h2>
+      <p>
+        Diese Webseite wurde auf Vertrauensbasis mit dir geteilt. Bitte verwende die
+        enthaltenen Informationen ausschliesslich fuer die Planung und Angebotserstellung.
+      </p>
+      <p>
+        Hier findest du die wichtigsten Unterlagen zum Projekt, insbesondere Grundrisse,
+        Fotos, Materialideen und den aktuellen Stand.
+      </p>
+      <button type="button" class="btn-primary welcome-popover__action" (click)="closeWelcomePopover()">
+        Verstanden
+      </button>
+    </div>
+  </div>
+
   <header class="top-nav" *ngIf="roomService.breadcrumbTitle()">
     <div class="nav-container">
       <div class="nav-brand" routerLink="/">
@@ -17,17 +40,3 @@
     <router-outlet></router-outlet>
   </main>
 </div>
-
-<ng-template #loginTpl>
-  <div class="login-screen">
-    <div class="glass-card login-card">
-      <h1 class="gradient-text">SAUERBRUCH 3</h1>
-      <p style="text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.8rem; opacity: 0.5; font-weight: 500; margin-top: -1rem; margin-bottom: 2rem;">Hausplanung & Renovierung</p>
-      <p>Bitte gib das Passwort ein, um die Planung zu sehen.</p>
-      <div class="login-input-wrapper">
-        <input #pwdInput type="password" (input)="checkPassword($event)" (keyup.enter)="checkPassword(pwdInput.value)" placeholder="Passwort..." autofocus>
-        <button class="btn-primary" (click)="checkPassword(pwdInput.value)">Anmelden</button>
-      </div>
-    </div>
-  </div>
-</ng-template>
