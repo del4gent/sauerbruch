@@ -34,7 +34,7 @@ Use `scripts/build_handwerker_pdf.py` for the actual PDF generation.
 Typical command:
 
 ```bash
-python3 ~/.codex/skills/handwerker-pdf/scripts/build_handwerker_pdf.py \
+python3 tools/handwerker-pdf-skill/scripts/build_handwerker_pdf.py \
   --project-root /Users/dobby/sauerbruch \
   --output /Users/dobby/sauerbruch/out/handwerker-bad-wc.pdf \
   --rooms bad,wc
@@ -46,6 +46,8 @@ Useful options:
 - `--title "Sauerbruch 3 | Handwerkerbriefing"` overrides the PDF title.
 - `--subtitle "Stand: März 2026"` adds a small project note.
 - `--include-finished` also exports rooms already marked as finished.
+- `--document-type angebot` creates compact offer documents with plan images, bestandsfotos, and material references.
+- `--debug-image-selection` prints the selected `Vorher` / `Nachher` files for validation.
 
 ## Output Rules
 
