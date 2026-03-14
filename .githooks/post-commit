@@ -1,0 +1,19 @@
+#!/bin/sh
+
+branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+
+if [ "$branch" != "main" ]; then
+  exit 0
+fi
+
+if ! git remote get-url origin >/dev/null 2>&1; then
+  echo "post-commit: skipping auto-push because remote 'origin' is missing."
+  exit 0
+fi
+
+echo "post-commit: pushing latest commit from main to origin..."
+
+if ! git push origin HEAD; then
+  echo "post-commit: auto-push failed. Please push manually."
+  exit 1
+fi
