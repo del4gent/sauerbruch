@@ -87,8 +87,8 @@
 | --- | --- | --- | --- | --- |
 | Demontage | Heizkörper, Tapeten, Parkett & Decke entfernen | Eigenleistung | 2026-03-30 | 2026-04-01 |
 | Fenster-Austausch | Einbau von 3 neuen Fenstern | Handwerker | 2026-04-02 | 2026-04-03 |
-| FBH Installation | Fußbodenheizung (Trockensystem) verlegen | Handwerker | 2026-04-06 | 2026-04-08 |
-| Decke & LED | Unterkonstruktion, Verkabelung & Beplankung | Handwerker | 2026-04-09 | 2026-04-10 |
+| Decke & LED | Unterkonstruktion, Verkabelung & Beplankung | Handwerker | 2026-04-06 | 2026-04-08 |
+| FBH Installation | Fußbodenheizung verlegen | Handwerker | 2026-04-09 | 2026-04-10 |
 | Wand-Finish | Tapezieren der Wände | Handwerker | 2026-04-13 | 2026-04-15 |
 | Boden-Finish | Parkett verlegen & Fußleisten montieren | Handwerker | 2026-04-16 | 2026-04-20 |
 
