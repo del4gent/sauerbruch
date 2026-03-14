@@ -62,6 +62,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   heroImage = signal<string | null>(null);
   beforeImage = signal<string | null>(null);
   afterImage = signal<string | null>(null);
+  isComparisonReady = signal(false);
   sliderPos = signal(0);
   error = signal(false);
   progress = signal<{ total: number; completed: number; percentage: number }>({ total: 0, completed: 0, percentage: 0 });
@@ -75,6 +76,7 @@ export class RoomComponent implements OnInit, OnDestroy {
   ablaufSection = computed(() => findAblaufSection(this.roomSections()));
 
   private animationInterval: ReturnType<typeof setInterval> | null = null;
+  private comparisonLoadToken = 0;
 
   ngOnInit() {
     this.route.params
@@ -97,6 +99,8 @@ export class RoomComponent implements OnInit, OnDestroy {
     this.heroImage.set(null);
     this.beforeImage.set(null);
     this.afterImage.set(null);
+    this.isComparisonReady.set(false);
+    this.sliderPos.set(0);
 
     const details = this.roomService.getRoomById(roomId);
     this.roomDetails.set(details || null);
@@ -131,7 +135,7 @@ export class RoomComponent implements OnInit, OnDestroy {
           this.afterImage.set(mediaState.afterImage);
 
           if (mediaState.beforeImage && mediaState.afterImage) {
-            this.startAnimation();
+            void this.prepareComparison(mediaState.beforeImage, mediaState.afterImage);
           }
         }
       },
@@ -161,6 +165,30 @@ export class RoomComponent implements OnInit, OnDestroy {
       clearInterval(this.animationInterval);
       this.animationInterval = null;
     }
+  }
+
+  private async prepareComparison(beforeImage: string, afterImage: string) {
+    const loadToken = ++this.comparisonLoadToken;
+    this.isComparisonReady.set(false);
+    await Promise.all([this.preloadImage(beforeImage), this.preloadImage(afterImage)]);
+    if (
+      loadToken !== this.comparisonLoadToken ||
+      this.beforeImage() !== beforeImage ||
+      this.afterImage() !== afterImage
+    ) {
+      return;
+    }
+    this.isComparisonReady.set(true);
+    this.startAnimation();
+  }
+
+  private preloadImage(src: string): Promise<void> {
+    return new Promise((resolve) => {
+      const image = new Image();
+      image.onload = () => resolve();
+      image.onerror = () => resolve();
+      image.src = src;
+    });
   }
 
   openImage(url: string) {
