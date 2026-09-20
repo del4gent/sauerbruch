@@ -183,12 +183,6 @@
                             </div>
                           </div>
                         }
-
-                        @if (group.id === 'ist' && roomService.getImageDate(img)) {
-                          <div class="item-caption date-caption">
-                            <span class="image-date">Aufnahme vom {{ roomService.getImageDate(img) }}</span>
-                          </div>
-                        }
                       </div>
                     }
                   </div>
@@ -260,15 +254,6 @@
                                 }
                               </div>
                               <div class="step-meta">
-                                @if (getRowStart(table, row) || getRowEnd(table, row)) {
-                                  <span class="step-date">
-                                    @if (getRowStart(table, row) && getRowEnd(table, row)) {
-                                      {{ getRowStart(table, row) | date:'MMMM yyyy' }} – {{ getRowEnd(table, row) | date:'MMMM yyyy' }}
-                                    } @else {
-                                      ab {{ (getRowStart(table, row) || getRowEnd(table, row)) | date:'MMMM yyyy' }}
-                                    }
-                                  </span>
-                                }
                                 @if (isCurrent(section, i)) {
                                   <span class="step-status-tag">{{ getRowStatus(table, row) || 'Aktiv' }}</span>
                                 }
