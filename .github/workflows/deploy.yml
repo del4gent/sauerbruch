@@ -28,6 +28,9 @@ jobs:
       - name: Build
         run: npx nx build hausplanung --base-href /sauerbruch/
 
+      - name: Create 404.html for SPA routing
+        run: cp dist/apps/hausplanung/browser/index.html dist/apps/hausplanung/browser/404.html
+
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
